@@ -12,8 +12,9 @@
 			value="#{testeBean.teste}" />
 		<p:commandButton
 			action="#{testeBean.listarMedicos}"
-			value="VAI"
-			ajax="false" />
+			update="teste"
+			value="VAI" />
+		<h:outputText value="#{testeBean.teste}" id="teste" />
 	</h:form>
 </h:body>
 </html>

@@ -3,7 +3,7 @@ package br.com.osm.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,7 +11,7 @@ import br.com.osm.dao.MedicoDAO;
 import br.com.osm.entidades.Medico;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class TesteBean implements Serializable {
 
 	/**
