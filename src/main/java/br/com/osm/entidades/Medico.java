@@ -1,41 +1,32 @@
 package br.com.osm.entidades;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "medico")
-public class Medico implements Entidade<Long> {
+public class Medico extends Usuario {
 
 	/**
 	 * @author Renahn 23-01-2018
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
 	private String nome;
+
+	@OneToOne(mappedBy = "medico")
+	private Autenticacao autenticacao;
 
 	public Medico() {
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	@Override
 	public String getNome() {
 		return nome;
 	}
 
+	@Override
 	public void setNome(String nome) {
 		this.nome = nome;
 	}

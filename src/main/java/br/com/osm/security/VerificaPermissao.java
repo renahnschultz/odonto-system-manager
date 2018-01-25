@@ -35,7 +35,7 @@ import org.apache.deltaspike.security.api.authorization.SecurityViolation;
 import org.primefaces.util.Base64;
 
 import br.com.osm.beans.LoginBean;
-import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.dao.AutenticacaoDAO;
 import br.com.osm.message.Mensagens;
 import br.com.osm.util.Constantes;
 import br.com.osm.viewconfig.Paginas;
@@ -50,7 +50,7 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 	private Logger logger = Logger.getLogger(VerificaPermissao.class.getName());
 
 	@Inject
-	private transient UsuarioDAO usuarioDAO;
+	private transient AutenticacaoDAO autenticacaoDAO;
 
 	@Inject
 	@DeltaSpike
@@ -203,11 +203,11 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 			List<String> rolesSet = new ArrayList<String>(Arrays.asList(restricao.value()));
 
 			try {
-				if (!usuarioDAO.possuiPermissao(usuarioSenha[0], usuarioSenha[1], rolesSet)) {
+				if (!autenticacaoDAO.possuiPermissao(usuarioSenha[0], usuarioSenha[1], rolesSet)) {
 					requestContext.abortWith(ACCESS_DENIED);
 					return;
 				}
-				request.get().setAttribute(Constantes.COLABORADOR_SESSAO, usuarioDAO.pesquisarPorLogin(usuarioSenha[0]));
+				request.get().setAttribute(Constantes.COLABORADOR_SESSAO, autenticacaoDAO.pesquisarPorLogin(usuarioSenha[0]));
 			} catch (Exception e) {
 				Response erro = Response.status(Response.Status.INTERNAL_SERVER_ERROR)
 						.entity("Erro ao validar usuário! " + e.getMessage()).build();

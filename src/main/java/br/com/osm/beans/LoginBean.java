@@ -22,15 +22,15 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
 import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
-import br.com.mobilesys.magictrade.dao.ColaboradorDAO;
-import br.com.mobilesys.magictrade.dao.generico.Filtro;
-import br.com.mobilesys.magictrade.dao.generico.OperandoClausula;
-import br.com.mobilesys.magictrade.entity.Colaborador;
-import br.com.mobilesys.magictrade.exception.MagicTradeException;
-import br.com.mobilesys.magictrade.message.Mensagens;
-import br.com.mobilesys.magictrade.security.VerificaPermissao;
-import br.com.mobilesys.magictrade.util.Constantes;
-import br.com.mobilesys.magictrade.viewconfig.Paginas;
+import br.com.generico.Filtro;
+import br.com.generico.OperandoClausula;
+import br.com.osm.dao.AutenticacaoDAO;
+import br.com.osm.entidades.Autenticacao;
+import br.com.osm.exception.OSMException;
+import br.com.osm.message.Mensagens;
+import br.com.osm.security.VerificaPermissao;
+import br.com.osm.util.Constantes;
+import br.com.osm.viewconfig.Paginas;
 
 /**
  *
@@ -62,10 +62,10 @@ public class LoginBean implements Serializable {
 
 	private String nomeUsuario;
 
-	private Colaborador colaborador;
+	private Autenticacao autenticacao;
 
 	@Inject
-	transient private ColaboradorDAO colaboradorDAO;
+	transient private AutenticacaoDAO autenticacaoDAO;
 
 	@Inject
 	private ViewNavigationHandler viewNavigationHandler;
@@ -84,15 +84,15 @@ public class LoginBean implements Serializable {
 	public void autenticar() {
 		try {
 			//executa essa query apenas paga garantir que as tabelas serão criadas pelo JPA
-			colaborador = colaboradorDAO.pesquisar(Filtro.criarNovoFiltro()
+			autenticacao = autenticacaoDAO.pesquisar(Filtro.criarNovoFiltro()
 					.append("login", OperandoClausula.IGUAL, login).build(), false);
-			colaborador = null;
+			autenticacao = null;
 			request.get().login(login, senha);
-			colaborador = colaboradorDAO.pesquisar(Filtro.criarNovoFiltro()
+			autenticacao = autenticacaoDAO.pesquisar(Filtro.criarNovoFiltro()
 					.append("login", OperandoClausula.IGUAL, login).build(), false);
-			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, colaborador);
-			idUsuario = colaborador.getId();
-			nomeUsuario = colaborador.getNome();
+			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, autenticacao);
+			idUsuario = autenticacao.getId();
+			nomeUsuario = autenticacao.getNome();
 			viewNavigationHandler.navigateTo(verificaPermissao.getPaginaNegada());
 		} catch (ServletException e) {
 			logger.warning("Usuário ou senha inválidos: " + login + ", " + senha);
@@ -104,7 +104,7 @@ public class LoginBean implements Serializable {
 
 	public Class<? extends ViewConfig> logout() {
 		limparSessao();
-		return Paginas.Login.class;
+		return Paginas.aaaa.class;
 	}
 
 	public void logoutIdle() {
@@ -142,9 +142,9 @@ public class LoginBean implements Serializable {
 	}
 
 	/**
-	 * Verifica se existe algum {@link Usuario} autenticado no sistema.
+	 * Verifica se existe algum {@link Autenticacao} autenticado no sistema.
 	 *
-	 * @return Retorna se existe algum {@link Usuario} autenticado no sistema.
+	 * @return Retorna se existe algum {@link Autenticacao} autenticado no sistema.
 	 */
 	public boolean isAutenticado() {
 		return idUsuario != null;
@@ -154,12 +154,12 @@ public class LoginBean implements Serializable {
 		return idUsuario;
 	}
 
-	public Colaborador getColaborador() {
-		return colaborador;
+	public Autenticacao getUsuario() {
+		return autenticacao;
 	}
 
-	public void setColaborador(Colaborador colaborador) {
-		this.colaborador = colaborador;
+	public void setUsuario(Autenticacao usuario) {
+		this.autenticacao = usuario;
 	}
 
 }

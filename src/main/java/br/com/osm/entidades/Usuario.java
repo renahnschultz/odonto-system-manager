@@ -1,10 +1,13 @@
 package br.com.osm.entidades;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-public class Usuario implements Entidade<Long> {
+@MappedSuperclass
+public abstract class Usuario implements Entidade<Long> {
 
 	/**
 	 * @author Renahn 06-02-2018
@@ -15,9 +18,11 @@ public class Usuario implements Entidade<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String login;
+	@Column(name = "nome", nullable = false, length = 45)
+	private String nome;
 
-	private String senha;
+	@Column(name = "email", nullable = false, length = 45)
+	private String email;
 
 	public Usuario() {
 	}
@@ -31,20 +36,12 @@ public class Usuario implements Entidade<Long> {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

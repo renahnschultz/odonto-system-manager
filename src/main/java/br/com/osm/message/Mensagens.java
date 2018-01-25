@@ -19,4 +19,10 @@ public interface Mensagens {
 	@MessageTemplate("{acesso.negado}")
 	String acessoNegado();
 
+	@MessageTemplate("{erro.ao.realizar.login.usuario.senha.invalidos}")
+	String erroAoRealizarLoginUsuarioSenhaInvalidos();
+
+	@MessageTemplate("{usuario.nao.autenticado}")
+	String usuarioNaoAutenticado();
+
 }
