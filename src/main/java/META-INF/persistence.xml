@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="odonto-system-manager-teste"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.jdbc.exclusive-connection.is-lazy"
+				value="true" />
+			<property name="eclipselink.jdbc.write-connections.max"
+				value="50" />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.logging.connection" value="false" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/odonto-system-manager?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;serverTimezone=America/Sao_Paulo" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			<property name="eclipselink.logging.session" value="false" />
+			<property name="eclipselink.logging.thread" value="false" />
+			<property name="eclipselink.logging.timestamp" value="false" />
+			<property name="eclipselink.logging.connection" value="false" />
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="odonto-system-manager" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<non-jta-data-source>jdbc/odonto-system-manager</non-jta-data-source>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.target-database" value="MySQL" />
+			<property name="eclipselink.jdbc.exclusive-connection.is-lazy"
+				value="true" />
+			<property name="eclipselink.jdbc.write-connections.max"
+				value="50" />
+			<property name="eclipselink.logging.level" value="OFF" />
+			<property name="eclipselink.target-database" value="MySQL" />
+			<property name="eclipselink.logging.session" value="false" />
+			<property name="eclipselink.logging.thread" value="false" />
+			<property name="eclipselink.logging.timestamp" value="false" />
+			<property name="eclipselink.logging.connection" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>
