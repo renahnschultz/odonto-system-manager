@@ -24,7 +24,7 @@ public class MedicoDAO extends GenericoDAO<Long, Medico> {
 	 *
 	 * @param descricao
 	 * @return
-	 * @throws MagicTradeException
+	 * @throws OSMException
 	 */
 	public List<Medico> listMedicos() throws Exception {
 		try {
