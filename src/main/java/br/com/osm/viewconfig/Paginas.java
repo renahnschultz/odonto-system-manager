@@ -13,4 +13,7 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
 public interface Paginas extends ViewConfig {
 
 	// Use interface para pastas e class para paginas.
+	public class aaaa implements ViewConfig {
+		
+	}
 }

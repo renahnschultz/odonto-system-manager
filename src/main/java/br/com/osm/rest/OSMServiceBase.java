@@ -4,8 +4,31 @@
 package br.com.osm.rest;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.enterprise.event.Event;
+import javax.enterprise.inject.IllegalProductException;
+import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+
+import org.primefaces.json.JSONObject;
+
+import com.google.gson.Gson;
+
+import br.com.generico.AbstractAtivo;
+import br.com.oms.enuns.StatusAtivo;
+import br.com.osm.dao.GenericoDAO;
 import br.com.osm.entidades.Entidade;
+import br.com.osm.exception.OSMException;
+import br.com.osm.message.Mensagens;
+import br.com.osm.util.CriaJsonRetorno;
 
 /**
  *
@@ -23,17 +46,17 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 //	/**
 //	 *
 //	 */
-//	protected GenericoDAO<PK, TipoClasse> dao;
-//	@Inject
-//	protected UriInfo uriInfo;
+	protected GenericoDAO<PK, TipoClasse> dao;
+	@Inject
+	protected UriInfo uriInfo;
 //	@Inject
 //	protected TelefoneDAO telefoneDAO;
 //	@Inject
 //	protected EmailDAO emailDAO;
 //	@Inject
 //	protected ApplicationProducer applicationProducer;
-//	@Inject
-//	protected Mensagens mensagens;
+	@Inject
+	protected Mensagens mensagens;
 //
 //	@Inject
 //	protected Locale locale;
@@ -41,215 +64,190 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 //	private CriteriaBuilder builder;
 //	private CriteriaQuery<TipoClasse> query;
 //	private Root<TipoClasse> from;
-//	protected MagicTradeLogger logger = MagicTradeLogger.getLogger(getClass().getName());
-//	@Inject
-//	protected Gson gson;
+	protected Logger logger = Logger.getLogger(getClass().getName());
+	@Inject
+	protected Gson gson;
 //
-//	@Inject
-//	@Auditoria(INSERIR)
-//	private Event<Entidade<?>> entidadeCriada;
+	@Inject
+	private Event<Entidade<?>> entidadeCriada;
+
+	@Inject
+	private Event<Entidade<?>> entidadeEditada;
+
+	@Inject
+	private Event<Entidade<?>> entidadeExcluida;
 //
-//	@Inject
-//	@Auditoria(ATUALIZAR)
-//	private Event<Entidade<?>> entidadeEditada;
+	protected OSMServiceBase(GenericoDAO<PK, TipoClasse> dao) {
+		this.dao = dao;
+	}
 //
-//	@Inject
-//	@Auditoria(EXCLUIR)
-//	private Event<Entidade<?>> entidadeExcluida;
-//
-//	protected OSMServiceBase(GenericoDAO<PK, TipoClasse> dao) {
-//		this.dao = dao;
-//	}
-//
-//	/**
-//	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
-//	 *
-//	 * @param tipoClasse
-//	 *            O objeto que será validado.
-//	 *
-//	 * @throws ConstraintViolationException
-//	 *             Lança exceção quando algum erro de validação for encontrado.
-//	 */
-//	protected void validacaoSalvar(TipoClasse tipoClasse) throws ValidacaoException {
-//
-//	}
-//
-//	/**
-//	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
-//	 *
-//	 * @param tipoClasse
-//	 *            O objeto que será validado
-//	 *
-//	 * @throws ConstraintViolationException
-//	 *             Lança exceção quando algum erro de validação for encontrado.
-//	 */
-//	protected void validacaoExcluir(TipoClasse tipoClasse) throws ValidacaoException {
-//
-//	}
-//
-//	/**
-//	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
-//	 *
-//	 * @param tipoClasse
-//	 *            O objeto que será validado
-//	 *
-//	 * @throws ConstraintViolationException
-//	 *             Lança exceção quando algum erro de validação for encontrado.
-//	 */
-//	protected void validacaoReativar(TipoClasse tipoClasse) throws ValidacaoException {
-//
-//	}
-//
-//	/**
-//	 * Salva um objeto.
-//	 *
-//	 * @param tipoClasse
-//	 * @return
-//	 *         <p>
-//	 *         {@link Status#OK} com o Location indicando o caminho do objeto salvo.
-//	 *         </p>
-//	 *         <p>
-//	 *         {@link Status#BAD_REQUEST} se ocorrer algum erro de validação ao salvar o objeto.
-//	 *         </p>
-//	 *         <p>
-//	 *         {@link Status#INTERNAL_SERVER_ERROR} se algum erro inesperado ocorrer.
-//	 *         </p>
-//	 */
-//	public Response salvar(TipoClasse tipoClasse) {
-//		try {
-//			boolean novo = tipoClasse.getId() == null;
+	/**
+	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
+	 *
+	 * @param tipoClasse
+	 *            O objeto que será validado.
+	 *
+	 * @throws ConstraintViolationException
+	 *             Lança exceção quando algum erro de validação for encontrado.
+	 */
+	protected void validacaoSalvar(TipoClasse tipoClasse) throws OSMException {
+
+	}
+
+	/**
+	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
+	 *
+	 * @param tipoClasse
+	 *            O objeto que será validado
+	 *
+	 * @throws ConstraintViolationException
+	 *             Lança exceção quando algum erro de validação for encontrado.
+	 */
+	protected void validacaoExcluir(TipoClasse tipoClasse) throws OSMException {
+
+	}
+
+	/**
+	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
+	 *
+	 * @param tipoClasse
+	 *            O objeto que será validado
+	 *
+	 * @throws ConstraintViolationException
+	 *             Lança exceção quando algum erro de validação for encontrado.
+	 */
+	protected void validacaoReativar(TipoClasse tipoClasse) throws OSMException {
+
+	}
+
+	/**
+	 * Salva um objeto.
+	 *
+	 * @param tipoClasse
+	 * @return
+	 *         <p>
+	 *         {@link Status#OK} com o Location indicando o caminho do objeto salvo.
+	 *         </p>
+	 *         <p>
+	 *         {@link Status#BAD_REQUEST} se ocorrer algum erro de validação ao salvar o objeto.
+	 *         </p>
+	 *         <p>
+	 *         {@link Status#INTERNAL_SERVER_ERROR} se algum erro inesperado ocorrer.
+	 *         </p>
+	 */
+	public Response salvar(TipoClasse tipoClasse) {
+		try {
+			boolean novo = tipoClasse.getId() == null;
 //			validarCampoUnico(tipoClasse);
-//			validacaoSalvar(tipoClasse);
-//			dao.salvar(tipoClasse);
-//			dao.flush();//para fazer as validações do JPA
-//			JSONObject jsonObject = new JSONObject();
-//			if (novo) {
-//				entidadeCriada.fire(tipoClasse);
-//				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.cadastradoComSucesso());
-//			} else {
-//				entidadeEditada.fire(tipoClasse);
-//				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.editadoComSucesso());
-//			}
-//			UriBuilder builder = null;
-//			if (uriInfo != null) {
-//				try {
-//					builder = uriInfo.getRequestUriBuilder()
-//							.path(String.valueOf(tipoClasse.getId()));
-//				} catch (IllegalProductException e) {
-//					//ignorado, se der exception é pq não conseguiu in
-//				}
-//			}
-//			if (logger.isLoggable(Level.FINE)) {
-//				logger.fine("salvo com sucesso", gson.toJson(tipoClasse));
-//			}
-//			ResponseBuilder responseBuilder = Response.status(novo ? Response.Status.CREATED : Response.Status.OK)
-//					.entity(jsonObject.toString());
-//			if (builder != null) {
-//				responseBuilder.contentLocation(builder.build());
-//			}
-//			return responseBuilder.build();
-//		} catch (ValidacaoException e) {
-//			dao.rollBackTransaction();
-//			logger.severe("erro ao salvar", e, gson.toJson(tipoClasse));
-//			return Response.status(BAD_REQUEST)
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(new CriaJsonRetorno().criarRetornoValidacao(e).toString())
-//					.build();
-//		} catch (ConstraintViolationException e) {
-//			dao.rollBackTransaction();
-//			logger.severe("erro ao salvar", e, gson.toJson(tipoClasse));
-//			return Response.status(BAD_REQUEST)
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(new CriaJsonRetorno().criarRetornoValidacao(e).toString())
-//					.build();
-//		} catch (Exception e) {
-//			dao.rollBackTransaction();
-//			e = getCause(e);
-//			String mensagem = new CriaJsonRetorno().criarRetornoIndefinido(e).toString();
-//			if (e instanceof ConstraintViolationException) {
-//				mensagem = new CriaJsonRetorno().criarRetornoValidacao((ConstraintViolationException) e).toString();
-//			}
-//			logger.severe("erro ao salvar", e, gson.toJson(tipoClasse));
-//			return Response.status(INTERNAL_SERVER_ERROR)
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(mensagem)
-//					.build();
-//		}
-//	}
-//
-//	private Exception getCause(Exception exception) {
-//		if (exception.getCause() == null) {
-//			return exception;
-//		}
-//		for (int i = 0; i < 3; i++) {
-//			if (exception.getCause() instanceof ConstraintViolationException) {
-//				return (ConstraintViolationException) exception.getCause();
-//			} else {
-//				exception = (Exception) exception.getCause();
-//			}
-//		}
-//		return exception;
-//	}
-//
-//	public Response excluir(PK id) {
-//		try {
-//			TipoClasse tipoClasse = dao.pesquisarPor(id);
-//			validacaoExcluir(tipoClasse);
-//			if (tipoClasse instanceof AbstractAtivo) {
-//				AbstractAtivo abstractAtivo = (AbstractAtivo) tipoClasse;
-//				abstractAtivo.setAtivo(StatusAtivo.EXCLUIDO);
-//				dao.salvar(tipoClasse);
-//				dao.flush();
-//				entidadeExcluida.fire(tipoClasse);
-//			} else {
-//				dao.excluir(tipoClasse);
-//				dao.flush();
-//				entidadeExcluida.fire(tipoClasse);
-//			}
-//			JSONObject jsonObject = new JSONObject();
-//			jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.excluidoComSucesso());
-//			if (logger.isLoggable(Level.FINE)) {
-//				logger.fine("excluido com sucesso", gson.toJson(tipoClasse));
-//			}
-//			return Response.ok()
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(jsonObject.toString()).build();
-//		} catch (Exception e) {
-//			dao.rollBackTransaction();
-//			logger.severe("erro ao excluir por id", e, String.valueOf(id));
-//			return Response.status(INTERNAL_SERVER_ERROR)
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(new CriaJsonRetorno().criarRetornoIndefinido(e).toString())
-//					.build();
-//		}
-//	}
-//
-//	public Response reativar(PK id) {
-//		try {
-//			TipoClasse tipoClasse = dao.pesquisarPor(id);
-//			validacaoReativar(tipoClasse);
-//			AbstractAtivo abstractAtivo = (AbstractAtivo) tipoClasse;
-//			abstractAtivo.setAtivo(StatusAtivo.ATIVO);
-//			dao.salvar(tipoClasse);
-//			dao.flush();
-//			entidadeEditada.fire(tipoClasse);
-//			JSONObject jsonObject = new JSONObject();
-//			jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.reativadoComSucesso());
-//			if (logger.isLoggable(Level.FINE)) {
-//				logger.fine("reativado com sucesso", gson.toJson(tipoClasse));
-//			}
-//			return Response.ok()
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(jsonObject.toString()).build();
-//		} catch (Exception e) {
-//			dao.rollBackTransaction();
-//			logger.severe("erro ao reativar por id", e, String.valueOf(id));
-//			return Response.status(INTERNAL_SERVER_ERROR)
-//					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-//					.entity(new CriaJsonRetorno().criarRetornoIndefinido(e).toString())
-//					.build();
-//		}
-//	}
+			validacaoSalvar(tipoClasse);
+			dao.salvar(tipoClasse);
+			dao.flush();//para fazer as validações do JPA
+			JSONObject jsonObject = new JSONObject();
+			if (novo) {
+				entidadeCriada.fire(tipoClasse);
+				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.cadastradoComSucesso());
+			} else {
+				entidadeEditada.fire(tipoClasse);
+				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.editadoComSucesso());
+			}
+			UriBuilder builder = null;
+			if (uriInfo != null) {
+				try {
+					builder = uriInfo.getRequestUriBuilder()
+							.path(String.valueOf(tipoClasse.getId()));
+				} catch (IllegalProductException e) {
+					//ignorado, se der exception é pq não conseguiu in
+				}
+			}
+			if (logger.isLoggable(Level.FINE)) {
+				logger.fine("salvo com sucesso");
+			}
+			ResponseBuilder responseBuilder = Response.status(novo ? Response.Status.CREATED : Response.Status.OK)
+					.entity(jsonObject.toString());
+			if (builder != null) {
+				responseBuilder.contentLocation(builder.build());
+			}
+			return responseBuilder.build();
+		} catch (ConstraintViolationException e) {
+			dao.rollBackTransaction();
+			logger.severe("erro ao salvar");
+			return Response.status(Status.BAD_REQUEST)
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(new CriaJsonRetorno().criarRetornoValidacao(e).toString())
+					.build();
+		} catch (Exception e) {
+			dao.rollBackTransaction();
+			String mensagem = new CriaJsonRetorno().criarRetornoIndefinido(e).toString();
+			if (e instanceof ConstraintViolationException) {
+				mensagem = new CriaJsonRetorno().criarRetornoValidacao((ConstraintViolationException) e).toString();
+			}
+			logger.severe("erro ao salvar");
+			return Response.status(Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(mensagem)
+					.build();
+		}
+	}
+
+	public Response excluir(PK id) {
+		try {
+			TipoClasse tipoClasse = dao.pesquisarPor(id);
+			validacaoExcluir(tipoClasse);
+			if (tipoClasse instanceof AbstractAtivo) {
+				AbstractAtivo abstractAtivo = (AbstractAtivo) tipoClasse;
+				abstractAtivo.setAtivo(StatusAtivo.EXCLUIDO);
+				dao.salvar(tipoClasse);
+				dao.flush();
+				entidadeExcluida.fire(tipoClasse);
+			} else {
+				dao.excluir(tipoClasse);
+				dao.flush();
+				entidadeExcluida.fire(tipoClasse);
+			}
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.excluidoComSucesso());
+			if (logger.isLoggable(Level.FINE)) {
+				logger.fine("excluido com sucesso");
+			}
+			return Response.ok()
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(jsonObject.toString()).build();
+		} catch (Exception e) {
+			dao.rollBackTransaction();
+			logger.severe("erro ao excluir por id");
+			return Response.status(Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(new CriaJsonRetorno().criarRetornoIndefinido(e).toString())
+					.build();
+		}
+	}
+
+	public Response reativar(PK id) {
+		try {
+			TipoClasse tipoClasse = dao.pesquisarPor(id);
+			validacaoReativar(tipoClasse);
+			AbstractAtivo abstractAtivo = (AbstractAtivo) tipoClasse;
+			abstractAtivo.setAtivo(StatusAtivo.ATIVO);
+			dao.salvar(tipoClasse);
+			dao.flush();
+			entidadeEditada.fire(tipoClasse);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.reativadoComSucesso());
+			if (logger.isLoggable(Level.FINE)) {
+				logger.fine("reativado com sucesso");
+			}
+			return Response.ok()
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(jsonObject.toString()).build();
+		} catch (Exception e) {
+			dao.rollBackTransaction();
+			logger.severe("erro ao reativar por id");
+			return Response.status(Status.INTERNAL_SERVER_ERROR)
+					.type(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+					.entity(new CriaJsonRetorno().criarRetornoIndefinido(e).toString())
+					.build();
+		}
+	}
 //
 //	//TODO não esta sendo feito o tratamento de erro na chamada do método
 //	public Response pesquisarPorId(PK id) {

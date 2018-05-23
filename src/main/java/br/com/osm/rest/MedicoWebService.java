@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
-import br.com.mobilesys.magictrade.exception.ValidacaoException;
 import br.com.osm.dao.MedicoDAO;
 import br.com.osm.entidades.Medico;
 import br.com.osm.exception.OSMException;
@@ -34,29 +33,17 @@ public class MedicoWebService extends OSMServiceBase<Long, Medico> {
 	}
 
 	@Override
-	protected void validacaoSalvar(Medico medico) throws ValidacaoException {
+	protected void validacaoSalvar(Medico medico) throws OSMException {
 	}
 
-	@Override
-	@Path("complete/{descricao}")
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
-	@Restricao({ "visualizar-medico" })
-	public Response autoComplete(@PathParam("descricao") String descricao) throws OSMException {
-		return super.autoComplete(descricao);
-	}
-
-	@Path("buscar/{descricao}")
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
-	@Restricao({ "visualizar-medico" })
-	public Response buscarMedicoPorDescricao(@PathParam("descricao") String descricao) throws OSMException {
-		Medico medico = ((MedicoDAO) dao).buscarMedicoAtivoPorDescricao(descricao);
-		if (medico == null) {
-			return Response.status(Status.NO_CONTENT).build();
-		}
-		return Response.ok(medico).build();
-	}
+//	@Override
+//	@Path("complete/{descricao}")
+//	@GET
+//	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
+//	@Restricao({ "visualizar-medico" })
+//	public Response autoComplete(@PathParam("descricao") String descricao) throws OSMException {
+//		return super.autoComplete(descricao);
+//	}
 
 	@Override
 	@POST

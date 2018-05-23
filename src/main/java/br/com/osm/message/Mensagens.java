@@ -25,4 +25,16 @@ public interface Mensagens {
 	@MessageTemplate("{usuario.nao.autenticado}")
 	String usuarioNaoAutenticado();
 
+	@MessageTemplate("{cadastrado.com.sucesso}")
+	String cadastradoComSucesso();
+
+	@MessageTemplate("{editado.com.sucesso}")
+	String editadoComSucesso();
+
+	@MessageTemplate("{excluido.com.sucesso}")
+	String excluidoComSucesso();
+
+	@MessageTemplate("{reativado.com.sucesso}")
+	String reativadoComSucesso();
+
 }

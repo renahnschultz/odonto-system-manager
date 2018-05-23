@@ -92,7 +92,7 @@ public class LoginBean implements Serializable {
 					.append("login", OperandoClausula.IGUAL, login).build(), false);
 			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, autenticacao);
 			idUsuario = autenticacao.getId();
-			nomeUsuario = autenticacao.getNome();
+			nomeUsuario = autenticacao.getLogin();
 			viewNavigationHandler.navigateTo(verificaPermissao.getPaginaNegada());
 		} catch (ServletException e) {
 			logger.warning("Usuário ou senha inválidos: " + login + ", " + senha);

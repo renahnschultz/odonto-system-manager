@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import br.com.generico.AbstractAtivo;
+
 @MappedSuperclass
-public abstract class Usuario implements Entidade<Long> {
+public abstract class Usuario extends AbstractAtivo implements Entidade<Long>  {
 
 	/**
 	 * @author Renahn 06-02-2018
