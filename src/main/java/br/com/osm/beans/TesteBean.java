@@ -24,13 +24,11 @@ public class TesteBean implements Serializable {
 	private String teste;
 
 	public TesteBean() {
-		System.out.println("Criou merda");
 	}
 
 	public void listarMedicos() {
 		List<Medico> listMedicos;
 		try {
-			System.out.println(teste);
 			listMedicos = medicoDAO.listMedicos();
 		} catch (Exception e) {
 			e.printStackTrace();
