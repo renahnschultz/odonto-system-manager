@@ -39,13 +39,13 @@ import br.com.osm.util.CriaJsonRetorno;
  */
 public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends Entidade<?>> implements Serializable {
 
-//	/**
-//	 *
-//	 */
-//	private static final long serialVersionUID = 1L;
-//	/**
-//	 *
-//	 */
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 *
+	 */
 	protected GenericoDAO<PK, TipoClasse> dao;
 	@Inject
 	protected UriInfo uriInfo;
@@ -76,10 +76,12 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 
 	@Inject
 	private Event<Entidade<?>> entidadeExcluida;
+
 //
 	protected OSMServiceBase(GenericoDAO<PK, TipoClasse> dao) {
 		this.dao = dao;
 	}
+
 //
 	/**
 	 * Método exclusivo para os casos onde existem validações específicas que não podem ser realizadas utilizando o Bean Validation.
@@ -150,6 +152,8 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 				entidadeEditada.fire(tipoClasse);
 				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.editadoComSucesso());
 			}
+			//  POST /colaborador/novo
+			//  /colaborador/13
 			UriBuilder builder = null;
 			if (uriInfo != null) {
 				try {
@@ -179,7 +183,7 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 			dao.rollBackTransaction();
 			String mensagem = new CriaJsonRetorno().criarRetornoIndefinido(e).toString();
 			if (e instanceof ConstraintViolationException) {
-				mensagem = new CriaJsonRetorno().criarRetornoValidacao((ConstraintViolationException) e).toString();
+				mensagem = new CriaJsonRetorno().criarRetornoValidacao(e).toString();
 			}
 			logger.severe("erro ao salvar");
 			return Response.status(Status.INTERNAL_SERVER_ERROR)

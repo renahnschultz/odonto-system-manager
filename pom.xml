@@ -24,7 +24,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -135,7 +135,7 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.deltaspike.modules</groupId>
 			<artifactId>deltaspike-servlet-module-api</artifactId>
@@ -218,6 +218,13 @@
 			<artifactId>deltaspike-jpa-module-impl</artifactId>
 			<version>${deltaspike.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.adminfaces</groupId>
+			<artifactId>admin-theme</artifactId>
+			<version>1.0.0-RC15</version>
+			<classifier>no-cache</classifier>
 		</dependency>
 
 	</dependencies>
