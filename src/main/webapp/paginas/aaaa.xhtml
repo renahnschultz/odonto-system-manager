@@ -3,7 +3,11 @@
 	xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<h:head></h:head>
+<h:head>
+	<h:outputStylesheet
+		library="webjars"
+		name="font-awesome/4.7.0/css/font-awesome-jsf.css" />
+</h:head>
 <h:body>
 	<h:form>
 		<p:inputText
@@ -14,7 +18,9 @@
 			action="#{testeBean.listarMedicos}"
 			update="teste"
 			value="VAI" />
-		<h:outputText value="#{testeBean.teste}" id="teste" />
+		<h:outputText
+			value="#{testeBean.teste}"
+			id="teste" />
 	</h:form>
 </h:body>
 </html>
