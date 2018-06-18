@@ -3,24 +3,22 @@ package br.com.osm.rest;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
-import br.com.osm.dao.MedicoDAO;
-import br.com.osm.entidades.Medico;
+import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.security.Restricao;
 
-@Path("medico")
-public class MedicoWebService extends OSMServiceBase<Long, Medico> {
+@Path("usuario")
+public class UsuarioWebService extends OSMServiceBase<Long, Usuario> {
 
 	/**
 	 *
@@ -28,12 +26,12 @@ public class MedicoWebService extends OSMServiceBase<Long, Medico> {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	public MedicoWebService(MedicoDAO medicoDAO) {
-		super(medicoDAO);
+	public UsuarioWebService(UsuarioDAO usuarioDAO) {
+		super(usuarioDAO);
 	}
 
 	@Override
-	protected void validacaoSalvar(Medico medico) throws OSMException {
+	protected void validacaoSalvar(Usuario usuario) throws OSMException {
 	}
 
 //	@Override
@@ -51,8 +49,8 @@ public class MedicoWebService extends OSMServiceBase<Long, Medico> {
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
 	@Restricao({ "cadastrar-medico", "editar-medico" })
-	public Response salvar(Medico medico) {
-		return super.salvar(medico);
+	public Response salvar(Usuario usuario) {
+		return super.salvar(usuario);
 	}
 
 	@Override

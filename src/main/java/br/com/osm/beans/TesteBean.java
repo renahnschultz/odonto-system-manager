@@ -1,14 +1,14 @@
 package br.com.osm.beans;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.osm.dao.MedicoDAO;
-import br.com.osm.entidades.Medico;
+import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.entidades.Usuario;
+import br.com.osm.rest.UsuarioWebService;
 
 @Named
 @ViewScoped
@@ -20,19 +20,16 @@ public class TesteBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	transient private MedicoDAO medicoDAO;
+	transient private UsuarioDAO usuarioDAO;
+	private Usuario usuario = new Usuario();
+	
 	private String teste;
 
 	public TesteBean() {
 	}
-
-	public void listarMedicos() {
-		List<Medico> listMedicos;
-		try {
-			listMedicos = medicoDAO.listMedicos();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
+	public void salvar() {
+		new UsuarioWebService(usuarioDAO).salvar(usuario);
 	}
 
 	public String getTeste() {
@@ -41,6 +38,14 @@ public class TesteBean implements Serializable {
 
 	public void setTeste(String teste) {
 		this.teste = teste;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

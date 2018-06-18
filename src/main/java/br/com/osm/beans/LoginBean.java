@@ -24,8 +24,8 @@ import org.apache.deltaspike.jsf.api.message.JsfMessage;
 
 import br.com.generico.Filtro;
 import br.com.generico.OperandoClausula;
-import br.com.osm.dao.AutenticacaoDAO;
-import br.com.osm.entidades.Autenticacao;
+import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.message.Mensagens;
 import br.com.osm.security.VerificaPermissao;
@@ -62,10 +62,10 @@ public class LoginBean implements Serializable {
 
 	private String nomeUsuario;
 
-	private Autenticacao autenticacao;
+	private Usuario usuario;
 
 	@Inject
-	transient private AutenticacaoDAO autenticacaoDAO;
+	transient private UsuarioDAO usuarioDAO;
 
 	@Inject
 	private ViewNavigationHandler viewNavigationHandler;
@@ -84,15 +84,15 @@ public class LoginBean implements Serializable {
 	public void autenticar() {
 		try {
 			//executa essa query apenas paga garantir que as tabelas serão criadas pelo JPA
-			autenticacao = autenticacaoDAO.pesquisar(Filtro.criarNovoFiltro()
+			usuario = usuarioDAO.pesquisar(Filtro.criarNovoFiltro()
 					.append("login", OperandoClausula.IGUAL, login).build(), false);
-			autenticacao = null;
+			usuario = null;
 			request.get().login(login, senha);
-			autenticacao = autenticacaoDAO.pesquisar(Filtro.criarNovoFiltro()
+			usuario = usuarioDAO.pesquisar(Filtro.criarNovoFiltro()
 					.append("login", OperandoClausula.IGUAL, login).build(), false);
-			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, autenticacao);
-			idUsuario = autenticacao.getId();
-			nomeUsuario = autenticacao.getLogin();
+			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, usuario);
+			idUsuario = usuario.getId();
+			nomeUsuario = usuario.getNome();
 			viewNavigationHandler.navigateTo(verificaPermissao.getPaginaNegada());
 		} catch (ServletException e) {
 			logger.warning("Usuário ou senha inválidos: " + login + ", " + senha);
@@ -153,13 +153,4 @@ public class LoginBean implements Serializable {
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
-
-	public Autenticacao getUsuario() {
-		return autenticacao;
-	}
-
-	public void setUsuario(Autenticacao usuario) {
-		this.autenticacao = usuario;
-	}
-
 }

@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.w3c.org/1999/xhtml"
+<html xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 </h:head>
 <h:body>
 	<h:form>
-		<p:inputText
-			id="id"
-			required="true"
-			value="#{testeBean.teste}" />
-		<p:commandButton
-			action="#{testeBean.listarMedicos}"
-			update="teste"
-			value="VAI" />
-		<h:outputText
-			value="#{testeBean.teste}"
-			id="teste" />
+		<p:panelGrid columns="1">
+		<p:outputLabel for="nome" value="Nome"/>
+			<p:inputText id="nome" required="true"
+				value="#{testeBean.usuario.nome}" />
+		<p:outputLabel for="email" value="Email"/>
+			<p:inputText id="email" type="email" required="true"
+				value="#{testeBean.usuario.email}" />
+		<p:outputLabel for="senha" value="Senha"/>
+			<p:inputText id="senha" type="password" required="true"
+				value="#{testeBean.usuario.senha}" />
+		<p:outputLabel for="dataNascimento" value="Data de Nascimento"/>
+			<p:calendar id="dataNascimento"
+				value="#{testeBean.usuario.dataNascimento}" />
+		<p:outputLabel for="cpf" value="CPF"/>
+			<p:inputText id="cpf" required="true"
+				value="#{testeBean.usuario.cpf}" />
+		<p:outputLabel for="tipo" value="Tipo"/>
+			<p:inputText id="tipo" required="true"
+				value="#{testeBean.usuario.cpf}" />
+		<p:outputLabel for="telefone" value="Telefone"/>
+			<p:inputText id="telefone" required="true" placeholder="Telefone"
+				value="#{testeBean.usuario.cpf}" />
+			<p:commandButton action="#{testeBean.salvar}" value="Salvar" />
+		</p:panelGrid>
 	</h:form>
 </h:body>
 </html>
