@@ -29,6 +29,7 @@ import br.com.osm.entidades.Entidade;
 import br.com.osm.exception.OSMException;
 import br.com.osm.message.Mensagens;
 import br.com.osm.util.CriaJsonRetorno;
+import br.com.osm.utils.EntityManagerProducer;
 
 /**
  *
@@ -139,21 +140,13 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 	 */
 	public Response salvar(TipoClasse tipoClasse) {
 		try {
+			dao.getEntityManager().getTransaction().begin();
 			boolean novo = tipoClasse.getId() == null;
 //			validarCampoUnico(tipoClasse);
 			validacaoSalvar(tipoClasse);
 			dao.salvar(tipoClasse);
 			dao.flush();//para fazer as validações do JPA
 			JSONObject jsonObject = new JSONObject();
-			if (novo) {
-				entidadeCriada.fire(tipoClasse);
-				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.cadastradoComSucesso());
-			} else {
-				entidadeEditada.fire(tipoClasse);
-				jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.editadoComSucesso());
-			}
-			//  POST /colaborador/novo
-			//  /colaborador/13
 			UriBuilder builder = null;
 			if (uriInfo != null) {
 				try {
@@ -171,6 +164,7 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 			if (builder != null) {
 				responseBuilder.contentLocation(builder.build());
 			}
+			dao.getEntityManager().getTransaction().commit();
 			return responseBuilder.build();
 		} catch (ConstraintViolationException e) {
 			dao.rollBackTransaction();

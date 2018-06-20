@@ -405,6 +405,9 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+	public EntityManager getEntityManager() {
+		return this.entityManager;
+	}
 
 	public void limparCache() {
 		entityManager.clear();

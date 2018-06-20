@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ public class EntityManagerProducer implements Serializable {
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory(PROVIDER);
 
 	@Produces
+	@Default
 	@RequestScoped
 	public EntityManager getEntityManager() {
 		return emf.createEntityManager();
