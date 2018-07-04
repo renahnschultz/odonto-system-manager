@@ -6,8 +6,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.osm.annotations.LazyModel;
 import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.model.AbstractLazyModel;
 import br.com.osm.rest.UsuarioWebService;
 
 @Named
@@ -22,12 +24,15 @@ public class TesteBean implements Serializable {
 	@Inject
 	transient private UsuarioDAO usuarioDAO;
 	private Usuario usuario = new Usuario();
-	
+	@Inject
+	@LazyModel
+	private AbstractLazyModel<Long, Usuario> usuarioLazy;
+
 	private String teste;
 
 	public TesteBean() {
 	}
-	
+
 	public void salvar() {
 		new UsuarioWebService(usuarioDAO).salvar(usuario);
 	}
@@ -46,6 +51,14 @@ public class TesteBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public AbstractLazyModel<Long, Usuario> getUsuarioLazy() {
+		return usuarioLazy;
+	}
+
+	public void setUsuarioLazy(AbstractLazyModel<Long, Usuario> usuarioLazy) {
+		this.usuarioLazy = usuarioLazy;
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.generico.AbstractAtivo;
+import br.com.osm.annotations.OrdenacaoPadrao;
 
 @Entity
 @Table(name = "usuario")
@@ -23,6 +24,7 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@OrdenacaoPadrao
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -118,18 +120,23 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Usuario other = (Usuario) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		return true;
 	}
 
