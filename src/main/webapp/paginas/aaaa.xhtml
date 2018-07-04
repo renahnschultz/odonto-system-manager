@@ -67,13 +67,15 @@
 					value="#{testeBean.usuario.telefone}" />
 				<p:commandButton
 					action="#{testeBean.salvar}"
+					update="dataTableUsuario"
 					value="Salvar" />
 			</p:panelGrid>
 			<p:dataTable
+			id="dataTableUsuario"
 				value="#{testeBean.usuarioLazy}"
 				lazy="true"
+				rows="15"
 				var="usuario"
-				reflow="true"
 				filterEvent="enter">
 				<p:column headerText="ID">#{usuario.id}</p:column>
 				<p:column headerText="Nome">#{usuario.nome}</p:column>

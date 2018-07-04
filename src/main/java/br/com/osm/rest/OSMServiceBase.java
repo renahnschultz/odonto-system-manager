@@ -29,7 +29,6 @@ import br.com.osm.entidades.Entidade;
 import br.com.osm.exception.OSMException;
 import br.com.osm.message.Mensagens;
 import br.com.osm.util.CriaJsonRetorno;
-import br.com.osm.utils.EntityManagerProducer;
 
 /**
  *
