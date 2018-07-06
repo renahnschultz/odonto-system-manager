@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.osm.dao.UsuarioDAO;
-import br.com.osm.utils.EntityManagerProducer;
+import br.com.osm.producer.EntityManagerProducer;
 
 public class TesteMedicoDAO {
 

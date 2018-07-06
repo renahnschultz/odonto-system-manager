@@ -139,7 +139,6 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 	 */
 	public Response salvar(TipoClasse tipoClasse) {
 		try {
-			dao.getEntityManager().getTransaction().begin();
 			boolean novo = tipoClasse.getId() == null;
 //			validarCampoUnico(tipoClasse);
 			validacaoSalvar(tipoClasse);
@@ -163,7 +162,6 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 			if (builder != null) {
 				responseBuilder.contentLocation(builder.build());
 			}
-			dao.getEntityManager().getTransaction().commit();
 			return responseBuilder.build();
 		} catch (ConstraintViolationException e) {
 			dao.rollBackTransaction();
