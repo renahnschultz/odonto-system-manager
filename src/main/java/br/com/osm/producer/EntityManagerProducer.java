@@ -50,10 +50,4 @@ public class EntityManagerProducer implements Serializable {
 		}
 	}
 
-	public void dispose(@Disposes @Default EntityManager entityManager) {
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
-	}
-
 }

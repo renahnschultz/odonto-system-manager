@@ -2,14 +2,10 @@ package br.com.osm.template;
 
 import static br.com.osm.util.Assert.has;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -54,22 +50,6 @@ public class AdminConfig implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		adminConfigFile = new Properties();
-		userConfigFile = new Properties();
-		try (InputStream is = new FileInputStream("admin-config.properties")) {
-			userConfigFile.load(is);
-		} catch (IOException ex) {
-			log.log(Level.WARNING, "Could not load user defined admin template properties. Falling back to default properties.");
-		}
-
-//		try (InputStream isDefault = cl.getResourceAsStream(("../../../resources/admin-config.properties"))) {
-//			adminConfigFile.load(isDefault);
-//		} catch (IOException ex) {
-//			log.log(Level.SEVERE, "Could not load admin template default properties.", ex);
-//		}
-
-		loadDefaults();
 	}
 
 	protected void loadDefaults() {
