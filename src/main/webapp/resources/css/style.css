@@ -1,3 +1,7 @@
 body{
 	font-size: 17px !important;
 }
+#mainNav .navbar-brand img{
+	margin-top: 11%;
+    transform: translate(0%, -50%);
+}
