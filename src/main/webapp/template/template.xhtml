@@ -48,7 +48,7 @@
 
 </h:head>
 
-<h:body styleClass="fixed-nav sticky-footer bg-dark">
+<h:body styleClass="fixed-nav bg-dark">
 	<p:growl
 		autoUpdate="true"
 		id="mensagens" />
@@ -56,14 +56,12 @@
 	<ui:include src="topbar.xhtml" />
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<ui:include src="menu.xhtml" />
-
 			<div class="layout-main">
 				<ui:insert name="content" />
 			</div>
-			<ui:include src="footer.xhtml" />
 		</div>
 	</div>
+	<ui:include src="footer.xhtml" />
 	<p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
 		<f:facet name="start">
 			<i

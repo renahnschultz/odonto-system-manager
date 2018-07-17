@@ -142,7 +142,9 @@ body.fixed-nav {
   max-width: none;
   text-overflow: ellipsis;
 }
-
+#mainNav{
+	border-radius: 0px;
+}
 @media (min-width: 992px) {
   #mainNav .navbar-brand {
     width: 250px;
@@ -456,19 +458,14 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 }
 
 footer.sticky-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  right: 0px;
+  bottom: 0px;
   width: 100%;
   height: 56px;
-  background-color: #e9ecef;
+  color: #fafafa;
+  background-color: #212529;
   line-height: 55px;
-}
-
-@media (min-width: 992px) {
-  footer.sticky-footer {
-    width: calc(100% - 250px);
-  }
 }
 
 @media (min-width: 992px) {
