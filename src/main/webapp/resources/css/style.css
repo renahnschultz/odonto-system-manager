@@ -1,7 +1,31 @@
-body{
+body {
 	font-size: 17px !important;
 }
-#mainNav .navbar-brand img{
+
+#mainNav .navbar-brand img {
 	margin-top: 11%;
-    transform: translate(0%, -50%);
+	transform: translate(0%, -50%);
+}
+
+body .ui-fluid .ui-chips, body .ui-fluid .ui-chips-container {
+	width: 100%;
+}
+
+body .ui-fluid .ui-selectonemenu .ui-selectonemenu-trigger {
+	width: 24px;
+	margin-right: 4px;
+}
+
+body .ui-fluid .ui-spinner .ui-spinner-button {
+	width: 25px;
+	height: 12px;
+}
+
+body .ui-fluid .ui-spinner .ui-spinner-input {
+	padding-right: 30px;
+}
+
+body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
+	top: -6px;
+	width: 24px;
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.generico.AbstractAtivo;
+import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.OrdenacaoPadrao;
 
 @Entity
@@ -47,8 +49,9 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "telefone", nullable = false, length = 16)
 	private String telefone;
 
+	@Enumerated
 	@Column(name = "tipo", nullable = false, length = 16)
-	private Integer tipo;
+	private TipoUsuario tipo;
 
 	public Usuario() {
 	}
@@ -149,11 +152,11 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 		return stringBuilder.toString();
 	}
 
-	public Integer getTipo() {
+	public TipoUsuario getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Integer tipo) {
+	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
 
