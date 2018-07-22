@@ -6,11 +6,16 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+
+import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.LazyModel;
 import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.model.AbstractLazyModel;
+import br.com.osm.rest.PacienteWebService;
 import br.com.osm.rest.UsuarioWebService;
+import br.com.osm.viewconfig.Paginas.aaaa;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
@@ -32,8 +37,10 @@ public class PacienteBean implements Serializable {
 	public PacienteBean() {
 	}
 
-	public void salvar() {
-		new UsuarioWebService(usuarioDAO).salvar(usuario);
+	public Class<? extends ViewConfig> salvar() {
+		usuario.setTipo(TipoUsuario.PACIENTE);
+		new PacienteWebService(usuarioDAO).salvar(usuario);
+		return aaaa.class;
 	}
 
 	public Usuario getUsuario() {

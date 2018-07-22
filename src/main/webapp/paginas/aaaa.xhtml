@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,84 +7,54 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<ui:composition template="/template/template.xhtml">
-	<ui:define name="content">
+<ui:composition template="/template/template_cadastro.xhtml">
+	<ui:define name="cadastro">
 		<h:form>
-			<p:panelGrid
-				columns="2"
-				layout="grid"
-				styleClass="ui-fluid">
-				<p:panelGrid
-					columns="1"
-					layout="grid">
-					<p:outputLabel
-						for="nome"
-						value="Nome" />
-					<p:inputText
-						id="nome"
-						required="true"
+				<p:panelGrid columns="1" layout="grid">
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" required="true"
 						value="#{testeBean.usuario.nome}" />
-					<p:outputLabel
-						for="email"
-						value="Email" />
-					<p:inputText
-						id="email"
-						type="email"
-						required="true"
+					<p:outputLabel for="email" value="Email" />
+					<p:inputText id="email" type="email" required="true"
 						value="#{testeBean.usuario.email}" />
-					<p:outputLabel
-						for="senha"
-						value="Senha" />
-					<p:inputText
-						id="senha"
-						type="password"
-						required="true"
+					<p:outputLabel for="senha" value="Senha" />
+					<p:inputText id="senha" type="password" required="true"
 						value="#{testeBean.usuario.senha}" />
-					<p:outputLabel
-						for="dataNascimento"
-						value="Data de Nascimento" />
-					<p:calendar
-						id="dataNascimento"
+					<p:outputLabel for="dataNascimento" value="Data de Nascimento" />
+					<p:calendar id="dataNascimento"
 						value="#{testeBean.usuario.dataNascimento}" />
-					<p:outputLabel
-						for="cpf"
-						value="CPF" />
-					<p:inputText
-						id="cpf"
-						required="true"
+					<p:outputLabel for="cpf" value="CPF" />
+					<p:inputText id="cpf" required="true"
 						value="#{testeBean.usuario.cpf}" />
-					<p:outputLabel
-						for="tipo"
-						value="Tipo" />
-					<p:inputText
-						id="tipo"
-						required="true"
+					<p:outputLabel for="tipo" value="Tipo" />
+					<p:inputText id="tipo" required="true"
 						value="#{testeBean.usuario.tipo}" />
-					<p:outputLabel
-						for="telefone"
-						value="Telefone" />
-					<p:inputText
-						id="telefone"
-						required="true"
-						placeholder="Telefone"
+					<p:outputLabel for="telefone" value="Telefone" />
+					<p:inputText id="telefone" required="true" placeholder="Telefone"
 						value="#{testeBean.usuario.telefone}" />
-					<p:commandButton
-						action="#{testeBean.salvar}"
-						update="dataTableUsuario"
-						value="Salvar" />
+					<p:commandButton action="#{testeBean.salvar}"
+						update="dataTableUsuario" value="Salvar" />
 				</p:panelGrid>
-				<p:dataTable
-					id="dataTableUsuario"
-					value="#{testeBean.usuarioLazy}"
-					lazy="true"
-					rows="15"
-					var="usuario"
-					filterEvent="enter">
-					<p:column headerText="ID">#{usuario.id}</p:column>
-					<p:column headerText="Nome">#{usuario.nome}</p:column>
-					<p:column headerText="E-mail">#{usuario.email}</p:column>
-				</p:dataTable>
-			</p:panelGrid>
+		</h:form>
+	</ui:define>
+	<ui:define name="listagem">
+		<h:form prependId="false">
+			<p:dataTable id="dataTableUsuario" value="#{testeBean.usuarioLazy}"
+				lazy="true" rows="15" var="usuario" filterEvent="enter">
+				<f:facet name="header">
+				<div class="ui-g">
+					<div class="ui-g-4">
+					<p:commandButton value="Novo" icon="fa fa-plus" onclick="abrirCadastro()" />
+					</div>
+					<div class="ui-g-4">Usuários</div>
+					<div class="ui-g-4">
+					</div>
+				</div>
+    </f:facet>
+				<p:column headerText="ID">#{usuario.id}</p:column>
+				<p:column headerText="Nome">#{usuario.nome}</p:column>
+				<p:column headerText="E-mail">#{usuario.email}</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

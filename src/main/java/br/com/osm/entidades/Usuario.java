@@ -49,6 +49,9 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "telefone", nullable = false, length = 16)
 	private String telefone;
 
+	@Column(name = "telefone_whats", nullable = false, length = 16)
+	private String telefoneWhats;
+
 	@Enumerated
 	@Column(name = "tipo", nullable = false, length = 16)
 	private TipoUsuario tipo;
@@ -158,6 +161,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getTelefoneWhats() {
+		return telefoneWhats;
+	}
+
+	public void setTelefoneWhats(String telefoneWhats) {
+		this.telefoneWhats = telefoneWhats;
 	}
 
 }

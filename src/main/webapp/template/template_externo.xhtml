@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge" />
+		<meta
+			http-equiv="Content-Type"
+			content="text/html; charset=UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta
+			name="apple-mobile-web-app-capable"
+			content="yes" />
+	</f:facet>
+	<title>Odonto System - <ui:insert name="titulo" />
+	</title>
+	<h:outputStylesheet
+		name="style.css"
+		library="css" />
+	<h:outputStylesheet
+		name="sb-admin.css"
+		library="css" />
+	<h:outputStylesheet
+		name="bootstrap.min.css"
+		library="css" />
+	<ui:insert name="head" />
+
+</h:head>
+
+<h:body styleClass="bg-dark">
+	<p:growl
+		autoUpdate="true"
+		id="mensagens" />
+
+	<div class="bg-dark ui-fluid">
+			<p:graphicImage library="images" url="logo2.png" />
+				<ui:insert name="content" />
+	</div>
+	<p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+		<f:facet name="start">
+			<i
+				class="fa fa-spinner fa-pulse ajax-loader"
+				aria-hidden="true"></i>
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	<p:dialog
+		styleClass="status-dialog"
+		id="statusDialog"
+		modal="true"
+		widgetVar="statusDialog"
+		closable="false">
+		<i
+			class="fa fa-spinner fa-pulse ajax-loader-modal"
+			aria-hidden="true"></i>
+		<br />
+		<br />
+		<h:outputText
+			style="font-size: 18px !important;"
+			value="Por favor aguarde" />
+	</p:dialog>
+
+	<h:outputScript
+		name="jquery.easing.min.js"
+		library="js" />
+	<h:outputScript
+		name="popper.min.js"
+		library="js" />
+	<h:outputScript
+		name="jquery.easing.min.js"
+		library="js" />
+	<h:outputScript
+		name="bootstrap.js"
+		library="js" />
+	<h:outputScript
+		name="script.js"
+		library="js" />
+	<h:outputScript
+		name="sb-admin.min.js"
+		library="js" />
+
+</h:body>
+
+</html>
