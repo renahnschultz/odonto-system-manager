@@ -9,6 +9,7 @@
 
 <ui:composition template="/template/template_cadastro.xhtml">
 	<ui:define name="cadastro">
+	<h1>CADASTRO DE SERVIÇO</h1>
 		<h:form>
 			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
 				<h:panelGroup>
@@ -47,7 +48,7 @@
 		</h:form>
 	</ui:define>
 	<ui:define name="listagem">
-		<h:form prependId="false">
+		<h:form id="formDataTable" prependId="false">
 			<p:dataTable id="dataTableServico" value="#{servicoBean.servicoLazy}"
 				lazy="true" rows="15" var="servico" filterEvent="enter">
 				<f:facet name="header">

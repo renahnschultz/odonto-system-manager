@@ -17,12 +17,13 @@ public interface Paginas extends ViewConfig {
 	// Use interface para pastas e class para paginas.
 	@Restricao(value = "DASHBOARD")
 	public class aaaa implements ViewConfig {
-		
+
 	}
-	@Restricao(value = "CADASTRAR_SERVICO")
-	public class servicos implements ViewConfig {
-		
+
+	public class cadServicos implements ViewConfig {
+
 	}
+
 	public class registroPaciente implements ViewConfig {
 	}
 }
