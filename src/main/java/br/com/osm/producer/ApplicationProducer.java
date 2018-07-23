@@ -19,8 +19,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- *
- * @author geraldo 01/05/2017
+ * 
+ * @author Renahn 22/07/2018
  *
  */
 @Named

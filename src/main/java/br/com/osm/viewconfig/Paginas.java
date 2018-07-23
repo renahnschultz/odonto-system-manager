@@ -19,4 +19,10 @@ public interface Paginas extends ViewConfig {
 	public class aaaa implements ViewConfig {
 		
 	}
+	@Restricao(value = "CADASTRAR_SERVICO")
+	public class servicos implements ViewConfig {
+		
+	}
+	public class registroPaciente implements ViewConfig {
+	}
 }

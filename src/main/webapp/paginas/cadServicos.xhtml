@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_cadastro.xhtml">
+	<ui:define name="cadastro">
+		<h:form>
+			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" required="true"
+						value="#{servicoBean.servico.nome}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="tipo" value="Tipo" />
+					<p:selectOneMenu id="tipo" value="#{servicoBean.servico.tipo}">
+						<f:selectItems var="tipoServico"
+							value="#{OSMProducer.tiposServico()}" itemValue="#{tipoServico}"
+							itemLabel="#{msgs[tipoServico.descricao]}"></f:selectItems>
+					</p:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="preco" value="Preço Sugerido" />
+					<p:inputNumber id="preco"
+						value="#{servicoBean.servico.precoSugerido}" decimalPlaces="2"
+						decimalSeparator="," emptyValue="0" thousandSeparator="."></p:inputNumber>
+				</h:panelGroup>
+				<p:spacer />
+			</p:panelGrid>
+			<p:panelGrid columns="1" layout="grid" styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel for="descricao" value="Descrição" />
+					<p:inputTextarea id="descricao" value="#{servicoBean.servico.descricao}" maxlength="200" rows="3"></p:inputTextarea>
+				</h:panelGroup>
+			</p:panelGrid>
+			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
+				<p:commandButton action="#{servicoBean.salvar}"
+				onstart="PF('statusDialog').show()"
+				oncomplete="PF('statusDialog').hide()"
+					update="dataTableServico" value="Salvar" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+	<ui:define name="listagem">
+		<h:form prependId="false">
+			<p:dataTable id="dataTableServico" value="#{servicoBean.servicoLazy}"
+				lazy="true" rows="15" var="servico" filterEvent="enter">
+				<f:facet name="header">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:commandButton value="Novo" icon="fa fa-plus"
+								onclick="abrirCadastro()" style="float: left;" />
+						</div>
+						<div class="ui-g-4">Serviços</div>
+						<div class="ui-g-4"></div>
+					</div>
+				</f:facet>
+				<p:column headerText="ID">#{servico.id}</p:column>
+				<p:column headerText="Nome">#{servico.nome}</p:column>
+				<p:column headerText="Descricao">#{servico.descricao}</p:column>
+				<p:column headerText="Tipo">#{servico.tipo}</p:column>
+				<p:column headerText="Preço">#{servico.precoSugerido}</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
