@@ -9,7 +9,7 @@
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
-	<div style="width: 100%;">
+	<div style="width: 100%;margin-top: 10px;">
 		<div id="cadastro-listagem" style="transition: ease-in-out 0.3s;width: calc(200% + 20px);transform: translateX(calc(-50% - 5px));">
 			<div class="card card-w-title" style="width: calc(50% - 10px);float:left;">
 					<ui:insert name="cadastro" />
@@ -22,6 +22,9 @@
 	<script type="text/javascript">
 		function abrirCadastro(){
 			$('#cadastro-listagem').css('transform', 'translateX(0%)')
+		}
+		function fecharCadastro(){
+			$('#cadastro-listagem').css('transform', 'translateX(calc(-50% - 5px))')
 		}
 	</script>
 	</ui:define>

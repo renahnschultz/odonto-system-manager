@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -9,63 +10,136 @@
 
 <ui:composition template="/template/template_cadastro.xhtml">
 	<ui:define name="cadastro">
-	<h1>CADASTRO DE SERVIÇO</h1>
 		<h:form>
-			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
+			<div class="ui-datatable-header ui-widget-header ui-corner-top">
+				<div class="ui-g">
+					<div class="ui-g-4"></div>
+					<div
+						class="ui-g-4"
+						style="text-align: center;">#{msgs['cadastro.de.servicos']}</div>
+					<div class="ui-g-4">
+						<p:commandButton
+							value="#{msgs['listagem']}"
+							type="button"
+							icon="fa fa-chevron-right"
+							iconPos="right"
+							onclick="fecharCadastro()"
+							style="float: right;" />
+					</div>
+				</div>
+			</div>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
 				<h:panelGroup>
-					<p:outputLabel for="nome" value="Nome" />
-					<p:inputText id="nome" required="true"
+					<p:outputLabel
+						for="nome"
+						value="#{msgs['nome']}" />
+					<p:inputText
+						id="nome"
+						required="true"
 						value="#{servicoBean.servico.nome}" />
 				</h:panelGroup>
 				<h:panelGroup>
-					<p:outputLabel for="tipo" value="Tipo" />
-					<p:selectOneMenu id="tipo" value="#{servicoBean.servico.tipo}">
-						<f:selectItems var="tipoServico"
-							value="#{OSMProducer.tiposServico()}" itemValue="#{tipoServico}"
+					<p:outputLabel
+						for="tipo"
+						value="#{msgs['tipo']}" />
+					<p:selectOneMenu
+						id="tipo"
+						value="#{servicoBean.servico.tipo}">
+						<f:selectItems
+							var="tipoServico"
+							value="#{OSMProducer.tiposServico()}"
+							itemValue="#{tipoServico}"
 							itemLabel="#{msgs[tipoServico.descricao]}"></f:selectItems>
 					</p:selectOneMenu>
 				</h:panelGroup>
 				<h:panelGroup>
-					<p:outputLabel for="preco" value="Preço Sugerido" />
-					<p:inputNumber id="preco"
-						value="#{servicoBean.servico.precoSugerido}" decimalPlaces="2"
-						decimalSeparator="," emptyValue="0" thousandSeparator="."></p:inputNumber>
+					<p:outputLabel
+						for="preco"
+						value="#{msgs['preco.sugerido']}" />
+					<p:inputNumber
+						id="preco"
+						value="#{servicoBean.servico.precoSugerido}"
+						decimalPlaces="2"
+						decimalSeparator=","
+						emptyValue="0"
+						symbol="#{OSMProducer.currencyCode()}"
+						minValue="0"
+						thousandSeparator="."></p:inputNumber>
 				</h:panelGroup>
 				<p:spacer />
 			</p:panelGrid>
-			<p:panelGrid columns="1" layout="grid" styleClass="ui-fluid">
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				styleClass="ui-fluid">
 				<h:panelGroup>
-					<p:outputLabel for="descricao" value="Descrição" />
-					<p:inputTextarea id="descricao" value="#{servicoBean.servico.descricao}" maxlength="200" rows="3"></p:inputTextarea>
+					<p:outputLabel
+						for="descricao"
+						value="#{msgs['descricao']}" />
+					<p:inputTextarea
+						id="descricao"
+						value="#{servicoBean.servico.descricao}"
+						maxlength="200"
+						rows="3"></p:inputTextarea>
 				</h:panelGroup>
 			</p:panelGrid>
-			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
-				<p:commandButton action="#{servicoBean.salvar}"
-				onstart="PF('statusDialog').show()"
-				oncomplete="PF('statusDialog').hide()"
-					update="dataTableServico" value="Salvar" />
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<p:commandButton
+					action="#{servicoBean.salvar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide()"
+					update="dataTableServico"
+					styleClass="btn btn-primary"
+					icon="fa fa-check"
+					value="#{msgs['salvar']}" />
+				<p:commandButton
+					action="#{servicoBean.salvar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide()"
+					update="dataTableServico"
+					styleClass="btn btn-danger"
+					icon="fa fa-ban"
+					value="#{msgs['cancelar']}" />
 			</p:panelGrid>
 		</h:form>
 	</ui:define>
 	<ui:define name="listagem">
-		<h:form id="formDataTable" prependId="false">
-			<p:dataTable id="dataTableServico" value="#{servicoBean.servicoLazy}"
-				lazy="true" rows="15" var="servico" filterEvent="enter">
+		<h:form
+			id="formDataTable"
+			prependId="false">
+			<p:dataTable
+				id="dataTableServico"
+				value="#{servicoBean.servicoLazy}"
+				lazy="true"
+				rows="15"
+				var="servico"
+				emptyMessage="#{msgs['nenhum.registro.encontrado']}"
+				filterEvent="enter">
 				<f:facet name="header">
 					<div class="ui-g">
 						<div class="ui-g-4">
-							<p:commandButton value="Novo" icon="fa fa-plus"
-								onclick="abrirCadastro()" style="float: left;" />
+							<p:commandButton
+								value="#{msgs['novo']}"
+								icon="fa fa-plus"
+								type="button"
+								onclick="abrirCadastro()"
+								style="float: left;" />
 						</div>
-						<div class="ui-g-4">Serviços</div>
+						<div class="ui-g-4">#{msgs['servicos']}</div>
 						<div class="ui-g-4"></div>
 					</div>
 				</f:facet>
-				<p:column headerText="ID">#{servico.id}</p:column>
-				<p:column headerText="Nome">#{servico.nome}</p:column>
-				<p:column headerText="Descricao">#{servico.descricao}</p:column>
-				<p:column headerText="Tipo">#{servico.tipo}</p:column>
-				<p:column headerText="Preço">#{servico.precoSugerido}</p:column>
+				<p:column headerText="#{msgs['id']}">#{servico.id}</p:column>
+				<p:column headerText="#{msgs['nome']}">#{servico.nome}</p:column>
+				<p:column headerText="#{msgs['descricao']}">#{servico.descricao}</p:column>
+				<p:column headerText="#{msgs['tipo']}">#{servico.tipo}</p:column>
+				<p:column headerText="#{msgs['preco.sugerido']}">#{servico.precoSugerido}</p:column>
 			</p:dataTable>
 		</h:form>
 	</ui:define>
