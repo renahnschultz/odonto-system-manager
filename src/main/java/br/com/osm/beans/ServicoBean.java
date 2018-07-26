@@ -6,15 +6,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
-
-import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.LazyModel;
 import br.com.osm.dao.ServicoDAO;
 import br.com.osm.entidades.Servico;
 import br.com.osm.model.AbstractLazyModel;
 import br.com.osm.rest.ServicoWebService;
-import br.com.osm.viewconfig.Paginas.aaaa;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
@@ -36,9 +32,13 @@ public class ServicoBean implements Serializable {
 	public ServicoBean() {
 	}
 
-	public Class<? extends ViewConfig> salvar() {
+	public void salvar() {
 		new ServicoWebService(servicoDAO).salvar(servico);
-		return aaaa.class;
+	}
+
+	public void excluir() {
+		new ServicoWebService(servicoDAO).excluir(servico.getId());
+		servico = new Servico();
 	}
 
 	public Servico getServico() {
@@ -57,6 +57,4 @@ public class ServicoBean implements Serializable {
 		this.servicoLazy = servicoLazy;
 	}
 
-	
-	
 }
