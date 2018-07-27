@@ -85,11 +85,13 @@ public class LoginBean implements Serializable {
 		try {
 			//executa essa query apenas paga garantir que as tabelas serão criadas pelo JPA
 			usuario = usuarioDAO.pesquisar(Filtro.criarNovoFiltro()
-					.append("login", OperandoClausula.IGUAL, login).build(), false);
+					.append("email", OperandoClausula.IGUAL, login).build(), false);
 			usuario = null;
 			request.get().login(login, senha);
 			usuario = usuarioDAO.pesquisar(Filtro.criarNovoFiltro()
-					.append("login", OperandoClausula.IGUAL, login).build(), false);
+					.append("email", OperandoClausula.IGUAL, login)
+					.or()
+					.append("cpf", OperandoClausula.IGUAL, login).build(), false);
 			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, usuario);
 			idUsuario = usuario.getId();
 			nomeUsuario = usuario.getNome();

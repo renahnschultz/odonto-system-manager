@@ -22,7 +22,7 @@ import br.com.osm.viewconfig.Paginas;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Documented
 @Stereotype
-@Secured(value = VerificaPermissao.class, errorView = Paginas.aaaa.class)
+@Secured(value = VerificaPermissao.class, errorView = Paginas.AcessoNegado.class)
 public @interface Restricao {
 
 	/**

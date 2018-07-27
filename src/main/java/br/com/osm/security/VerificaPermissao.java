@@ -68,7 +68,7 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 	 * Armazena a página que o usuário tentou acessar mas ainda não estava autenticado, para que ele seja redireconado para a página que
 	 * tentou acessar após fazer o login. A página padrão de redirecionamento é a Dashboard
 	 */
-	private Class<? extends ViewConfig> paginaNegada = Paginas.aaaa.class;
+	private Class<? extends ViewConfig> paginaNegada = Paginas.AcessoNegado.class;
 
 	@Override
 	protected void checkPermission(AccessDecisionVoterContext context, Set<SecurityViolation> violations) {
@@ -132,7 +132,7 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 	 *         </li>
 	 */
 	public boolean temPermissao(String role) {
-		if (role.equals("mobilesys")) {
+		if (role.equals("osm")) {
 			return request.get().isUserInRole(role);
 		}
 		return request.get().isUserInRole(role)

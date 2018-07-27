@@ -226,6 +226,19 @@
 			<version>1.0.0-RC15</version>
 			<classifier>no-cache</classifier>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.glassfish.main.security</groupId>
+			<artifactId>security</artifactId>
+			<version>4.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.main.security</groupId>
+			<artifactId>security-ee</artifactId>
+			<version>4.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 
