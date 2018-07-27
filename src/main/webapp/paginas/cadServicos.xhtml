@@ -94,16 +94,16 @@
 				<p:commandButton
 					action="#{servicoBean.salvar}"
 					onstart="PF('statusDialog').show()"
-					oncomplete="PF('statusDialog').hide()"
-					update="dataTableServico"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableServico  @form"
 					styleClass="btn btn-primary"
 					icon="fa fa-check"
 					value="#{msgs['salvar']}" />
 				<p:commandButton
-					action="#{servicoBean.salvar}"
+					action="#{servicoBean.cancelar}"
 					onstart="PF('statusDialog').show()"
-					oncomplete="PF('statusDialog').hide()"
-					update="dataTableServico"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableServico @form"
 					styleClass="btn btn-danger"
 					icon="fa fa-ban"
 					value="#{msgs['cancelar']}" />
@@ -165,6 +165,9 @@
 					style="text-align:center;">
 					<p:commandButton
 						action="#{servicoBean.excluir}"
+						update="@form"
+						onstart="PF('statusDialog').show()" 
+						oncomplete="PF('statusDialog').hide()"
 						icon="fa fa-trash">
 						<p:confirm
 							header="#{msgs['confirmacao.de.exclusao']}"
@@ -179,20 +182,10 @@
 						type="button" />
 				</p:column>
 			</p:dataTable>
-			<p:confirmDialog
-				global="true"
-				showEffect="fade"
-				hideEffect="fade">
-				<p:commandButton
-					value="#{msgs['sim']}"
-					type="button"
-					styleClass="btn btn-danger"
-					icon="fa fa-check" />
-				<p:commandButton
-					value="#{msgs['nao']}"
-					type="button"
-					icon="fa fa-times" />
-			</p:confirmDialog>
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes btn btn-danger" icon="ui-icon-check" />
+        <p:commandButton value="No" styleClass="ui-confirmdialog-no btn btn-success" icon="ui-icon-close" />
+    </p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

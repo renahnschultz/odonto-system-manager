@@ -34,6 +34,11 @@ public class ServicoBean implements Serializable {
 
 	public void salvar() {
 		new ServicoWebService(servicoDAO).salvar(servico);
+		cancelar();
+	}
+	
+	public void cancelar() {
+		servico = new Servico();
 	}
 
 	public void excluir() {
