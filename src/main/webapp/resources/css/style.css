@@ -29,3 +29,41 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	top: -6px;
 	width: 24px;
 }
+
+.login {
+	padding: 20px;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40%;
+	border-radius: 10px;
+	border: 1px solid #fafafa;
+	width: 40%;
+	top: 50%;
+}
+.login button{
+	font-size: 18px;
+}
+
+.login .ui-inputgroup input:focus {
+	border: none;
+	box-shadow: none;
+}
+
+.login .ui-inputgroup input {
+	width: calc(100% - 40px);
+	height: 42px;
+	border-radius: 0px 5px 5px 0px;
+	border: none;
+}
+
+.login .ui-inputgroup span {
+	display: flex;
+	float: left;
+	width: 40px;
+	padding: 8px 0px 8px 0px;
+	border-radius: 5px 0px 0px 5px;
+	font-size: 26px;
+	background: #CCC;
+}

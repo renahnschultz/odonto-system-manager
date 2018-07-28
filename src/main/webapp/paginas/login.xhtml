@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,12 +9,38 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/template/template_externo.xhtml">
-<ui:define name="titulo">Login</ui:define>
+	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="content">
 		<h:form>
-			<p:inputText value="#{loginBean.login}"></p:inputText>
-			<p:inputText value="#{loginBean.senha}"></p:inputText>
-			<p:commandButton action="#{loginBean.autenticar}" value="Logar"></p:commandButton>
+			<div class="mx-auto login">
+				<img
+					src="../images/logo1.png"
+					width="100%" />
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="ui-inputgroup">
+							<span><i class="fa fa-user mx-auto"></i></span>
+							<p:inputText
+								value="#{loginBean.login}"
+								placeholder="#{msgs['email.ou.cpf']}"></p:inputText>
+						</div>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-inputgroup">
+							<span><i class="fa fa-lock mx-auto"></i></span>
+							<p:password
+								value="#{loginBean.senha}"
+								placeholder="#{msgs['senha']}"></p:password>
+						</div>
+					</div>
+					<div class="ui-g-12 ui-fluid">
+						<p:commandButton
+							styleClass="btn btn-primary"
+							action="#{loginBean.autenticar}"
+							value="#{msgs['logar']}"></p:commandButton>
+					</div>
+				</div>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

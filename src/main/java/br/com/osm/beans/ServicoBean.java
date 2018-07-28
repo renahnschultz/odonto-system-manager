@@ -36,7 +36,7 @@ public class ServicoBean implements Serializable {
 		new ServicoWebService(servicoDAO).salvar(servico);
 		cancelar();
 	}
-	
+
 	public void cancelar() {
 		servico = new Servico();
 	}

@@ -24,7 +24,6 @@ public interface Paginas extends ViewConfig {
 	class Login implements ViewConfig {
 	}
 
-	// Use interface para pastas e class para paginas.
 	@Restricao(value = "DASHBOARD")
 	public class aaaa implements ViewConfig {
 
