@@ -20,6 +20,7 @@ import javax.inject.Named;
 import org.apache.deltaspike.core.api.message.MessageContext;
 
 import br.com.osm.enuns.TipoServico;
+import br.com.osm.enuns.UnidadeMedida;
 
 /**
  *
@@ -54,6 +55,15 @@ public class OSMProducer {
 			tipoServicos.add(tipo);
 		}
 		return tipoServicos;
+	}
+	
+	@Named
+	public List<UnidadeMedida> unidadesMedida() {
+		List<UnidadeMedida> unidadesMedida= new ArrayList<UnidadeMedida>();
+		for (UnidadeMedida medida : UnidadeMedida.values()) {
+			unidadesMedida.add(medida);
+		}
+		return unidadesMedida;
 	}
 
 	public String currencyCode() {

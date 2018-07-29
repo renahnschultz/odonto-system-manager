@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_cadastro.xhtml">
+	<ui:define name="title">#{msgs['cadastro.de.materiais']}</ui:define>
+	<ui:define name="cadastro">
+		<h:form>
+			<div class="ui-datatable-header ui-widget-header ui-corner-top">
+				<div class="ui-g">
+					<div class="ui-g-4"></div>
+					<div
+						class="ui-g-4"
+						style="text-align: center;">#{msgs['cadastro.de.materiais']}</div>
+					<div class="ui-g-4">
+						<p:commandButton
+							value="#{msgs['listagem']}"
+							type="button"
+							icon="fa fa-chevron-right"
+							iconPos="right"
+							onclick="fecharCadastro()"
+							style="float: right;" />
+					</div>
+				</div>
+			</div>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel
+						for="nome"
+						value="#{msgs['nome']}" />
+					<p:inputText
+						id="nome"
+						required="true"
+						value="#{materialBean.material.nome}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="medida"
+						value="#{msgs['medida']}" />
+					<p:selectOneMenu
+						id="medida"
+						value="#{materialBean.material.medida}">
+						<f:selectItems
+							var="unidadeMedida"
+							value="#{OSMProducer.unidadesMedida()}"
+							itemValue="#{unidadeMedida}"
+							itemLabel="#{msgs[unidadeMedida.descricao]}"></f:selectItems>
+					</p:selectOneMenu>
+				</h:panelGroup>
+				
+				<p:spacer />
+			</p:panelGrid>
+			<p:panelGrid
+				columns="1"
+				layout="grid"
+				styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel
+						for="descricao"
+						value="#{msgs['descricao']}" />
+					<p:inputTextarea
+						id="descricao"
+						value="#{materialBean.material.descricao}"
+						maxlength="200"
+						rows="3"></p:inputTextarea>
+				</h:panelGroup>
+			</p:panelGrid>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<p:commandButton
+					action="#{materialBean.salvar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableMaterial  @form"
+					styleClass="btn btn-primary"
+					icon="fa fa-check"
+					value="#{msgs['salvar']}" />
+				<p:commandButton
+					action="#{materialBean.cancelar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableMaterial @form"
+					styleClass="btn btn-danger"
+					icon="fa fa-ban"
+					value="#{msgs['cancelar']}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+	<ui:define name="listagem">
+		<h:form
+			id="formDataTable"
+			prependId="false">
+			<p:dataTable
+				id="dataTableMaterial"
+				value="#{materialBean.materialLazy}"
+				lazy="true"
+				rows="15"
+				var="material"
+				emptyMessage="#{msgs['nenhum.registro.encontrado']}"
+				filterEvent="enter">
+				<f:facet name="header">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:commandButton
+								value="#{msgs['novo']}"
+								icon="fa fa-plus"
+								type="button"
+								onclick="abrirCadastro()"
+								style="float: left;" />
+						</div>
+						<div class="ui-g-4">#{msgs['materiais']}</div>
+						<div class="ui-g-4"></div>
+					</div>
+				</f:facet>
+				<p:column
+					headerText="#{msgs['id']}"
+					style="text-align:center;">
+					<h:outputText value="#{material.id}" />
+				</p:column>
+				<p:column headerText="#{msgs['nome']}">
+					<h:outputText value="#{material.nome}" />
+				</p:column>
+				<p:column headerText="#{msgs['descricao']}">
+					<h:outputText value="#{material.descricao}" />
+				</p:column>
+				<p:column headerText="#{msgs['medida']}">
+					<h:outputText value="#{msgs[material.medida.descricao]}" />
+				</p:column>
+				<p:column
+					headerText="#{msgs['acoes']}"
+					style="text-align:center;">
+					<p:commandButton
+						action="#{materialBean.excluir}"
+						update="@form"
+						onstart="PF('statusDialog').show()" 
+						oncomplete="PF('statusDialog').hide()"
+						icon="fa fa-trash">
+						<p:confirm
+							header="#{msgs['confirmacao.de.exclusao']}"
+							message="#{msgs['tem.certeza.que.deseja.excluir.este.registro']}"
+							icon="fa fa-alert" />
+						<f:setPropertyActionListener
+							value="#{material}"
+							target="#{materialBean.material}"></f:setPropertyActionListener>
+					</p:commandButton>
+					<p:commandButton
+						icon="fa fa-pencil"
+						type="button" />
+				</p:column>
+			</p:dataTable>
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes btn btn-danger" icon="ui-icon-check" />
+        <p:commandButton value="No" styleClass="ui-confirmdialog-no btn btn-success" icon="ui-icon-close" />
+    </p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

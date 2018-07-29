@@ -10,14 +10,13 @@ import javax.persistence.Table;
 
 import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
-import br.com.osm.enuns.TipoServico;
-
+import br.com.osm.enuns.UnidadeMedida;
 @Entity
-@Table(name = "servico")
-public class Servico extends AbstractAtivo implements Entidade<Long> {
+@Table(name = "material")
+public class Material extends AbstractAtivo implements Entidade<Long> {
 
 	/**
-	 * @author Renahn 07-22-2018
+	 * @author Lucas 07-22-2018
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -33,16 +32,12 @@ public class Servico extends AbstractAtivo implements Entidade<Long> {
 	private String descricao;
 
 	@Enumerated
-	@Column(name = "tipo", nullable = false)
-	private TipoServico tipo;
+	@Column(name = "medida", nullable = false)
+	private UnidadeMedida medida;
 
-	@Column(name = "preco_sugerido", nullable = true)
-	private Double precoSugerido;
-
-	public Servico() {
+	public Material() {
 	}
 
-	@Override
 	public Long getId() {
 		return id;
 	}
@@ -58,8 +53,6 @@ public class Servico extends AbstractAtivo implements Entidade<Long> {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
 
 	public String getDescricao() {
 		return descricao;
@@ -69,55 +62,56 @@ public class Servico extends AbstractAtivo implements Entidade<Long> {
 		this.descricao = descricao;
 	}
 
+	public UnidadeMedida getMedida() {
+		return medida;
+	}
+
+	public void setMedida(UnidadeMedida medida) {
+		this.medida = medida;
+	}
+
+	@Override
+	public String toString() {
+		return "Material [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", medida=" + medida + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((medida == null) ? 0 : medida.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
-		Servico other = (Servico) obj;
-		if (id == null) {
-			if (other.id != null) {
+		Material other = (Material) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
 				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		} else if (!descricao.equals(other.descricao))
 			return false;
-		}
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (medida != other.medida)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Servico [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", tipo=" + tipo + "]";
-	}
-
-	public TipoServico getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoServico tipo) {
-		this.tipo = tipo;
-	}
-
-	public Double getPrecoSugerido() {
-		return precoSugerido;
-	}
-
-	public void setPrecoSugerido(Double precoSugerido) {
-		this.precoSugerido = precoSugerido;
-	}
-
 }
