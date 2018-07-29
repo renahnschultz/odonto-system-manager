@@ -9,9 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.generico.AbstractAtivo;
-import br.com.oms.enuns.TipoServico;
-import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.OrdenacaoPadrao;
+import br.com.osm.enuns.TipoServico;
+import br.com.osm.enuns.TipoUsuario;
 
 @Entity
 @Table(name = "servico")

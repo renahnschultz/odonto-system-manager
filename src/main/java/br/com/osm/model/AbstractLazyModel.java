@@ -22,10 +22,10 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
-import br.com.oms.enuns.StatusAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
 import br.com.osm.dao.GenericoDAO;
 import br.com.osm.entidades.Entidade;
+import br.com.osm.enuns.StatusAtivo;
 import br.com.osm.exception.OSMException;
 import br.com.osm.util.ConversorGenerico;
 

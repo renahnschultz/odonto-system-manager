@@ -13,8 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.generico.AbstractAtivo;
-import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.OrdenacaoPadrao;
+import br.com.osm.enuns.TipoUsuario;
 
 @Entity
 @Table(name = "usuario")

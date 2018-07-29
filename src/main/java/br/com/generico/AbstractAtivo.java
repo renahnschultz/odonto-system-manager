@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
-import br.com.oms.enuns.StatusAtivo;
+import br.com.osm.enuns.StatusAtivo;
 
 @MappedSuperclass
 public abstract class AbstractAtivo {

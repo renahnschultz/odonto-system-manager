@@ -3,7 +3,7 @@
  */
 package br.com.generico;
 
-import br.com.oms.enuns.EnumGenerico;
+import br.com.osm.enuns.EnumGenerico;
 
 /**
  *

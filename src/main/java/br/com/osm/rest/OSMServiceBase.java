@@ -23,9 +23,9 @@ import org.primefaces.json.JSONObject;
 import com.google.gson.Gson;
 
 import br.com.generico.AbstractAtivo;
-import br.com.oms.enuns.StatusAtivo;
 import br.com.osm.dao.GenericoDAO;
 import br.com.osm.entidades.Entidade;
+import br.com.osm.enuns.StatusAtivo;
 import br.com.osm.exception.OSMException;
 import br.com.osm.message.Mensagens;
 import br.com.osm.util.CriaJsonRetorno;

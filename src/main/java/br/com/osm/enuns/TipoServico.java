@@ -1,4 +1,4 @@
-package br.com.oms.enuns;
+package br.com.osm.enuns;
 
 public enum TipoServico {
 

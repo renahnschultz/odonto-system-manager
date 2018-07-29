@@ -19,7 +19,7 @@ import javax.inject.Named;
 
 import org.apache.deltaspike.core.api.message.MessageContext;
 
-import br.com.oms.enuns.TipoServico;
+import br.com.osm.enuns.TipoServico;
 
 /**
  *

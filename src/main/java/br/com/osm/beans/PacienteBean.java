@@ -8,10 +8,10 @@ import javax.inject.Named;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
-import br.com.oms.enuns.TipoUsuario;
 import br.com.osm.annotations.LazyModel;
 import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.model.AbstractLazyModel;
 import br.com.osm.rest.PacienteWebService;
 import br.com.osm.rest.UsuarioWebService;
