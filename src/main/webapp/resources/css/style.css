@@ -30,7 +30,7 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	width: 24px;
 }
 
-.login {
+.acesso-negado {
 	padding: 20px;
 	transform: translate(-50%, -50%);
 	position: absolute;
@@ -38,9 +38,10 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	left: 50%;
 	width: 40%;
 	border-radius: 10px;
-	border: 1px solid #fafafa;
 	width: 40%;
 	top: 50%;
+}
+.login {
 }
 .login button{
 	font-size: 18px;
