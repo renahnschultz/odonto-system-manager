@@ -12,32 +12,48 @@
 	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="content">
 		<h:form>
-			<div class="mx-auto login">
-				<img
-					src="../images/logo1.png"
-					width="100%" />
-				<div class="ui-g">
-					<div class="ui-g-12">
-						<div class="ui-inputgroup">
-							<span><i class="fa fa-user mx-auto"></i></span>
-							<p:inputText
-								value="#{loginBean.login}"
-								placeholder="#{msgs['email.ou.cpf']}"></p:inputText>
-						</div>
+			<div
+				class="row login"
+				style="text-align: center; top: 45%; position: absolute; width: 100%; transform: translateY(-50%);">
+				<div class="ui-g-6">
+					<div class="ui-g-6"><p:spacer/></div>
+					<div class="ui-g-6">
+						<img
+							src="../images/logo2.png"
+							width="70%" />
 					</div>
-					<div class="ui-g-12">
-						<div class="ui-inputgroup">
-							<span><i class="fa fa-lock mx-auto"></i></span>
-							<p:password
-								value="#{loginBean.senha}"
-								placeholder="#{msgs['senha']}"></p:password>
+				</div>
+				<div
+					class="col-6"
+					style="text-align: left;">
+					<div class="ui-g">
+						<div class="ui-g-6">
+							<div class="ui-g-12">
+								<div class="ui-inputgroup">
+									<span><i class="fa fa-user mx-auto"></i></span>
+									<p:inputText
+										value="#{loginBean.login}"
+										placeholder="#{msgs['email.ou.cpf']}"></p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12">
+								<div class="ui-inputgroup">
+									<span><i class="fa fa-lock mx-auto"></i></span>
+									<p:password
+										value="#{loginBean.senha}"
+										placeholder="#{msgs['senha']}"></p:password>
+								</div>
+							</div>
+							<div class="ui-g-12" style="text-align: right;">
+								<p:link value="Esqueceu a senha?" styleClass="text-secondary"></p:link>
+							</div>
+							<div class="ui-g-12 ui-fluid">
+								<p:commandButton
+									styleClass="btn btn-primary"
+									action="#{loginBean.autenticar}"
+									value="#{msgs['logar']}"></p:commandButton>
+							</div>
 						</div>
-					</div>
-					<div class="ui-g-12 ui-fluid">
-						<p:commandButton
-							styleClass="btn btn-primary"
-							action="#{loginBean.autenticar}"
-							value="#{msgs['logar']}"></p:commandButton>
 					</div>
 				</div>
 			</div>

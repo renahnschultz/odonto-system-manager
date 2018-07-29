@@ -36,16 +36,19 @@
 
 </h:head>
 
-<h:body  style="background: #151241;">
+<h:body style="background: #fafafa;">
 	<p:growl
 		autoUpdate="true"
 		id="mensagens" />
 
 	<div>
-			<p:graphicImage library="images" url="logo2.png" />
-				<ui:insert name="content" />
+		<p:graphicImage
+			library="images"
+			url="logo2.png" />
+		<ui:insert name="content" />
 	</div>
-	<p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+	<p:ajaxStatus
+		style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
 		<f:facet name="start">
 			<i
 				class="fa fa-spinner fa-pulse ajax-loader"
