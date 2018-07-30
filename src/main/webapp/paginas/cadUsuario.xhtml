@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_cadastro.xhtml">
+	<ui:define name="title">#{msgs['cadastro.de.usuarios']}</ui:define>
+	<ui:define name="cadastro">
+		<h:form>
+			<div class="ui-datatable-header ui-widget-header ui-corner-top">
+				<div class="ui-g">
+					<div class="ui-g-4"></div>
+					<div
+						class="ui-g-4"
+						style="text-align: center;">#{msgs['cadastro.de.usuarios']}</div>
+					<div class="ui-g-4">
+						<p:commandButton
+							value="#{msgs['listagem']}"
+							type="button"
+							icon="fa fa-chevron-right"
+							iconPos="right"
+							onclick="fecharCadastro()"
+							style="float: right;" />
+					</div>
+				</div>
+			</div>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel
+						for="nome"
+						value="#{msgs['nome']}" />
+					<p:inputText
+						id="nome"
+						required="true"
+						value="#{usuarioBean.usuario.nome}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="sobrenome"
+						value="#{msgs['sobrenome']}" />
+					<p:inputText
+						id="sobrenome"
+						required="true"
+						value="#{usuarioBean.usuario.sobrenome}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="cpf"
+						value="#{msgs['cpf']}" />
+					<p:inputMask
+						id="cpf"
+						mask="999.999.999-99" 
+						required="true"
+						value="#{usuarioBean.usuario.cpf}" />
+				</h:panelGroup>				
+				<p:spacer />
+			</p:panelGrid>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel
+						for="tipo"
+						value="#{msgs['tipo']}" />
+					<p:selectOneMenu
+						id="tipo"
+						value="#{usuarioBean.usuario.tipo}">
+						<f:selectItems
+							var="tipoUsuario"
+							value="#{OSMProducer.tiposUsuario()}"
+							itemValue="#{tipoUsuario}"
+							itemLabel="#{msgs[tipoUsuario.descricao]}"></f:selectItems>
+					</p:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="email"
+						value="#{msgs['email']}" />
+					<p:inputText
+						id="email"
+						required="true"
+						value="#{usuarioBean.usuario.email}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="dataNascimento"
+						value="#{msgs['data.de.nascimento']}" />
+					<p:calendar
+						id="dataNascimento"
+						required="true"
+						value="#{usuarioBean.usuario.dataNascimento}" />
+				</h:panelGroup>
+			</p:panelGrid>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<h:panelGroup>
+					<p:outputLabel
+						for="telefone"
+						value="#{msgs['telefone']}" />
+					<p:inputText
+						id="telefone"
+						required="true"
+						value="#{usuarioBean.usuario.telefone}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="telefoneWhats"
+						value="#{msgs['telefone.whats']}" />
+					<p:inputText
+						id="telefoneWhats"
+						required="true"
+						value="#{usuarioBean.usuario.telefoneWhats}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="senha"
+						value="#{msgs['senha']}" />
+					<p:inputText
+						id="senha"
+						required="true"
+						value="#{usuarioBean.usuario.senha}" />
+				</h:panelGroup>
+			</p:panelGrid>
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<p:commandButton
+					action="#{usuarioBean.salvar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableUsuario  @form"
+					styleClass="btn btn-primary"
+					icon="fa fa-check"
+					value="#{msgs['salvar']}" />
+				<p:commandButton
+					action="#{usuarioBean.cancelar}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
+					update="dataTableUsuario @form"
+					styleClass="btn btn-danger"
+					icon="fa fa-ban"
+					value="#{msgs['cancelar']}" />
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+	<ui:define name="listagem">
+		<h:form
+			id="formDataTable"
+			prependId="false">
+			<p:dataTable
+				id="dataTableUsuario"
+				value="#{usuarioBean.usuarioLazy}"
+				lazy="true"
+				rows="15"
+				var="usuario"
+				emptyMessage="#{msgs['nenhum.registro.encontrado']}"
+				filterEvent="enter">
+				<f:facet name="header">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:commandButton
+								value="#{msgs['novo']}"
+								icon="fa fa-plus"
+								type="button"
+								onclick="abrirCadastro()"
+								style="float: left;" />
+						</div>
+						<div class="ui-g-4">#{msgs['usuarios']}</div>
+						<div class="ui-g-4"></div>
+					</div>
+				</f:facet>
+				<p:column
+					headerText="#{msgs['id']}"
+					style="text-align:center;">
+					<h:outputText value="#{usuario.id}" />
+				</p:column>
+				<p:column headerText="#{msgs['nome']}">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				<p:column headerText="#{msgs['tipo']}">
+					<h:outputText value="#{msgs[usuario.tipo.descricao]}" />
+				</p:column>
+				<p:column
+					headerText="#{msgs['acoes']}"
+					style="text-align:center;">
+					<p:commandButton
+						action="#{usuarioBean.excluir}"
+						update="@form"
+						onstart="PF('statusDialog').show()" 
+						oncomplete="PF('statusDialog').hide()"
+						icon="fa fa-trash">
+						<p:confirm
+							header="#{msgs['confirmacao.de.exclusao']}"
+							message="#{msgs['tem.certeza.que.deseja.excluir.este.registro']}"
+							icon="fa fa-alert" />
+						<f:setPropertyActionListener
+							value="#{usuario}"
+							target="#{usuarioBean.usuario}"></f:setPropertyActionListener>
+					</p:commandButton>
+					<p:commandButton
+						icon="fa fa-pencil"
+						type="button" />
+				</p:column>
+			</p:dataTable>
+			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes btn btn-danger" icon="ui-icon-check" />
+        <p:commandButton value="No" styleClass="ui-confirmdialog-no btn btn-success" icon="ui-icon-close" />
+    </p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

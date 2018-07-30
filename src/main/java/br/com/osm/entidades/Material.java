@@ -16,7 +16,7 @@ import br.com.osm.enuns.UnidadeMedida;
 public class Material extends AbstractAtivo implements Entidade<Long> {
 
 	/**
-	 * @author Lucas 07-22-2018
+	 * @author Lucas 28-07-2018
 	 */
 	private static final long serialVersionUID = 1L;
 

@@ -32,6 +32,9 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	@Column(name = "nome", nullable = false, length = 45)
 	private String nome;
+	
+	@Column(name = "sobrenome", nullable = false, length = 45)
+	private String sobrenome;
 
 	@Column(name = "email", nullable = false, length = 45)
 	private String email;
@@ -74,6 +77,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 	public String getEmail() {
@@ -149,8 +160,9 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder().append("Usuario [id=").append(id).append(", nome=")
-				.append(nome).append(", email=").append(email).append(", dataNascimento=").append(dataNascimento)
-				.append(", cpf=").append(cpf).append(", senha=").append(senha).append(", telefone=").append(telefone)
+				.append(nome).append(", sobrenome=").append(sobrenome).append(", email=").append(email)
+				.append(", dataNascimento=").append(dataNascimento).append(", cpf=").append(cpf)
+				.append(", senha=").append(senha).append(", telefone=").append(telefone)
 				.append("]");
 		return stringBuilder.toString();
 	}
