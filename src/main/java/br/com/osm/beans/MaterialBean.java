@@ -15,7 +15,7 @@ import br.com.osm.rest.MaterialWebService;
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
  *
- * @author Renahn 20-07-2018
+ * @author Lucas 28-07-2018
  *
  */
 @Named

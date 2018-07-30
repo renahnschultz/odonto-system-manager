@@ -2,11 +2,11 @@ package br.com.osm.enuns;
 
 public enum TipoUsuario {
 
-	ADMINISTRADOR("Administrador Odonto System"),
-	ADMINISTRADOR_CLINICA("Administrador Clinica/Consultorio"),
-	ODONTOLOGO("Odontólogo"),
-	SECRETARIO("Secretário"),
-	PACIENTE("Paciente");
+	ADMINISTRADOR("administrador.odonto.system"),
+	ADMINISTRADOR_CLINICA("administrador.clinicaconsultorio"),
+	ODONTOLOGO("odontologo"),
+	SECRETARIO("secretario"),
+	PACIENTE("paciente");
 
 	private String descricao;
 

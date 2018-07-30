@@ -20,6 +20,7 @@ import javax.inject.Named;
 import org.apache.deltaspike.core.api.message.MessageContext;
 
 import br.com.osm.enuns.TipoServico;
+import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.enuns.UnidadeMedida;
 
 /**
@@ -55,6 +56,15 @@ public class OSMProducer {
 			tipoServicos.add(tipo);
 		}
 		return tipoServicos;
+	}
+	
+	@Named
+	public List<TipoUsuario> tiposUsuario() {
+		List<TipoUsuario> tipoUsuario = new ArrayList<TipoUsuario>();
+		for (TipoUsuario tipo : TipoUsuario.values()) {
+			tipoUsuario.add(tipo);
+		}
+		return tipoUsuario;
 	}
 	
 	@Named
