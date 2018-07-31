@@ -24,7 +24,7 @@ public interface Paginas extends ViewConfig {
 	class Login implements ViewConfig {
 	}
 
-	@Restricao(value = "DASHBOARD")
+	@Restricao(value = "visualizar-dashboard")
 	public class aaaa implements ViewConfig {
 
 	}
