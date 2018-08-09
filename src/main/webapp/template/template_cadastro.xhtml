@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -9,17 +10,38 @@
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
-	<div style="width: 100%;margin-top: 10px;">
-		<div id="cadastro-listagem" style="transition: ease-in-out 0.3s;width: calc(200% + 20px);transform: translateX(calc(-50% - 5px));">
-			<div class="card card-w-title" style="width: calc(50% - 10px);float:left;">
+		<div style="width: 100%; margin-top: 10px;">
+			<div
+				id="cadastro-listagem"
+				style="transition: ease-in-out 0.3s; width: calc(200% + 20px); transform: translateX(calc(-50% - 5px));">
+				<div
+					class="card card-w-title"
+					style="width: calc(50% - 10px); float: left;">
 					<ui:insert name="cadastro" />
-			</div>
-			<div class="card card-w-title" style="width: calc(50% - 10px);float:left;margin-left: 20px;">
+				</div>
+				<div
+					class="card card-w-title"
+					style="width: calc(50% - 10px); float: left; margin-left: 20px;">
 					<ui:insert name="listagem" />
+					<h:form>
+						<p:confirmDialog
+							global="true"
+							showEffect="fade"
+							hideEffect="fade">
+							<p:commandButton
+								value="Yes"
+								styleClass="ui-confirmdialog-yes btn btn-danger"
+								icon="fa fa-check" />
+							<p:commandButton
+								value="No"
+								styleClass="ui-confirmdialog-no btn btn-success"
+								icon="fa fa-close" />
+						</p:confirmDialog>
+					</h:form>
+				</div>
 			</div>
 		</div>
-	</div>
-	<script type="text/javascript">
+		<script type="text/javascript">
 		function abrirCadastro(){
 			$('#cadastro-listagem').css('transform', 'translateX(0%)')
 		}

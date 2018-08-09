@@ -26,6 +26,7 @@ import br.com.generico.Filtro;
 import br.com.generico.OperandoClausula;
 import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.message.Mensagens;
 import br.com.osm.security.VerificaPermissao;
@@ -95,7 +96,16 @@ public class LoginBean implements Serializable {
 			request.get().getSession().setAttribute(Constantes.COLABORADOR_SESSAO, usuario);
 			idUsuario = usuario.getId();
 			nomeUsuario = usuario.getNome();
-			viewNavigationHandler.navigateTo(verificaPermissao.getPaginaNegada());
+			usuario.getPermissoes();
+			if(TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardPaciente.class);
+			}else if(TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardOdontologo.class);
+			}else if(TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardSecretario.class);
+			}else if(TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardAdministrador.class);
+			}
 		} catch (ServletException e) {
 			logger.warning("Usuário ou senha inválidos: " + login + ", " + senha);
 			mensagens.addError().erroAoRealizarLoginUsuarioSenhaInvalidos();
