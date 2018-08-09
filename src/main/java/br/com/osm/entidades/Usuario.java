@@ -192,4 +192,12 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 		this.telefoneWhats = telefoneWhats;
 	}
 
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
+
 }
