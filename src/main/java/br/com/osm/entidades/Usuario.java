@@ -30,10 +30,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "nome", nullable = false, length = 45)
+	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
 	
-	@Column(name = "sobrenome", nullable = false, length = 45)
+	@Column(name = "sobrenome", nullable = false, length = 80)
 	private String sobrenome;
 
 	@Column(name = "email", nullable = false, length = 45)

@@ -1,6 +1,8 @@
 package br.com.osm.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -57,6 +59,20 @@ public class UsuarioBean implements Serializable {
 
 	public void setUsuarioLazy(AbstractLazyModel<Long, Usuario> usuarioLazy) {
 		this.usuarioLazy = usuarioLazy;
+	}
+	
+	@Named
+	public List<TipoUsuario> tiposUsuario() {
+		List<TipoUsuario> tipoUsuario = new ArrayList<TipoUsuario>();
+		Usuario usuarioLogado = new LoginBean().getUsuario();
+		
+		for (TipoUsuario tipo : TipoUsuario.values()) {
+			if (TipoUsuario.ADMINISTRADOR.equals(tipo)) {
+				continue;
+			}
+			tipoUsuario.add(tipo);
+		}
+		return tipoUsuario;
 	}
 
 }
