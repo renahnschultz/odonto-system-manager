@@ -1,13 +1,18 @@
 package br.com.osm.entidades;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,8 +37,7 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
-	
-	@Column(name = "sobrenome", nullable = false, length = 80)
+
 	private String sobrenome;
 
 	@Column(name = "email", nullable = false, length = 45)
@@ -58,6 +62,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Enumerated
 	@Column(name = "tipo", nullable = false, length = 16)
 	private TipoUsuario tipo;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "usuario_has_permissao", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_permissao"))
+	private List<Permissao> permissoes;
 
 	public Usuario() {
 	}
