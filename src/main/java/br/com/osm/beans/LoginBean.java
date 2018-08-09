@@ -165,4 +165,12 @@ public class LoginBean implements Serializable {
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 }
