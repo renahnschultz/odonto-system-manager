@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<div class="card card-w-title" style="margin-top: 10px;">
+			<ui:insert name="include" />
+		</div>
+		<script type="text/javascript">
+		function abrirCadastro(){
+			$('#cadastro-listagem').css('transform', 'translateX(0%)')
+		}
+		function fecharCadastro(){
+			$('#cadastro-listagem').css('transform', 'translateX(calc(-50% - 5px))')
+		}
+	</script>
+	</ui:define>
+</ui:composition>
+</html>

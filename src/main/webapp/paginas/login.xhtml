@@ -9,14 +9,28 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/template/template_externo.xhtml">
+	<ui:define name="head">
+		<script type="text/javascript">
+			/*<![CDATA[*/
+				$(function(){
+					verificarAutenticacao();
+				});
+			/*]]>*/
+		</script>
+	</ui:define>
 	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="content">
 		<h:form>
+			<p:remoteCommand
+				action="#{loginBean.verificarAutenticacao()}"
+				name="verificarAutenticacao"></p:remoteCommand>
 			<div
 				class="row login"
 				style="text-align: center; top: 45%; position: absolute; width: 100%; transform: translateY(-50%);">
 				<div class="ui-g-6">
-					<div class="ui-g-6"><p:spacer/></div>
+					<div class="ui-g-6">
+						<p:spacer />
+					</div>
 					<div class="ui-g-6">
 						<img
 							src="../images/logo2.png"
@@ -44,8 +58,12 @@
 										placeholder="#{msgs['senha']}"></p:password>
 								</div>
 							</div>
-							<div class="ui-g-12" style="text-align: right;">
-								<p:link value="Esqueceu a senha?" styleClass="text-secondary"></p:link>
+							<div
+								class="ui-g-12"
+								style="text-align: right;">
+								<p:link
+									value="Esqueceu a senha?"
+									styleClass="text-secondary"></p:link>
 							</div>
 							<div class="ui-g-12 ui-fluid">
 								<p:commandButton

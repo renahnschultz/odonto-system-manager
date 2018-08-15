@@ -41,7 +41,18 @@
 			<form-error-page>/paginas/login.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
+	<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>
+                Odonto System Manager
+            </web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
 	<welcome-file-list>
 		<welcome-file>paginas/login.jsf</welcome-file>
 	</welcome-file-list>
+	<security-role>
+		<role-name>visualizar-dashboard</role-name>
+	</security-role>
 </web-app>

@@ -79,7 +79,20 @@ public class LoginBean implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
+	}
 
+	public void verificarAutenticacao() {
+		if (isAutenticado()) {
+			if (TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardPaciente.class);
+			} else if (TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardOdontologo.class);
+			} else if (TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardSecretario.class);
+			} else if (TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
+				viewNavigationHandler.navigateTo(Paginas.DashboardAdministrador.class);
+			}
+		}
 	}
 
 	public void autenticar() {
@@ -97,13 +110,13 @@ public class LoginBean implements Serializable {
 			idUsuario = usuario.getId();
 			nomeUsuario = usuario.getNome();
 			usuario.getPermissoes();
-			if(TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
+			if (TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
 				viewNavigationHandler.navigateTo(Paginas.DashboardPaciente.class);
-			}else if(TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
+			} else if (TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
 				viewNavigationHandler.navigateTo(Paginas.DashboardOdontologo.class);
-			}else if(TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
+			} else if (TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
 				viewNavigationHandler.navigateTo(Paginas.DashboardSecretario.class);
-			}else if(TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
+			} else if (TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
 				viewNavigationHandler.navigateTo(Paginas.DashboardAdministrador.class);
 			}
 		} catch (ServletException e) {
