@@ -35,18 +35,21 @@ public interface Paginas extends ViewConfig {
 
 	public class registroPaciente implements ViewConfig {
 	}
-	
-	public class DashboardPaciente implements ViewConfig{
-		
+
+	public class DashboardPaciente implements ViewConfig {
+
 	}
-	public class DashboardOdontologo implements ViewConfig{
-		
+
+	public class DashboardOdontologo implements ViewConfig {
+
 	}
-	public class DashboardSecretario implements ViewConfig{
-		
+
+	public class DashboardSecretario implements ViewConfig {
+
 	}
-	public class DashboardAdministrador implements ViewConfig{
-		
+
+	public class DashboardAdministrador implements ViewConfig {
+
 	}
-	
+
 }

@@ -3,6 +3,7 @@
  */
 package br.com.osm.producer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PostConstructApplicationEvent;
 import javax.faces.event.PreDestroyApplicationEvent;
@@ -30,8 +32,12 @@ import br.com.osm.enuns.UnidadeMedida;
  */
 @Named
 @ApplicationScoped
-public class OSMProducer {
+public class OSMProducer implements Serializable {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	@Inject
 	private MessageContext mensagens;
 
@@ -50,6 +56,7 @@ public class OSMProducer {
 	}
 
 	@Named
+	@Produces
 	public List<TipoServico> tiposServico() {
 		List<TipoServico> tipoServicos = new ArrayList<TipoServico>();
 		for (TipoServico tipo : TipoServico.values()) {
@@ -57,8 +64,9 @@ public class OSMProducer {
 		}
 		return tipoServicos;
 	}
-	
+
 	@Named
+	@Produces
 	public List<TipoUsuario> tiposUsuario() {
 		List<TipoUsuario> tipoUsuario = new ArrayList<TipoUsuario>();
 		for (TipoUsuario tipo : TipoUsuario.values()) {
@@ -66,10 +74,11 @@ public class OSMProducer {
 		}
 		return tipoUsuario;
 	}
-	
+
 	@Named
+	@Produces
 	public List<UnidadeMedida> unidadesMedida() {
-		List<UnidadeMedida> unidadesMedida= new ArrayList<UnidadeMedida>();
+		List<UnidadeMedida> unidadesMedida = new ArrayList<UnidadeMedida>();
 		for (UnidadeMedida medida : UnidadeMedida.values()) {
 			unidadesMedida.add(medida);
 		}

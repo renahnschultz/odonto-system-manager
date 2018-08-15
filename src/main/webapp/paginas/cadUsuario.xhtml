@@ -57,16 +57,10 @@
 						value="#{msgs['cpf']}" />
 					<p:inputMask
 						id="cpf"
-						mask="999.999.999-99" 
+						mask="999.999.999-99"
 						required="true"
 						value="#{usuarioBean.usuario.cpf}" />
-				</h:panelGroup>				
-				<p:spacer />
-			</p:panelGrid>
-			<p:panelGrid
-				columns="4"
-				layout="grid"
-				styleClass="ui-fluid">
+				</h:panelGroup>
 				<h:panelGroup>
 					<p:outputLabel
 						for="tipo"
@@ -99,11 +93,6 @@
 						required="true"
 						value="#{usuarioBean.usuario.dataNascimento}" />
 				</h:panelGroup>
-			</p:panelGrid>
-			<p:panelGrid
-				columns="4"
-				layout="grid"
-				styleClass="ui-fluid">
 				<h:panelGroup>
 					<p:outputLabel
 						for="telefone"
@@ -126,10 +115,23 @@
 					<p:outputLabel
 						for="senha"
 						value="#{msgs['senha']}" />
-					<p:inputText
+					<p:password
 						id="senha"
-						required="true"
-						value="#{usuarioBean.usuario.senha}" />
+						value="#{usuarioBean.usuario.senha}"
+						match="senha2"
+						label="#{msgs['senha']}"
+						required="true" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel
+						for="senha2"
+						value="#{msgs['repita.a.senha']}" />
+					<p:password
+						id="senha2"
+						value="#{usuarioBean.usuario.senha}"
+						match="pwd2"
+						label="#{msgs['repita.a.senha']}"
+						required="true" />
 				</h:panelGroup>
 			</p:panelGrid>
 			<p:panelGrid
@@ -198,7 +200,7 @@
 					<p:commandButton
 						action="#{usuarioBean.excluir}"
 						update="@form"
-						onstart="PF('statusDialog').show()" 
+						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide()"
 						icon="fa fa-trash">
 						<p:confirm
@@ -214,10 +216,19 @@
 						type="button" />
 				</p:column>
 			</p:dataTable>
-			 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-        <p:commandButton value="Yes" styleClass="ui-confirmdialog-yes btn btn-danger" icon="ui-icon-check" />
-        <p:commandButton value="No" styleClass="ui-confirmdialog-no btn btn-success" icon="ui-icon-close" />
-    </p:confirmDialog>
+			<p:confirmDialog
+				global="true"
+				showEffect="fade"
+				hideEffect="fade">
+				<p:commandButton
+					value="Yes"
+					styleClass="ui-confirmdialog-yes btn btn-danger"
+					icon="ui-icon-check" />
+				<p:commandButton
+					value="No"
+					styleClass="ui-confirmdialog-no btn btn-success"
+					icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>
