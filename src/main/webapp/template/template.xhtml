@@ -1,101 +1,59 @@
-<!DOCTYPE html>
-<html
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/admin.xhtml">
 
-<h:head>
-	<f:facet name="first">
-		<meta
-			http-equiv="X-UA-Compatible"
-			content="IE=edge" />
-		<meta
-			http-equiv="Content-Type"
-			content="text/html; charset=UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<meta
-			name="apple-mobile-web-app-capable"
-			content="yes" />
-	</f:facet>
-	<title>Odonto System - <ui:insert name="title" />
-	</title>
-	<h:outputStylesheet
-		name="style.css"
-		library="css" />
-	<h:outputStylesheet
-		name="bootstrap.css"
-		library="css" />
-	<h:outputStylesheet
-		name="sb-admin.css"
-		library="css" />
-	<ui:insert name="head" />
+	<ui:define name="head">
+		<title>OSM - <ui:insert name="title"/></title>
+		<h:outputStylesheet
+			library="css"
+			name="starter.css" />
+	</ui:define>
 
-</h:head>
+	<ui:define name="logo-lg">
+        <img src="../images/logo1.png" width="100%"/>
+    </ui:define>
 
-<h:body styleClass="fixed-nav bg-dark sidenav-toggled">
-	<p:growl
-		autoUpdate="true"
-		id="mensagens" />
+	<ui:define name="logo-mini">
+        <img src="../images/logo2.png" width="100%"/>
+    </ui:define>
 
-	<ui:include src="topbar.xhtml" />
-	<div class="content-wrapper">
-		<div class="container-fluid">
-			<div class="layout-main">
-				<ui:insert name="content" />
-			</div>
+	<ui:define name="menu">
+		<ul class="sidebar-menu"  style="z-index: 9999999999 !important;">
+			<li><p:link
+					href="/index.xhtml"
+					onclick="clearBreadCrumbs()">
+					<i class="fa fa-home"></i>
+					<span>Home</span>
+				</p:link></li>
+			<li class="header">General</li>
+			<li><p:link href="/car-list.xhtml">
+					<i class="fa fa-car"></i>
+					<span>Cars</span>
+				</p:link></li>
+		</ul>
+	</ui:define>
+
+	<ui:define name="top-menu">
+		<ui:include src="/template/topbar.xhtml" />
+	</ui:define>
+
+	<ui:define name="footer">
+		<a
+			target="_blank"
+			href="https://github.com/adminfaces/"> Copyright (C) 2017 - AdminFaces </a>
+
+		<div
+			class="pull-right hidden-xs"
+			style="color: gray">
+			<i>1.0.0</i>
 		</div>
-	</div>
-	<ui:include src="footer.xhtml" />
-	<p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
-		<f:facet name="start">
-			<i
-				class="fa fa-spinner fa-pulse ajax-loader"
-				aria-hidden="true"></i>
-		</f:facet>
+	</ui:define>
 
-		<f:facet name="complete">
-			<h:outputText value="" />
-		</f:facet>
-	</p:ajaxStatus>
-	<p:dialog
-		styleClass="status-dialog"
-		id="statusDialog"
-		modal="true"
-		widgetVar="statusDialog"
-		closable="false">
-		<i
-			class="fa fa-spinner fa-pulse ajax-loader-modal"
-			aria-hidden="true"></i>
-		<br />
-		<br />
-		<h:outputText
-			style="font-size: 18px !important;"
-			value="Por favor aguarde" />
-	</p:dialog>
-
-	<h:outputScript
-		name="jquery.easing.min.js"
-		library="js" />
-	<h:outputScript
-		name="popper.min.js"
-		library="js" />
-	<h:outputScript
-		name="jquery.easing.min.js"
-		library="js" />
-	<h:outputScript
-		name="bootstrap.js"
-		library="js" />
-	<h:outputScript
-		name="script.js"
-		library="js" />
-	<h:outputScript
-		name="sb-admin.min.js"
-		library="js" />
-
-</h:body>
-
-</html>
+</ui:composition>

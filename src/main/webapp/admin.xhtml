@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:adm="http://github.com/adminfaces">
+
+    <ui:insert name="metadata"/>
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <ui:insert name="head"/>
+        <ui:insert name="head-end"/>
+        <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+    </h:head>
+    <h:body styleClass="skin-black-light sidebar-mini">
+        <ui:insert name="body-begin"/>
+        <p:ajaxStatus rendered="true"
+                      onstart="showBar();"
+                      onsuccess="hideBar();"/>
+
+        <p:dialog id="adminStatusDialog" modal="true" widgetVar="statusDialog" draggable="false" closable="false"
+                  resizable="false" responsive="true" showHeader="false" appendTo="@(body)">
+            <p:graphicImage />
+        </p:dialog>
+
+        <div class="wrapper">
+            <div id="loader" class="load-bar" style="display: none">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <header class="main-header">
+                <a href="#{request.contextPath}/" class="logo">
+                    <span class="logo-mini">
+                        <ui:insert name="logo-mini"/>
+                    </span>
+                    <span class="logo-lg">
+                        <ui:insert name="logo-lg"/>
+                    </span>
+                    <span class="logo-lg">
+                        <ui:insert name="logo"/>
+                    </span>
+                </a>
+                <nav class="navbar navbar-static-top">
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only"></span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ui:insert name="top-menu"/>
+                    </div>
+
+                    <div class="center-navbar">
+                        <ui:insert name="center-header"/>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- side menu -->
+            <aside id="sidebar" class="main-sidebar slideout-menu">
+                <div style="z-index: 9997;">
+                    <ui:insert name="menu-begin"/>
+                    <ui:fragment rendered="true">
+                        <div class="sidebar-form">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="#{msgs['menu.search.placeholder']}" autocomplete="off"
+                                       onclick="this.value = '';searchLeftMenu('')"
+                                       onkeyup="searchLeftMenu(this.value)" onblur="this.value = '';hideMenuResults()"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                                            class="fa fa-search"></i>
+                                    </button>
+                                </span>
+
+                            </div>
+
+                            <ul id="menu-search" class="nav navbar-nav" role="menu">
+                                <li class="dropdown" >
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"/>
+
+                                    <ul class="dropdown-menu" role="menu">
+
+                                    </ul>
+                                </li>     
+                            </ul>    
+                        </div>
+                    </ui:fragment>
+                    <section class="sidebar">
+                        <ui:insert name="menu"/>
+                    </section>
+                    <ui:insert name="menu-end"/>
+                </div>
+            </aside>
+            <!-- content -->
+            <div id="content" class="content-wrapper">
+                <adm:breadcrumb title="#{title}" rendered="false"/>
+                <ui:insert name="content-wrapper"/>
+                <section class="content-header">
+                    <h1>
+                        <ui:insert name="title">
+                            <h:outputText value="#{title}" rendered="false"/>
+                        </ui:insert>
+                        <small><ui:insert name="description"/></small>
+                    </h1>
+                    <ui:insert name="content-header"/>
+                </section>
+                <section class="content">
+                    <ui:insert name="content-begin"/>
+                    <ui:fragment rendered="true">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p:messages id="messages" closable="true" globalOnly="true" autoUpdate="true"
+                                            showDetail="true" severity="error,fatal" escape="false"/>
+                                <!-- we need two messages because info-messages are hidden by javascript  -->
+                                <p:messages id="info-messages" closable="true" autoUpdate="true" showDetail="true"
+                                            severity="info,warn" escape="false"/>
+                                <p:tooltip/> <!-- exception messages with type tooltip -->
+                            </div>
+                        </div>
+                    </ui:fragment>
+
+                    <ui:insert name="body"/>
+                </section>
+                <ui:insert name="content-end"/>
+            </div>
+
+
+            <footer class="main-footer">
+                <ui:insert name="footer"/>
+            </footer>
+            <div id="scrollTop" class="ripplelink scroll-top" onclick="window.scrollTo(0, 0)">
+                <i class="fa fa-chevron-up"></i>
+            </div>
+
+            <ui:insert name="wrapper-end"/>
+        </div>
+
+        <ui:insert name="after-wrapper"/>
+
+        <script type="text/javascript">
+            if (isMobile()) {
+                window.onscroll = activateScrollToTop;
+            }
+        </script>
+
+        <adm:ripple/>
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
+        <h:outputScript library="js" name="bootstrap.min.js" target="head"/>
+        <h:outputScript library="js" name="admin-lte.min.js" target="head"/>
+        <h:outputScript library="js" name="admintemplate.js" target="head"/>
+        <!-- slide in/out menu integration  -->
+        <h:outputScript library="js" name="slideout.min.js" target="head" rendered="true"/>
+        <h:outputScript library="js" name="adminslide.js" target="head" rendered="true"/>
+        <h:outputScript library="js" name="control-sidebar.js" target="head" rendered="true"/>
+        <h:outputScript library="js" name="slimscroll.min.js" target="head"/> 
+        <ui:fragment rendered="false">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('.slideout-menu').removeClass('slideout-menu');
+                    $('.slideout-panel').removeClass('slideout-panel');
+                });
+            </script>
+        </ui:fragment>
+
+        <ui:fragment rendered="true">
+            <script type="text/javascript">
+                $(window).scroll(function () {
+                    if (isMobile()) {
+                        var minScrollTimeNav = 300;
+                        var now = new Date().getTime();
+                        if (!scrollTimerNav) {
+                            if (now - lastScrollFireTimeNav > (3 * minScrollTimeNav)) {
+                                activateAutoShowNavbarOnScrollUp();   // fire immediately on first scroll
+                                lastScrollFireTimeNav = now;
+                            }
+                            scrollTimerNav = setTimeout(function () {
+                                scrollTimerNav = null;
+                                lastScrollFireTimeNav = new Date().getTime();
+                                activateAutoShowNavbarOnScrollUp();
+                            }, minScrollTimeNav);
+                        }
+                    }
+                });
+            </script>
+        </ui:fragment>
+        
+        <ui:fragment rendered="true">
+
+            <script type="text/javascript">
+                //<![CDATA[
+                /* hide info messages */
+                $(document).on("pfAjaxComplete", function () {
+                    var $messages = $("div[id$='info-messages']");
+                    if ($messages.length) {
+                        var wordCount = $messages.text().split(/\W/).length;
+                        var readingTimeMillis = 2500 + (wordCount * 200);
+                        setTimeout(function () {
+                            $messages.slideUp();
+                        }, readingTimeMillis);
+                    }
+                });
+                $(document).ready(function () {
+                    var $messages = $("div[id$='info-messages']");
+                    if ($messages.length) {
+                        var wordCount = $messages.text().split(/\W/).length;
+                        var readingTimeMillis = 2500 + (wordCount * 200);
+                        setTimeout(function () {
+                            $messages.slideUp();
+                        }, readingTimeMillis);
+                    }
+                });
+                //]]>
+            </script>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{not empty skin}">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    store('layout.skin', null);
+                });
+            </script>
+        </ui:fragment>
+
+
+    </h:body>
+
+</html>

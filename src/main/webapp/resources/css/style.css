@@ -68,3 +68,9 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	font-size: 26px;
 	background: #CCC;
 }
+
+div.ui-chkbox span.ui-chkbox-icon{
+	background-image: url(/odonto-system-manager/javax.faces.resource/images/ui-icons_222222_256x240.png.jsf?ln=primefaces-admin-1.0.0-RC15) !important;
+	display: inline;
+    margin-left: 3px;
+}
