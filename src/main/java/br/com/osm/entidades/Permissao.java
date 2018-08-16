@@ -1,6 +1,5 @@
 package br.com.osm.entidades;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,7 @@ import br.com.osm.annotations.OrdenacaoPadrao;
 
 @Entity
 @Table(name = "permissao")
-public class Permissao {
+public class Permissao implements Entidade<Long> {
 
 	@Id
 	@OrdenacaoPadrao
@@ -27,4 +26,38 @@ public class Permissao {
 	
 	@Column(name = "grupo", nullable = false)
 	private String grupo;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(String permissao) {
+		this.permissao = permissao;
+	}
+
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
+	
+	
 }

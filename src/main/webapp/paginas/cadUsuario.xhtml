@@ -30,37 +30,10 @@
 				</div>
 			</div>
 			<p:panelGrid
-				columns="4"
+				columns="2"
 				layout="grid"
+				id="gridCadastro"
 				styleClass="ui-fluid">
-				<h:panelGroup>
-					<p:outputLabel
-						for="nome"
-						value="#{msgs['nome']}" />
-					<p:inputText
-						id="nome"
-						required="true"
-						value="#{usuarioBean.usuario.nome}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="sobrenome"
-						value="#{msgs['sobrenome']}" />
-					<p:inputText
-						id="sobrenome"
-						required="true"
-						value="#{usuarioBean.usuario.sobrenome}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="cpf"
-						value="#{msgs['cpf']}" />
-					<p:inputMask
-						id="cpf"
-						mask="999.999.999-99"
-						required="true"
-						value="#{usuarioBean.usuario.cpf}" />
-				</h:panelGroup>
 				<h:panelGroup>
 					<p:outputLabel
 						for="tipo"
@@ -72,66 +45,152 @@
 							var="tipoUsuario"
 							value="#{OSMProducer.tiposUsuario()}"
 							itemValue="#{tipoUsuario}"
-							itemLabel="#{msgs[tipoUsuario.descricao]}"></f:selectItems>
+							itemLabel="#{msgs[tipoUsuario.descricao]}" />
+						<p:ajax
+							event="change"
+							process="@this"
+							update="gridCadastro"
+							listener="#{usuarioBean.alteracaoTipoUsuario()}"></p:ajax>
 					</p:selectOneMenu>
 				</h:panelGroup>
+				<h:outputText
+					value="#{msgs['permissoes']}"
+					style="    font-weight: bold;font-size: 25px;margin-top: 20px;display: table;" />
 				<h:panelGroup>
-					<p:outputLabel
-						for="email"
-						value="#{msgs['email']}" />
-					<p:inputText
-						id="email"
-						required="true"
-						value="#{usuarioBean.usuario.email}" />
+					<p:panelGrid
+						columns="2"
+						layout="grid"
+						styleClass="ui-fluid">
+						<h:panelGroup>
+							<p:outputLabel
+								for="nome"
+								value="#{msgs['nome']}" />
+							<p:inputText
+								id="nome"
+								required="true"
+								value="#{usuarioBean.usuario.nome}" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:outputLabel
+								for="sobrenome"
+								value="#{msgs['sobrenome']}" />
+							<p:inputText
+								id="sobrenome"
+								required="true"
+								value="#{usuarioBean.usuario.sobrenome}" />
+						</h:panelGroup>
+					</p:panelGrid>
+					<p:panelGrid
+						columns="1"
+						layout="grid"
+						styleClass="ui-fluid">
+						<h:panelGroup>
+							<p:outputLabel
+								for="email"
+								value="#{msgs['email']}" />
+							<p:inputText
+								id="email"
+								required="true"
+								value="#{usuarioBean.usuario.email}" />
+						</h:panelGroup>
+					</p:panelGrid>
+					<p:panelGrid
+						columns="2"
+						layout="grid"
+						styleClass="ui-fluid">
+						<h:panelGroup>
+							<p:outputLabel
+								for="cpf"
+								value="#{msgs['cpf']}" />
+							<p:inputMask
+								id="cpf"
+								mask="999.999.999-99"
+								required="true"
+								value="#{usuarioBean.usuario.cpf}" />
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{usuarioBean.usuario.tipo ne 'ODONTOLOGO'}">
+							<p:spacer></p:spacer>
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{usuarioBean.usuario.tipo eq 'ODONTOLOGO'}">
+							<p:outputLabel
+								for="cro"
+								value="#{msgs['cro']}" />
+							<p:inputText
+								id="cro"
+								required="true"
+								value="#{usuarioBean.usuario.email}" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:outputLabel
+								for="dataNascimento"
+								value="#{msgs['data.de.nascimento']}" />
+							<p:calendar
+								id="dataNascimento"
+								required="true"
+								value="#{usuarioBean.usuario.dataNascimento}" />
+						</h:panelGroup>
+						<p:spacer></p:spacer>
+						<h:panelGroup>
+							<p:outputLabel
+								for="telefone"
+								value="#{msgs['telefone']}" />
+							<p:inputText
+								id="telefone"
+								required="true"
+								value="#{usuarioBean.usuario.telefone}" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:outputLabel
+								for="telefoneWhats"
+								value="#{msgs['telefone.whats']}" />
+							<p:inputText
+								id="telefoneWhats"
+								required="true"
+								value="#{usuarioBean.usuario.telefoneWhats}" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:outputLabel
+								for="senha"
+								value="#{msgs['senha']}" />
+							<p:password
+								id="senha"
+								value="#{usuarioBean.usuario.senha}"
+								match="senha2"
+								label="#{msgs['senha']}"
+								required="true" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:outputLabel
+								for="senha2"
+								value="#{msgs['repita.a.senha']}" />
+							<p:password
+								id="senha2"
+								value="#{usuarioBean.usuario.senha}"
+								match="pwd2"
+								label="#{msgs['repita.a.senha']}"
+								required="true" />
+						</h:panelGroup>
+					</p:panelGrid>
 				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="dataNascimento"
-						value="#{msgs['data.de.nascimento']}" />
-					<p:calendar
-						id="dataNascimento"
-						required="true"
-						value="#{usuarioBean.usuario.dataNascimento}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="telefone"
-						value="#{msgs['telefone']}" />
-					<p:inputText
-						id="telefone"
-						required="true"
-						value="#{usuarioBean.usuario.telefone}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="telefoneWhats"
-						value="#{msgs['telefone.whats']}" />
-					<p:inputText
-						id="telefoneWhats"
-						required="true"
-						value="#{usuarioBean.usuario.telefoneWhats}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="senha"
-						value="#{msgs['senha']}" />
-					<p:password
-						id="senha"
-						value="#{usuarioBean.usuario.senha}"
-						match="senha2"
-						label="#{msgs['senha']}"
-						required="true" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel
-						for="senha2"
-						value="#{msgs['repita.a.senha']}" />
-					<p:password
-						id="senha2"
-						value="#{usuarioBean.usuario.senha}"
-						match="pwd2"
-						label="#{msgs['repita.a.senha']}"
-						required="true" />
+				<h:panelGroup styleClass="custom-checkbox">
+					<p:tree
+						value="#{usuarioBean.permissoes}"
+						var="permissao"
+						selectionMode="checkbox"
+						selection="#{usuarioBean.permissoesSelecionadas}">
+						<p:treeNode
+							type="grupo"
+							icon="fa fa-archive">
+							<h:outputText value="#{msgs[permissao]}" />
+						</p:treeNode>
+						<p:treeNode
+							type="permissao"
+							icon="fa fa-key">
+							<h:outputText value="#{msgs[permissao.descricao]}" />
+						</p:treeNode>
+					</p:tree>
 				</h:panelGroup>
 			</p:panelGrid>
 			<p:panelGrid

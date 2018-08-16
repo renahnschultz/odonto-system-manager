@@ -359,7 +359,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   color: #adb5bd;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 10px) {
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
     background: #343a40;
   }
