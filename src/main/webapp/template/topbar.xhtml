@@ -37,10 +37,11 @@
                             <p:commandLink styleClass="btn btn-danger" value="Change password"/>
                         </div>
                         <div class="pull-right">
-                            <p:commandLink id="logout" action="#{logoutMB.doLogout}" title="Logoff">
-                                <i class="fa fa-sign-out fa-2x"></i>
-                            </p:commandLink>
-                        </div>
+							<p:commandLink id="logout" action="#{loginBean.logout()}"
+								title="Logoff">
+								<i class="fa fa-sign-out fa-2x"></i>
+							</p:commandLink>
+						</div>
                     </h:form>
                 </li>
             </ul>

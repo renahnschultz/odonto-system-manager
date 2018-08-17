@@ -129,7 +129,7 @@ public class LoginBean implements Serializable {
 
 	public Class<? extends ViewConfig> logout() {
 		limparSessao();
-		return Paginas.aaaa.class;
+		return Paginas.Login.class;
 	}
 
 	public void logoutIdle() {
