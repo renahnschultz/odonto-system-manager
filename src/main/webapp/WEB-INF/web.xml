@@ -10,7 +10,7 @@
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>admin-1.0.0-RC15</param-value>
+		<param-value>admin-1.0.0-RC18</param-value>
 	</context-param>
 	<context-param>
 		<param-name>primefaces.FONT_AWESOME</param-name>
@@ -52,7 +52,35 @@
 	<welcome-file-list>
 		<welcome-file>paginas/login.jsf</welcome-file>
 	</welcome-file-list>
+	
 	<security-role>
-		<role-name>visualizar-dashboard</role-name>
+		<role-name>administrador</role-name>
+	</security-role>
+	<security-role>
+		<role-name>visualizar-servicos</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-servicos</role-name>
+	</security-role>
+	<security-role>
+		<role-name>excluir-servicos</role-name>
+	</security-role>
+	<security-role>
+		<role-name>visualizar-materiais</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-materiais</role-name>
+	</security-role>
+	<security-role>
+		<role-name>excluir-materiais</role-name>
+	</security-role>
+	<security-role>
+		<role-name>visualizar-usuarios</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-usuarios</role-name>
+	</security-role>
+	<security-role>
+		<role-name>excluir-usuarios</role-name>
 	</security-role>
 </web-app>

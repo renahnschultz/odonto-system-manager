@@ -1,5 +1,6 @@
 package br.com.osm.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_has_permissao", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_permissao"))
-	private List<Permissao> permissoes;
+	private List<Permissao> permissoes = new ArrayList<Permissao>();
 
 	public Usuario() {
 	}
@@ -198,6 +199,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
+	}
+	
+	public void adicionarPermissao(Permissao permissao) {
+		permissoes.add(permissao);
 	}
 
 }

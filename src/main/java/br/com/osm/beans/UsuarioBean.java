@@ -59,6 +59,11 @@ public class UsuarioBean implements Serializable {
 
 	public Class<? extends ViewConfig> salvar() {
 		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
+		for (TreeNode treeNode : permissoesSelecionadas) {
+			if(treeNode.getType().equals("permissao")) {
+				usuario.adicionarPermissao((Permissao) treeNode.getData());
+			}
+		}
 		new PacienteWebService(usuarioDAO).salvar(usuario);
 		return aaaa.class;
 	}

@@ -29,10 +29,19 @@ public interface Paginas extends ViewConfig {
 
 	}
 
+	@Restricao(value = {"visualizar-servicos", "cadastrar-servicos", "excluir-servicos"})
 	public class cadServicos implements ViewConfig {
 
 	}
 
+	@Restricao(value = {"visualizar-materiais", "cadastrar-materiais", "excluir-materiais"})
+	public class cadMaterial implements ViewConfig {
+	}
+
+	@Restricao(value = {"visualizar-usuarios", "cadastrar-usuarios", "excluir-usuarios"})
+	public class cadUsuario implements ViewConfig {
+	}
+	
 	public class registroPaciente implements ViewConfig {
 	}
 

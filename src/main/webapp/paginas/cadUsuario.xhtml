@@ -11,7 +11,7 @@
 <ui:composition template="/template/template_cadastro.xhtml">
 	<ui:define name="title">#{msgs['cadastro.de.usuarios']}</ui:define>
 	<ui:define name="cadastro">
-		<h:form>
+		<h:form prependId="false">
 			<div class="ui-datatable-header ui-widget-header ui-corner-top">
 				<div class="ui-g">
 					<div class="ui-g-4"></div>
@@ -168,7 +168,6 @@
 							<p:password
 								id="senha2"
 								value="#{usuarioBean.usuario.senha}"
-								match="pwd2"
 								label="#{msgs['repita.a.senha']}"
 								required="true" />
 						</h:panelGroup>
