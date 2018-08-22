@@ -43,6 +43,10 @@
 							<span>#{msgs['servico']}</span>
 						</p:link></li>
 				</ul></li>
+			<li><p:link outcome="horarioOdontologo.jsf" rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">
+					<i class="fa fa-clock-o"></i>
+					<span>#{msgs['meu.horario']}</span>
+				</p:link></li>
 		</ul>
 	</ui:define>
 

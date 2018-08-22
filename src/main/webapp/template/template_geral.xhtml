@@ -9,18 +9,12 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="template.xhtml">
-	<ui:define name="content">
-		<div class="card" style="margin-top: 10px;">
-			<ui:insert name="include" />
+	<ui:define name="body">
+		<div
+			class="card"
+			style="margin-top: 10px;">
+			<ui:insert name="card" />
 		</div>
-		<script type="text/javascript">
-		function abrirCadastro(){
-			$('#cadastro-listagem').css('transform', 'translateX(0%)')
-		}
-		function fecharCadastro(){
-			$('#cadastro-listagem').css('transform', 'translateX(calc(-50% - 5px))')
-		}
-	</script>
 	</ui:define>
 </ui:composition>
 </html>
