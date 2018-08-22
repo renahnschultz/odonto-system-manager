@@ -18,17 +18,17 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <pe:gravatar id="userImage" style="max-width: 20px;"
                              value="nonexisting" />
-                <span class="hidden-xs">AAAAAA</span>
+                <span class="hidden-xs">#{loginBean.usuario.nome}</span>
             </a>
             <ul class="dropdown-menu">
                 <li class="user-header">
                     <div class="hidden-xs">
-                        <pe:gravatar style="border-radius: 50%"
-                                     value="rmpestano@gmail.com"/>
+                        <pe:gravatar id="userImage2" style="max-width: 20px;"
+                             value="nonexisting" />
                     </div>
                     <p>
-                        AAAAAA
-                        <small>Subtitle</small>
+                        <h:outputText value="#{loginBean.usuario.nome} - #{loginBean.usuario.sobrenome}"/>
+                        <small><h:outputText value="#{msgs[loginBean.usuario.tipo.descricao]}"/></small>
                     </p>
                 </li>
                 <li class="user-footer">

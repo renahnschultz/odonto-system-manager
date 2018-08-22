@@ -65,6 +65,10 @@ public class UsuarioBean implements Serializable {
 		new PacienteWebService(usuarioDAO).salvar(usuario);
 	}
 	
+	public void excluir() {
+		new PacienteWebService(usuarioDAO).excluir(usuario.getId());
+	}
+	
 	public void cancelar() {
 		usuario = new Usuario();
 	}
