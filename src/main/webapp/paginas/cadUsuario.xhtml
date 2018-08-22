@@ -120,7 +120,7 @@
 							<p:inputText
 								id="cro"
 								required="true"
-								value="#{usuarioBean.usuario.email}" />
+								value="#{usuarioBean.usuario.cro}" />
 						</h:panelGroup>
 						<h:panelGroup>
 							<p:outputLabel
@@ -202,6 +202,7 @@
 					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
 					update="dataTableUsuario  @form"
 					styleClass="btn btn-primary"
+					process="@form"
 					icon="fa fa-check"
 					value="#{msgs['salvar']}" />
 				<p:commandButton

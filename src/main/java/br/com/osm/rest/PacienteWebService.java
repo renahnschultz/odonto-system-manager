@@ -61,7 +61,7 @@ public class PacienteWebService extends OSMServiceBase<Long, Usuario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "cadastrar-medico", "editar-medico" })
+	@Restricao({ "cadastrar-usuarios", "editar-usuarios" })
 	public Response salvar(Usuario usuario) {
 		return super.salvar(usuario);
 	}
@@ -72,7 +72,7 @@ public class PacienteWebService extends OSMServiceBase<Long, Usuario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-medico" })
+	@Restricao({ "excluir-usuarios" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}

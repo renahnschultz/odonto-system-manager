@@ -24,7 +24,6 @@ import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.model.AbstractLazyModel;
 import br.com.osm.rest.PacienteWebService;
-import br.com.osm.viewconfig.Paginas.aaaa;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Usuario.
@@ -56,16 +55,18 @@ public class UsuarioBean implements Serializable {
 	public void init() {
 		criarTreePermissoes();
 	}
-
-	public Class<? extends ViewConfig> salvar() {
-		usuario.setTipo(TipoUsuario.ADMINISTRADOR);
+	
+	public void salvar() {
 		for (TreeNode treeNode : permissoesSelecionadas) {
 			if(treeNode.getType().equals("permissao")) {
 				usuario.adicionarPermissao((Permissao) treeNode.getData());
 			}
 		}
 		new PacienteWebService(usuarioDAO).salvar(usuario);
-		return aaaa.class;
+	}
+	
+	public void cancelar() {
+		usuario = new Usuario();
 	}
 
 	public Usuario getUsuario() {
