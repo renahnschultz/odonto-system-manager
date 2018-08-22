@@ -26,12 +26,6 @@
 	<h:outputStylesheet
 		name="style.css"
 		library="css" />
-	<h:outputStylesheet
-		name="sb-admin.css"
-		library="css" />
-	<h:outputStylesheet
-		name="bootstrap.min.css"
-		library="css" />
 	<ui:insert name="head" />
 
 </h:head>
@@ -42,9 +36,6 @@
 		id="mensagens" />
 
 	<div>
-		<p:graphicImage
-			library="images"
-			url="logo2.png" />
 		<ui:insert name="content" />
 	</div>
 	<p:ajaxStatus
@@ -76,23 +67,41 @@
 	</p:dialog>
 
 	<h:outputScript
-		name="jquery.easing.min.js"
-		library="js" />
+		library="primefaces"
+		name="jquery/jquery.js"
+		target="head" />
 	<h:outputScript
-		name="popper.min.js"
-		library="js" />
+		library="js"
+		name="bootstrap.min.js"
+		target="head" />
 	<h:outputScript
-		name="jquery.easing.min.js"
-		library="js" />
+		library="js"
+		name="admin-lte.min.js"
+		target="head" />
 	<h:outputScript
-		name="bootstrap.js"
-		library="js" />
+		library="js"
+		name="admintemplate.js"
+		target="head" />
+	<!-- slide in/out menu integration  -->
 	<h:outputScript
-		name="script.js"
-		library="js" />
+		library="js"
+		name="slideout.min.js"
+		target="head"
+		rendered="true" />
 	<h:outputScript
-		name="sb-admin.min.js"
-		library="js" />
+		library="js"
+		name="adminslide.js"
+		target="head"
+		rendered="true" />
+	<h:outputScript
+		library="js"
+		name="control-sidebar.js"
+		target="head"
+		rendered="true" />
+	<h:outputScript
+		library="js"
+		name="slimscroll.min.js"
+		target="head" />
 
 </h:body>
 

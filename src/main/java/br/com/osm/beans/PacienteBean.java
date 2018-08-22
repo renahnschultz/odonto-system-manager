@@ -9,13 +9,14 @@ import javax.inject.Named;
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 import br.com.osm.annotations.LazyModel;
+import br.com.osm.dao.PermissaoDAO;
 import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.enuns.TipoUsuario;
+import br.com.osm.exception.OSMException;
 import br.com.osm.model.AbstractLazyModel;
 import br.com.osm.rest.PacienteWebService;
-import br.com.osm.rest.UsuarioWebService;
-import br.com.osm.viewconfig.Paginas.aaaa;
+import br.com.osm.viewconfig.Paginas;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
@@ -29,6 +30,8 @@ public class PacienteBean implements Serializable {
 
 	@Inject
 	transient private UsuarioDAO usuarioDAO;
+	@Inject
+	transient private PermissaoDAO permissaoDAO;
 	private Usuario usuario = new Usuario();
 	@Inject
 	@LazyModel
@@ -38,9 +41,14 @@ public class PacienteBean implements Serializable {
 	}
 
 	public Class<? extends ViewConfig> salvar() {
-		usuario.setTipo(TipoUsuario.PACIENTE);
-		new PacienteWebService(usuarioDAO).salvar(usuario);
-		return aaaa.class;
+		try {
+			usuario.setTipo(TipoUsuario.PACIENTE);
+			usuario.setPermissoes(permissaoDAO.permissoesPadrao("paciente"));
+			new PacienteWebService(usuarioDAO).salvar(usuario);
+			return Paginas.Login.class;
+		} catch (OSMException e) {
+			throw new RuntimeException("Erro ao salvar paciente", e);
+		}
 	}
 
 	public Usuario getUsuario() {

@@ -27,6 +27,9 @@ public class Permissao implements Entidade<Long> {
 	@Column(name = "grupo", nullable = false)
 	private String grupo;
 
+	@Column(name = "usuario_padrao", nullable = false)
+	private String usuarioPadrao;
+
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +60,14 @@ public class Permissao implements Entidade<Long> {
 
 	public void setGrupo(String grupo) {
 		this.grupo = grupo;
+	}
+
+	public String getUsuarioPadrao() {
+		return usuarioPadrao;
+	}
+
+	public void setUsuarioPadrao(String usuarioPadrao) {
+		this.usuarioPadrao = usuarioPadrao;
 	}
 	
 	

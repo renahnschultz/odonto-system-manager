@@ -35,4 +35,17 @@ public class PermissaoDAO extends GenericoDAO<Long, Permissao>  {
 		}
 	}
 
+	public List<Permissao> permissoesPadrao(String tipoUsuario) throws OSMException {
+		try {
+			StringBuilder sql = new StringBuilder("SELECT p FROM ")
+					.append(tipo.getSimpleName())
+					.append(" AS p ")
+					.append(" WHERE p.usuarioPadrao LIKE '%" + tipoUsuario + "%' ");
+			TypedQuery<Permissao> query = entityManager.createQuery(sql.toString(), Permissao.class);
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
+		}
+	}
+
 }

@@ -27,7 +27,7 @@
                              value="nonexisting" />
                     </div>
                     <p>
-                        <h:outputText value="#{loginBean.usuario.nome} - #{loginBean.usuario.sobrenome}"/>
+                        <h:outputText value="#{loginBean.usuario.nome} #{loginBean.usuario.sobrenome}"/>
                         <small><h:outputText value="#{msgs[loginBean.usuario.tipo.descricao]}"/></small>
                     </p>
                 </li>
@@ -46,10 +46,6 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <a id="layout-setup" href="#"  data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-        </li>
-
     </ul>
 
 </ui:composition>

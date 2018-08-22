@@ -11,7 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.deltaspike.core.api.config.view.ViewConfig;
 import org.primefaces.model.CheckboxTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -23,7 +22,7 @@ import br.com.osm.entidades.Usuario;
 import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.model.AbstractLazyModel;
-import br.com.osm.rest.PacienteWebService;
+import br.com.osm.rest.UsuarioWebService;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Usuario.
@@ -62,11 +61,11 @@ public class UsuarioBean implements Serializable {
 				usuario.adicionarPermissao((Permissao) treeNode.getData());
 			}
 		}
-		new PacienteWebService(usuarioDAO).salvar(usuario);
+		new UsuarioWebService(usuarioDAO).salvar(usuario);
 	}
 	
 	public void excluir() {
-		new PacienteWebService(usuarioDAO).excluir(usuario.getId());
+		new UsuarioWebService(usuarioDAO).excluir(usuario.getId());
 	}
 	
 	public void cancelar() {

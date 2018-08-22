@@ -1,5 +1,9 @@
 package br.com.osm.rest;
 
+import java.util.Date;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -32,6 +36,15 @@ public class UsuarioWebService extends OSMServiceBase<Long, Usuario> {
 
 	@Override
 	protected void validacaoSalvar(Usuario usuario) throws OSMException {
+		try {
+			if(usuario.getDataNascimento().after(new Date())) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data nascimento posterior à atual.", "Data de nascimento posterior à atual."));
+				throw new OSMException("data.posterior.atual");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new OSMException(e);
+		}
 	}
 
 //	@Override
@@ -48,7 +61,7 @@ public class UsuarioWebService extends OSMServiceBase<Long, Usuario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "cadastrar-medico", "editar-medico" })
+	@Restricao({ "cadastrar-usuarios", "editar-usuarios" })
 	public Response salvar(Usuario usuario) {
 		return super.salvar(usuario);
 	}
@@ -59,7 +72,7 @@ public class UsuarioWebService extends OSMServiceBase<Long, Usuario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-medico" })
+	@Restricao({ "excluir-usuarios" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}
