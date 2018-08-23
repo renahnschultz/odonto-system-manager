@@ -1,49 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:c="http://java.sun.com/jsp/jstl/core" template="/admin.xhtml">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/admin.xhtml">
 
 	<ui:define name="head">
 		<title>OSM - <ui:insert name="title" /></title>
-		<h:outputStylesheet library="css" name="starter.css" />
+		<h:outputStylesheet
+			library="css"
+			name="starter.css" />
 	</ui:define>
 
 	<ui:define name="logo-lg">
-		<img src="../images/logo1.png" width="100%" />
+		<img
+			src="../images/logo1.png"
+			width="100%" />
 	</ui:define>
 
 	<ui:define name="logo-mini">
-		<img src="../images/logo2.png" width="100%" />
+		<img
+			src="../images/logo2.png"
+			width="100%" />
 	</ui:define>
 
 	<ui:define name="menu">
-		<ul class="sidebar-menu tree" data-widget="tree" style="z-index: 9999999999 !important;">
+		<ul
+			class="sidebar-menu tree"
+			data-widget="tree"
+			style="z-index: 9999999999 !important;">
 			<h:form>
 			</h:form>
-			<li class="treeview"><a href="#"> <i class="fa fa-file-text-o"></i>
-					<span>#{msgs['cadastro']}</span> <span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
+			<li class="treeview"><a href="#"> <i
+					class="fa fa-file-text-o"></i> <span>#{msgs['cadastro']}</span> <span
+					class="pull-right-container"> <i
+						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
 				<ul class="treeview-menu">
-					<li><p:link outcome="cadUsuario.jsf">
+					<li><p:link
+							outcome="cadUsuario.jsf"
+							rendered="#{verificaPermissao.temPermissao('cadastrar-usuarios, visualizar-usuarios')}">
 							<i class="fa fa-users"></i>
 							<span>#{msgs['usuario']}</span>
 						</p:link></li>
-					<li><p:link outcome="cadMaterial.jsf">
+					<li><p:link
+							outcome="cadMaterial.jsf"
+							rendered="#{verificaPermissao.temPermissao('cadastrar-materiais, visualizar-materiais')}">
 							<i class="fa fa-cube"></i>
 							<span>#{msgs['material']}</span>
 						</p:link></li>
-					<li><p:link outcome="cadServicos.jsf">
+					<li><p:link
+							outcome="cadServicos.jsf"
+							rendered="#{verificaPermissao.temPermissao('cadastrar-servicos, visualizar-servicos')}">
 							<i class="fa fa-cog"></i>
 							<span>#{msgs['servico']}</span>
 						</p:link></li>
+					<li><p:link
+							outcome="cadPergunta.jsf"
+							rendered="#{verificaPermissao.temPermissao('cadastrar-perguntas, visualizar-perguntas')}">
+							<i class="fa fa-clock-o"></i>
+							<span>#{msgs['pergunta.anamnese']}</span>
+						</p:link></li>
 				</ul></li>
-			<li><p:link outcome="horarioOdontologo.jsf" rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">
+			<li><p:link
+					outcome="horarioOdontologo.jsf"
+					rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">
 					<i class="fa fa-clock-o"></i>
 					<span>#{msgs['meu.horario']}</span>
 				</p:link></li>
@@ -55,10 +81,14 @@
 	</ui:define>
 
 	<ui:define name="footer">
-		<a target="_blank" href="https://github.com/adminfaces/">
-			Copyright (C) 2017 - AdminFaces </a>
+		<a
+			target="_blank"
+			href="https://github.com/adminfaces/"> Copyright (C) 2017 -
+			AdminFaces </a>
 
-		<div class="pull-right hidden-xs" style="color: gray">
+		<div
+			class="pull-right hidden-xs"
+			style="color: gray">
 			<i>1.0.0</i>
 		</div>
 	</ui:define>
