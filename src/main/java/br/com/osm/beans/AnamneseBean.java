@@ -2,6 +2,7 @@ package br.com.osm.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,9 +21,9 @@ import br.com.osm.rest.AnamneseWebService;
 import br.com.osm.util.FacesUtil;
 
 /**
- * Classe responsável pelo controle da tela de cadastro de Paciente.
+ * Classe responsável pelo controle da tela de cadastro de Anamnese.
  *
- * @author Lucas 28-07-2018
+ * @author Renahn 28-07-2018
  *
  */
 @Named
@@ -43,9 +44,11 @@ public class AnamneseBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			setAnamnese(anamneseDAO.anamneseDoUsuario(usuarioLogado));
+			anamnese = anamneseDAO.anamneseDoUsuario(usuarioLogado);
 			if(getAnamnese() == null) {
 				criarNovaAnamnese();
+			}else {
+				novasRespostas(perguntaDAO.perguntasForaDaAnamnese(anamnese));
 			}
 		}catch(Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
@@ -55,19 +58,25 @@ public class AnamneseBean implements Serializable {
 	private void criarNovaAnamnese() throws OSMException {
 		try {
 			List<Pergunta> perguntas = perguntaDAO.listarTudo();
-			setAnamnese(new Anamnese());
+			anamnese = new Anamnese();
+			anamnese.setUsuario(usuarioLogado);
 			getAnamnese().setRespostas(new ArrayList<RespostaAnamnese>());
-			for (Pergunta pergunta : perguntas) {
-				getAnamnese().adicionarResposta(new RespostaAnamnese(getAnamnese(), pergunta));
-			}
+			novasRespostas(perguntas);
 		}catch(Exception e) {
 			throw new OSMException(e, "Erro ao iniciar anamnese.");
 		}
 	}
 
+	private void novasRespostas(List<Pergunta> perguntas) {
+		for (Pergunta pergunta : perguntas) {
+			getAnamnese().adicionarResposta(new RespostaAnamnese(getAnamnese(), pergunta));
+		}
+	}
+
 	public void salvar() {
 		try {
-			new AnamneseWebService(anamneseDAO).salvar(getAnamnese());
+			anamnese.setDataPreenchimento(new Date());
+			new AnamneseWebService(anamneseDAO).salvar(anamnese);
 		}catch(Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}

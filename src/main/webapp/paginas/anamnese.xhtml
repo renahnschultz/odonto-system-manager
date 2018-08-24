@@ -56,6 +56,19 @@
 						</p:outputPanel>
 					</div>
 				</p:repeat>
+				<div class="ui-g-4"></div>
+				<div class="ui-g-4"></div>
+				<div class="ui-g-4">
+					<p:commandButton
+						action="#{anamneseBean.salvar}"
+						onstart="PF('statusDialog').show()"
+						oncomplete="PF('statusDialog').hide();"
+						update="@form"
+						process="@form"
+						styleClass="btn btn-success"
+						icon="fa fa-check"
+						value="#{msgs['salvar.anamnese']}" />
+				</div>
 			</h:form>
 		</div>
 	</ui:define>

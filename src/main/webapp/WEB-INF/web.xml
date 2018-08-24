@@ -83,4 +83,19 @@
 	<security-role>
 		<role-name>excluir-usuarios</role-name>
 	</security-role>
+	<security-role>
+		<role-name>cadastrar-perguntas</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-perguntas</role-name>
+	</security-role>
+	<security-role>
+		<role-name>excluir-perguntas</role-name>
+	</security-role>
+	<security-role>
+		<role-name>cadastrar-anamnese</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-anamnese</role-name>
+	</security-role>
 </web-app>
