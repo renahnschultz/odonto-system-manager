@@ -46,6 +46,7 @@ public class UsuarioBean implements Serializable {
 
 	private TreeNode permissoes;
 	private TreeNode[] permissoesSelecionadas;
+	private Boolean alterarSenha = false;
 
 	public UsuarioBean() {
 	}
@@ -54,22 +55,30 @@ public class UsuarioBean implements Serializable {
 	public void init() {
 		criarTreePermissoes();
 	}
-	
+
 	public void salvar() {
-		for (TreeNode treeNode : permissoesSelecionadas) {
-			if(treeNode.getType().equals("permissao")) {
-				usuario.adicionarPermissao((Permissao) treeNode.getData());
+		try {
+			if (permissoesSelecionadas != null) {
+				for (TreeNode treeNode : permissoesSelecionadas) {
+					if (treeNode.getType().equals("permissao")) {
+						usuario.adicionarPermissao((Permissao) treeNode.getData());
+					}
+				}
 			}
+			new UsuarioWebService(usuarioDAO).salvar(usuario);
+			alterarSenha = false;
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao salvar usuario.", e);
 		}
-		new UsuarioWebService(usuarioDAO).salvar(usuario);
 	}
-	
+
 	public void excluir() {
 		new UsuarioWebService(usuarioDAO).excluir(usuario.getId());
 	}
-	
+
 	public void cancelar() {
 		usuario = new Usuario();
+		alterarSenha = false;
 	}
 
 	public Usuario getUsuario() {
@@ -136,6 +145,18 @@ public class UsuarioBean implements Serializable {
 
 	public void setPermissoesSelecionadas(TreeNode[] permissoesSelecionadas) {
 		this.permissoesSelecionadas = permissoesSelecionadas;
+	}
+
+	public Boolean getAlterarSenha() {
+		return alterarSenha;
+	}
+
+	public void setAlterarSenha(Boolean alterarSenha) {
+		this.alterarSenha = alterarSenha;
+	}
+	
+	public void iniciarAlteracaoSenha() {
+		setAlterarSenha(true);
 	}
 
 }

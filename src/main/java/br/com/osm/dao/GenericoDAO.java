@@ -27,6 +27,7 @@ import javax.validation.ConstraintViolationException;
 
 import br.com.generico.Filtro;
 import br.com.osm.entidades.Entidade;
+import br.com.osm.entidades.Permissao;
 import br.com.osm.exception.OSMException;
 
 public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>> {
@@ -221,6 +222,18 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 						.setMaxResults(maximoResultados);
 			}
 			return tq.getResultList();
+		} catch (Exception e) {
+			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
+		}
+	}
+	
+	public List<TipoClasse> listarTudo() throws OSMException {
+		try {
+			StringBuilder sql = new StringBuilder("SELECT p FROM ")
+					.append(tipo.getSimpleName())
+					.append(" AS p ");
+			TypedQuery<TipoClasse> query = entityManager.createQuery(sql.toString(), tipo);
+			return query.getResultList();
 		} catch (Exception e) {
 			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
 		}

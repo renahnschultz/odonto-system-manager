@@ -76,3 +76,11 @@ div.ui-chkbox span.ui-chkbox-icon{
 .mx-auto{
 	margin: auto;
 }
+.titulo-coluna{
+	font-size: 18px;
+	font-weight: bold;
+}
+.pergunta-anamnese{
+	font-size: 16px;
+	color: #666;
+}

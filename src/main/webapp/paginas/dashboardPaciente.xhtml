@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,22 +9,9 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/template/template_geral.xhtml">
-	<ui:define name="include">
-		<h1 style="margin: 10px;">#{msgs['bem.vindo']} #{loginBean.usuario.nome}</h1>
-		<div class="ui-g ui-fluid">
-			<div class="ui-g-4">
-				
-			</div>
-			<div class="ui-g-4">
-				Bem Vindo
-			</div>
-			<div class="ui-g-4">
-				<p:button value="#{msgs['nova.consulta']}" icon="fa fa-plus" styleClass="btn btn-success"></p:button>
-			</div>
-		</div>
-		<div class="ui-g ui-fluid">
-			<h1 style="margin: 10px;">#{msgs['seus.agendamentos']}</h1>
-		</div>
+	<ui:define name="title">#{msgs['dashboard']}</ui:define>
+	<ui:define name="card">
+		<p:button value="Anamnese" class="btn btn-warning" outcome="anamnese.jsf"></p:button>
 	</ui:define>
 </ui:composition>
 </html>

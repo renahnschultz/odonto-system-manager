@@ -22,6 +22,7 @@ import javax.inject.Named;
 import org.apache.deltaspike.core.api.message.MessageContext;
 
 import br.com.osm.enuns.SimNao;
+import br.com.osm.enuns.SimNaoOutro;
 import br.com.osm.enuns.TipoResposta;
 import br.com.osm.enuns.TipoServico;
 import br.com.osm.enuns.TipoUsuario;
@@ -92,6 +93,16 @@ public class OSMProducer implements Serializable {
 	public List<SimNao> simNaoProducer() {
 		List<SimNao> lista = new ArrayList<SimNao>();
 		for (SimNao object : SimNao.values()) {
+			lista.add(object);
+		}
+		return lista;
+	}
+
+	@Named
+	@Produces
+	public List<SimNaoOutro> simNaoOutroProducer() {
+		List<SimNaoOutro> lista = new ArrayList<SimNaoOutro>();
+		for (SimNaoOutro object : SimNaoOutro.values()) {
 			lista.add(object);
 		}
 		return lista;

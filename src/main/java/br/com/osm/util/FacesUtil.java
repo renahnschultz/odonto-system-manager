@@ -17,6 +17,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.osm.entidades.Usuario;
+
 /**
  *
  * @author Renahn
@@ -120,6 +122,10 @@ public class FacesUtil {
 	 */
 	public static HttpServletResponse getServletResponse() {
 		return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+	}
+	
+	public static Usuario getUsuarioLogado() {
+		return (Usuario) getServletRequest().getSession().getAttribute(Constantes.COLABORADOR_SESSAO);
 	}
 
 	/**
