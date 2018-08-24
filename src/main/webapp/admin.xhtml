@@ -274,17 +274,17 @@
 			id="content"
 			class="content-wrapper">
 			<ui:insert name="content-wrapper" />
-			<section class="content-header">
-				<h1>
-					<ui:insert name="title">
-						<h:outputText
-							value="#{title}"
-							rendered="false" />
-					</ui:insert>
-					<small><ui:insert name="description" /></small>
-				</h1>
-				<ui:insert name="content-header" />
-			</section>
+<!-- 			<section class="content-header"> -->
+<!-- 				<h1 style="background: #0288d1;text-align: center;border-radius: 3px;padding: 10px; color: #fff;margin-left: 3px;"> -->
+<!-- 					<ui:insert name="title"> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{title}" -->
+<!-- 							rendered="false" /> -->
+<!-- 					</ui:insert> -->
+<!-- 					<small><ui:insert name="description" /></small> -->
+<!-- 				</h1> -->
+<!-- 				<ui:insert name="content-header" /> -->
+<!-- 			</section> -->
 			<section class="content">
 				<ui:insert name="content-begin" />
 				<ui:fragment rendered="true">
@@ -321,12 +321,6 @@
 		<footer class="main-footer">
 			<ui:insert name="footer" />
 		</footer>
-		<div
-			id="scrollTop"
-			class="ripplelink scroll-top"
-			onclick="window.scrollTo(0, 0)">
-			<i class="fa fa-chevron-up"></i>
-		</div>
 
 		<ui:insert name="wrapper-end" />
 	</div>

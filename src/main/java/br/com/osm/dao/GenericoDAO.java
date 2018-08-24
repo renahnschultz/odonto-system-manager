@@ -25,9 +25,10 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 import javax.validation.ConstraintViolationException;
 
+import br.com.generico.AbstractAtivo;
 import br.com.generico.Filtro;
 import br.com.osm.entidades.Entidade;
-import br.com.osm.entidades.Permissao;
+import br.com.osm.enuns.StatusAtivo;
 import br.com.osm.exception.OSMException;
 
 public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>> {
@@ -232,7 +233,13 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())
 					.append(" AS p ");
+			if (AbstractAtivo.class.isAssignableFrom(tipo)) {
+				sql.append(" WHERE p.ativo = :ativo ");
+			}
 			TypedQuery<TipoClasse> query = entityManager.createQuery(sql.toString(), tipo);
+			if (AbstractAtivo.class.isAssignableFrom(tipo)) {
+				query.setParameter("ativo", StatusAtivo.ATIVO);
+			}
 			return query.getResultList();
 		} catch (Exception e) {
 			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());

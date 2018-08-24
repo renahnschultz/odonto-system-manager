@@ -11,6 +11,16 @@
 <ui:composition template="/template/template_geral.xhtml">
 	<ui:define name="title">#{msgs['anamnese']}</ui:define>
 	<ui:define name="card">
+		<div class="ui-datatable-header ui-widget-header ui-corner-top">
+			<div class="ui-g">
+				<div class="ui-g-4"></div>
+				<div
+					class="ui-g-4"
+					style="text-align: center;">#{msgs['anamnese']}</div>
+				<div class="ui-g-4">
+				</div>
+			</div>
+		</div>
 		<div
 			class="ui-fluid"
 			style="padding: 10px;">
@@ -64,6 +74,7 @@
 						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide();"
 						update="@form"
+						rendered="#{verificaPermissao.temPermissoes('cadastrar-anamnese, editar-anamnese')}"
 						process="@form"
 						styleClass="btn btn-success"
 						icon="fa fa-check"

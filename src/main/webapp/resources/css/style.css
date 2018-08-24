@@ -84,3 +84,12 @@ div.ui-chkbox span.ui-chkbox-icon{
 	font-size: 16px;
 	color: #666;
 }
+.ui-datatable-header.ui-widget-header.ui-corner-top{
+	background: #0288d1 !important;
+	color: #fafafa;
+	font-weight: normal !important;
+	font-size: 22px !important;
+}
+.card{
+	border-radius: 3px;
+}

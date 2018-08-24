@@ -39,6 +39,10 @@ public interface Paginas extends ViewConfig {
 	@Restricao(value = {"visualizar-perguntas", "cadastrar-perguntas", "excluir-perguntas"})
 	public class cadPergunta implements ViewConfig {
 	}
+
+	@Restricao(value = {"cadastrar-anamnese", "editar-anamnese"})
+	public class Anamnese implements ViewConfig {
+	}
 	
 	public class registroPaciente implements ViewConfig {
 	}
