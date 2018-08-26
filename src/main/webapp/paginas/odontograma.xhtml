@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['odontograma']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-datatable-header ui-widget-header ui-corner-top">
+			<div class="ui-g">
+				<div class="ui-g-4"></div>
+				<div
+					class="ui-g-4"
+					style="text-align: center;">#{msgs['odontograma']}</div>
+				<div class="ui-g-4">
+				</div>
+			</div>
+		</div>
+		<div
+			class="ui-fluid"
+			style="padding: 10px;">
+			<h:form id="formOdontograma" prependId="false">
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
