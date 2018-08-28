@@ -93,3 +93,7 @@ div.ui-chkbox span.ui-chkbox-icon{
 .card{
 	border-radius: 3px;
 }
+.texto-sem-odontograma{
+	color: #3c3c3c;
+	font-size: 18px;
+}

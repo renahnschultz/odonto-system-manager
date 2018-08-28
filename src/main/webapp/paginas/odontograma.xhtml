@@ -11,22 +11,130 @@
 <ui:composition template="/template/template_geral.xhtml">
 	<ui:define name="title">#{msgs['odontograma']}</ui:define>
 	<ui:define name="card">
+		<ui:param
+			name="bean"
+			value="#{odontogramaBean}" />
 		<div class="ui-datatable-header ui-widget-header ui-corner-top">
 			<div class="ui-g">
 				<div class="ui-g-4"></div>
 				<div
 					class="ui-g-4"
 					style="text-align: center;">#{msgs['odontograma']}</div>
-				<div class="ui-g-4">
-				</div>
+				<div class="ui-g-4"></div>
 			</div>
 		</div>
 		<div
 			class="ui-fluid"
 			style="padding: 10px;">
-			<h:form id="formOdontograma" prependId="false">
+			<h:form
+				id="formOdontograma"
+				prependId="false">
+				<h:inputHidden
+					id="hiddenX"
+					value="#{bean.coorX}" />
+				<h:inputHidden
+					id="hiddenY"
+					value="#{bean.coorY}" />
+				<h:inputHidden
+					id="denteId"
+					value="#{bean.denteId}" />
+				<p:remoteCommand
+					name="processarCoordenadas"
+					action="#{bean.processarMarcacao()}"
+					process="@form"></p:remoteCommand>
+				<h:panelGroup
+					rendered="#{bean.odontograma eq null}"
+					style="text-align:center;">
+					<h:outputText
+						styleClass="texto-sem-odontograma"
+						value="#{msgs['paciente.sem.odontograma']}"></h:outputText>
+					<p:commandButton
+						value="#{msgs['novo.odontograma']}"
+						styleClass="btn btn-success"
+						update="@form"
+						process="@this"
+						action="#{bean.criarNovoOdontograma()}"
+						icon="fa fa-plus"></p:commandButton>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{bean.odontograma ne null}"
+					styleClass="ui-g">
+					<div
+						id="divOdontograma"
+						class="ui-g-7"
+						style="border-right: 1px solid #c2c2c2;">
+						<p:repeat
+							var="dente"
+							value="#{bean.odontograma.dentes}">
+							<canvas
+								id="canvas#{dente.dente.id}"
+								class="canvas-odontograma"
+								width="#{dente.dente.percentualTamanho()}"
+								height="40vh"
+								style="cursor: crosshair;background:url(../images/odontograma/#{dente.dente.img});background-position:center;background-repeat: no-repeat;background-size: 100%;"></canvas>
+						</p:repeat>
+					</div>
+					<div class="ui-g-5 ui-g">
+						<div
+							class="ui-g-3"
+							style="background: url(../images/user.png); background-position: center; background-repeat: no-repeat; background-size: 100%;" />
+						<div class="ui-g-9">
+							<p:panelGrid
+								columns="1"
+								layout="grid">
+								<h:outputText
+									value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" />
+								<h:outputText value="Idade: #{bean.odontograma.paciente.idade}" />
+							</p:panelGrid>
+						</div>
+					</div>
+					<div class="ui-g-5">
+					</div>
+				</h:panelGroup>
 			</h:form>
 		</div>
+		<script type="text/javascript">
+        //<![CDATA[
+        
+	        $(document).ready(sizingCanvas());
+	
+	        function sizingCanvas(){
+	            $('.canvas-odontograma').each(function (){
+					var largura = $(this).attr("width").replace('%', '');
+					var pxLargura = $('#divOdontograma').width() * (largura / 100);
+					$(this).attr("width", pxLargura);
+					$(this).attr("height", $(window).height() * 0.4);
+	            });
+	        }
+	        
+	        $(document).on('click', ".canvas-odontograma", function(e){
+			     getPosition(e, $(this).attr('id')); 
+			});
+			
+			var pointSize = 4;
+			
+			function getPosition(event, id){
+				var canvas = document.getElementById(id);
+			     var rect = canvas.getBoundingClientRect();
+			     var x = event.clientX - rect.left;
+			     var y = event.clientY - rect.top;
+			        
+			     drawCoordinates(x,y,id);
+			     $('#hiddenX').val(x);
+			     $('#hiddenY').val(y);
+			     $('#denteId').val(id.replace('canvas'));
+			     processarCoordenadas();
+			}
+			
+			function drawCoordinates(x,y,id){	
+			  	var ctx = document.getElementById(id).getContext("2d");
+			  	ctx.fillStyle = "#333"; // Red color
+			    ctx.beginPath();
+			    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+			    ctx.fill();
+			}
+        //]]>
+		</script>
 	</ui:define>
 </ui:composition>
 </html>

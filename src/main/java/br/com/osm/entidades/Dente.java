@@ -30,6 +30,9 @@ public class Dente implements Entidade<Long> {
 	
 	@Column(name = "img", nullable = false, length = 45)
 	private String img;
+	
+	@Column(name = "ordem", nullable = false)
+	private Integer ordem;
 
 	public Dente() {
 	}
@@ -99,7 +102,20 @@ public class Dente implements Entidade<Long> {
 	public void setImg(String img) {
 		this.img = img;
 	}
+
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
 	
-	
+	public String percentualTamanho() {
+		if(id.toString().contains("8") || id.toString().contains("7") || id.toString().contains("6")) {
+			return Double.valueOf(7).toString() + "%";
+		}
+		return Double.valueOf(5).toString() + "%";
+	}
 
 }
