@@ -1,5 +1,8 @@
 package br.com.osm.entidades;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.osm.annotations.OrdenacaoPadrao;
@@ -40,6 +44,9 @@ public class DenteOdontograma implements Entidade<Long> {
 	@Enumerated
 	@Column(name = "estado", nullable = false)
 	private EstadoDente estado;
+	
+	@OneToMany(mappedBy = "dente", cascade = CascadeType.ALL)
+	private List<Marcacao> marcacoes;
 
 	public DenteOdontograma() {
 	}

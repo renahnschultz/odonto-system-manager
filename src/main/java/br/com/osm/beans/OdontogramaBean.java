@@ -15,6 +15,7 @@ import br.com.osm.dao.DenteDAO;
 import br.com.osm.dao.OdontogramaDAO;
 import br.com.osm.entidades.Dente;
 import br.com.osm.entidades.DenteOdontograma;
+import br.com.osm.entidades.Marcacao;
 import br.com.osm.entidades.Odontograma;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
@@ -38,8 +39,8 @@ public class OdontogramaBean implements Serializable {
 
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
 	
-	private Double coorX;
-	private Double coorY;
+	
+	private Marcacao marcacao = new Marcacao();
 	private Long denteId;
 
 	public OdontogramaBean() {
@@ -112,28 +113,20 @@ public class OdontogramaBean implements Serializable {
 		this.odontograma = odontograma;
 	}
 
-	public Double getCoorY() {
-		return coorY;
-	}
-
-	public void setCoorY(Double coorY) {
-		this.coorY = coorY;
-	}
-
-	public Double getCoorX() {
-		return coorX;
-	}
-
-	public void setCoorX(Double coorX) {
-		this.coorX = coorX;
-	}
-
 	public Long getDenteId() {
 		return denteId;
 	}
 
 	public void setDenteId(Long denteId) {
 		this.denteId = denteId;
+	}
+
+	public Marcacao getMarcacao() {
+		return marcacao;
+	}
+
+	public void setMarcacao(Marcacao marcacao) {
+		this.marcacao = marcacao;
 	}
 
 }
