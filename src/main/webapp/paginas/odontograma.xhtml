@@ -36,12 +36,22 @@
 					id="hiddenY"
 					value="#{bean.marcacao.posY}" />
 				<h:inputHidden
+					id="cor"
+					value="#{bean.marcacao.cor}" />
+				<h:inputHidden
 					id="denteId"
 					value="#{bean.denteId}" />
 				<p:remoteCommand
+					id="processoDeCoordenadas"
 					name="processarCoordenadas"
+					process="@form"
 					action="#{bean.processarMarcacao()}"
-					process="@form"></p:remoteCommand>
+					update="panelMarcacoes"></p:remoteCommand>
+				<p:remoteCommand
+					id="imprimirMarcacoes"
+					name="imprimirMarcacoes"
+					process="@this"
+					action="#{bean.imprimirMarcacoes()}"></p:remoteCommand>
 				<h:panelGroup
 					rendered="#{bean.odontograma eq null}"
 					style="text-align:center;">
@@ -51,9 +61,8 @@
 					<p:commandButton
 						value="#{msgs['novo.odontograma']}"
 						styleClass="btn btn-success"
-						update="@form"
 						process="@this"
-						action="#{bean.criarNovoOdontograma()}"
+						action="#{bean.criarNovoOdontograma}"
 						icon="fa fa-plus"></p:commandButton>
 				</h:panelGroup>
 				<h:panelGroup
@@ -61,8 +70,8 @@
 					styleClass="ui-g">
 					<div
 						id="divOdontograma"
-						class="ui-g-7"
-						style="border-right: 1px solid #c2c2c2;">
+						class="ui-g-8"
+						style="border-right: 1px solid #eee;">
 						<p:repeat
 							var="dente"
 							value="#{bean.odontograma.dentes}">
@@ -74,21 +83,134 @@
 								style="cursor: crosshair;background:url(../images/odontograma/#{dente.dente.img});background-position:center;background-repeat: no-repeat;background-size: 100%;"></canvas>
 						</p:repeat>
 					</div>
-					<div class="ui-g-5 ui-g">
+					<div class="ui-g-4">
 						<div
-							class="ui-g-3"
-							style="background: url(../images/user.png); background-position: center; background-repeat: no-repeat; background-size: 100%;" />
-						<div class="ui-g-9">
-							<p:panelGrid
-								columns="1"
-								layout="grid">
-								<h:outputText
-									value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" />
-								<h:outputText value="Idade: #{bean.odontograma.paciente.idade}" />
-							</p:panelGrid>
+							class="ui-g-12 ui-g"
+							style="height: 20%;">
+							<div class="ui-g-2">
+								<p:graphicImage
+									value="/images/user.png"
+									style="position:relative;display:block"
+									styleClass="mx-auto my-auto"
+									width="60"
+									height="60" />
+							</div>
+							<div class="ui-g-10">
+								<p:panelGrid
+									columns="1"
+									layout="grid">
+									<h:outputText
+										style="font-size: 22px;font-weight: bold;"
+										value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" />
+									<h:outputText
+										value="#{msgs['idade']}: #{bean.odontograma.paciente.idade}" />
+								</p:panelGrid>
+							</div>
 						</div>
-					</div>
-					<div class="ui-g-5">
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['ferramentas']}</div>
+						<div
+							class="ui-g-12 ui-g"
+							style="padding: 0px;">
+							<p:outputPanel
+								id="marcarAusente"
+								class="ui-g-2"
+								style="font-size: 28px; color: #444;">
+								<span
+									class="my-auto mx-auto fa fa-minus-square"
+									style="display: table; position: relative;" />
+							</p:outputPanel>
+							<p:tooltip
+								id="marcarAusenteTooltip"
+								for="marcarAusente"
+								value="#{msgs['marcar.dente.ausente']}"
+								position="bottom" />
+							<p:outputPanel
+								id="marcarProtese"
+								class="ui-g-2"
+								style="font-size: 28px; color: #444;">
+								<span
+									class="my-auto mx-auto fa fa-wrench"
+									style="display: table; position: relative;" />
+							</p:outputPanel>
+							<p:tooltip
+								id="marcarProteseTooltip"
+								for="marcarProtese"
+								value="#{msgs['marcar.dente.protese']}"
+								position="bottom" />
+							<p:outputPanel
+								id="marcar"
+								class="ui-g-2"
+								style="font-size: 28px; color: #444;">
+								<span
+									class="my-auto mx-auto fa fa-circle"
+									style="display: table; position: relative;" />
+							</p:outputPanel>
+							<p:tooltip
+								id="marcarTooltip"
+								for="marcar"
+								value="#{msgs['realizar.marcacao']}"
+								position="bottom" />
+						</div>
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: 3c3c3c;">
+							#{msgs['marcacoes']}</div>
+						<p:outputPanel
+							id="panelMarcacoes"
+							style="max-height: 45vh;overflow-y: scroll;"
+							class="ui-g-12 ui-g marcacoes">
+							<p:repeat
+								var="marcacao"
+								varStatus="status"
+								value="#{bean.odontograma.marcacoes}">
+								<div
+									class="marcacao ui-g-12 ui-g"
+									onmouseout="removerDestaque(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
+									onmouseover="destacarMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})">
+									<div class="ui-g-2">
+										<div
+											class="circulo-marcacao mx-auto my-auto"
+											style="background: #{marcacao.cor};"></div>
+									</div>
+									<p:outputPanel class="ui-material ui-g-7">
+										<h:outputText
+											value="#{marcacao.nome}"
+											style="font-size: 18px;" />
+										<br />
+										<h:outputText
+											value="#{marcacao.dente.dente.descricao}"
+											style="color: #979797;" />
+										<h:outputText
+											value="#{marcacao.dataHora}"
+											style="color: #979797; float:right;">
+											<f:convertDateTime pattern="dd/MM/yy HH:mm" />
+										</h:outputText>
+									</p:outputPanel>
+									<div
+										class="ui-g-3 ui-g"
+										style="padding: 0px;">
+										<p:commandLink
+											styleClass="ui-g-6"
+											style="font-size: 28px; color: #444;">
+											<span
+												class="my-auto mx-auto fa fa-pencil"
+												style="display: table; position: relative;" />
+										</p:commandLink>
+										<div
+											class="ui-g-6"
+											onclick="removerMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
+											style="font-size: 28px; color: #f44336;">
+											<span
+												class="my-auto mx-auto fa fa-times"
+												style="display: table; position: relative;" />
+										</div>
+									</div>
+								</div>
+							</p:repeat>
+						</p:outputPanel>
 					</div>
 				</h:panelGroup>
 			</h:form>
@@ -97,6 +219,36 @@
         //<![CDATA[
         
 	        $(document).ready(sizingCanvas());
+	        $(document).ready(imprimirMarcacoes());
+			var pointSize = 4;
+			var corPadrao = "#333333";
+			var corDestaque = "#ffab00";
+
+	        function destacarMarcacao(x, y, id){
+	        	drawCoordinates(x,y,'canvas' + id, true);
+		    }
+
+	        function removerDestaque(x, y, id){
+	        	limparRetangulo(x,y,'canvas' + id);
+	        	drawCoordinates(x,y,'canvas' + id, false);
+		    }
+
+	        function removerMarcacao(x, y, id){
+	        	limparRetangulo(x,y,'canvas' + id);
+	        	$('#hiddenX').val(x);
+			    $('#hiddenY').val(y);
+			    $('#cor').val('#333333');
+			    $('#denteId').val(id.replace('canvas', ''));
+			    processarCoordenadas();
+	        }
+
+		    function limparRetangulo(x, y, id){
+		    	var ctx = document.getElementById(id).getContext("2d");
+		    	var tam = pointSize + 1;
+		    	ctx.beginPath();
+		    	ctx.clearRect(x - tam - 1, y - tam - 1, tam * 2 + 2, tam * 2 + 2);
+		    	ctx.closePath();
+			}
 	
 	        function sizingCanvas(){
 	            $('.canvas-odontograma').each(function (){
@@ -111,7 +263,6 @@
 			     getPosition(e, $(this).attr('id')); 
 			});
 			
-			var pointSize = 4;
 			
 			function getPosition(event, id){
 				var canvas = document.getElementById(id);
@@ -119,19 +270,26 @@
 			     var x = event.clientX - rect.left;
 			     var y = event.clientY - rect.top;
 			        
-			     drawCoordinates(x,y,id);
+			     drawCoordinates(x,y,id, false);
 			     $('#hiddenX').val(x);
 			     $('#hiddenY').val(y);
-			     $('#denteId').val(id.replace('canvas'));
+			     $('#cor').val('#333333');
+			     $('#denteId').val(id.replace('canvas', ''));
 			     processarCoordenadas();
 			}
 			
-			function drawCoordinates(x,y,id){	
+			function drawCoordinates(x,y,id, stroke){	
 			  	var ctx = document.getElementById(id).getContext("2d");
-			  	ctx.fillStyle = "#333"; // Red color
+			  	if(stroke){
+				  	ctx.strokeStyle = corPadrao; // Red color
+			  	}
+			  	ctx.fillStyle = !stroke ? corPadrao : corDestaque; // Red color
 			    ctx.beginPath();
-			    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+			    ctx.arc(x, y, stroke ? pointSize + 1 : pointSize, 0, Math.PI * 2, true);
 			    ctx.fill();
+			  	if(stroke){
+				    ctx.stroke();
+			  	}
 			}
         //]]>
 		</script>

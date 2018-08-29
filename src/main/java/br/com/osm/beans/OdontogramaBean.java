@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeFacesContext;
+import org.primefaces.context.RequestContext;
 
 import br.com.osm.dao.DenteDAO;
 import br.com.osm.dao.OdontogramaDAO;
@@ -19,6 +24,7 @@ import br.com.osm.entidades.Marcacao;
 import br.com.osm.entidades.Odontograma;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
+import br.com.osm.rest.OdontogramaWebService;
 import br.com.osm.util.FacesUtil;
 
 /**
@@ -50,9 +56,26 @@ public class OdontogramaBean implements Serializable {
 	public void init() {
 		try {
 			odontograma = odontogramaDAO.odontogramaDoPaciente(usuarioLogado);
-			criarNovoOdontograma();
+			Collections.sort(odontograma.getDentes(), new Comparator<DenteOdontograma>() {
+
+				@Override
+				public int compare(DenteOdontograma o1, DenteOdontograma o2) {
+					if(o1.getDente().getOrdem() > o2.getDente().getOrdem()) {
+						return 1;
+					} else if(o1.getDente().getOrdem() < o2.getDente().getOrdem()) {
+						return -1;
+					}
+					return 0;
+				}
+			});
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
+		}
+	}
+
+	public void imprimirMarcacoes() {
+		for(Marcacao marcacao : odontograma.getMarcacoes()) {
+			PrimeFaces.current().executeScript("drawCoordinates(" + marcacao.getPosX().toString() +", " + marcacao.getPosY().toString() + ", #canvas" + marcacao.getDente().getDente().getId().toString() + ", false)");
 		}
 	}
 
@@ -75,6 +98,7 @@ public class OdontogramaBean implements Serializable {
 					return 0;
 				}
 			});
+			salvar();
 		} catch (Exception e) {
 			throw new OSMException(e, "Erro ao iniciar anamnese.");
 		}
@@ -88,9 +112,19 @@ public class OdontogramaBean implements Serializable {
 	
 	public void processarMarcacao() {
 		try {
-			Marcacao marcacao = new Marcacao();
-			odontograma.getDentes();
-			
+			for(DenteOdontograma dente : odontograma.getDentes()) {
+				if(dente.getDente().getId() == denteId) {
+					marcacao.setDente(dente);
+					break;
+				}
+			}
+			marcacao.setNome("Nome da marcação");
+			marcacao.getDente().adicionarMarcacao(marcacao);
+			marcacao.setOdontograma(odontograma);
+			marcacao.setDataHora(new Date());
+			odontograma.adicionarMarcacao(marcacao);
+			marcacao = new Marcacao();
+			salvar();
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
@@ -98,8 +132,7 @@ public class OdontogramaBean implements Serializable {
 
 	public void salvar() {
 		try {
-//			odontograma.setDataPreenchimento(new Date());
-//			new AnamneseWebService(odontogramaDAO).salvar(odontograma);
+			new OdontogramaWebService(odontogramaDAO).salvar(odontograma);
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}

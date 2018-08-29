@@ -1,5 +1,7 @@
 package br.com.osm.entidades;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
@@ -50,6 +53,9 @@ public class Marcacao implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_odontograma")
 	private Odontograma odontograma;
+
+	@Transient
+	private Date dataHora;
 
 	public Marcacao() {
 	}
@@ -159,6 +165,20 @@ public class Marcacao implements Entidade<Long> {
 		} else if (!posY.equals(other.posY))
 			return false;
 		return true;
+	}
+
+	public Date getDataHora() {
+		return dataHora;
+	}
+
+	public void setDataHora(Date dataHora) {
+		this.dataHora = dataHora;
+	}
+
+	@Override
+	public String toString() {
+		return "Marcacao [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", posX=" + posX + ", posY=" + posY + ", cor=" + cor
+				+ ", dataHora=" + dataHora + "]";
 	}
 	
 	

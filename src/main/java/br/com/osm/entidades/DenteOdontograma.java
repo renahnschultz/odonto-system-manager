@@ -1,5 +1,6 @@
 package br.com.osm.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,7 +44,7 @@ public class DenteOdontograma implements Entidade<Long> {
 	
 	@Enumerated
 	@Column(name = "estado", nullable = false)
-	private EstadoDente estado;
+	private EstadoDente estado = EstadoDente.NORMAL;
 	
 	@OneToMany(mappedBy = "dente", cascade = CascadeType.ALL)
 	private List<Marcacao> marcacoes;
@@ -122,9 +123,14 @@ public class DenteOdontograma implements Entidade<Long> {
 
 	@Override
 	public String toString() {
-		return "DenteOdontograma [id=" + id + ", odontograma=" + odontograma + ", dente=" + dente + ", estado=" + estado + "]";
+		return "DenteOdontograma [id=" + id + ", dente=" + dente + ", estado=" + estado + "]";
 	}
 	
-	
+	public void adicionarMarcacao(Marcacao marcacao) {
+		if(marcacoes == null) {
+			marcacoes = new ArrayList<Marcacao>();
+		}
+		marcacoes.add(marcacao);
+	}
 
 }

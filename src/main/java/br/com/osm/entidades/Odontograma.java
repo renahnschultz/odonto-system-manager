@@ -1,5 +1,6 @@
 package br.com.osm.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,10 +40,13 @@ public class Odontograma extends AbstractAtivo implements Entidade<Long> {
 	
 	@Enumerated
 	@Column(name = "tipo", nullable = false)
-	private TipoOdontograma tipo;
+	private TipoOdontograma tipo = TipoOdontograma.ADULTO;
 	
 	@OneToMany(mappedBy = "odontograma", cascade = CascadeType.ALL)
 	private List<DenteOdontograma> dentes;
+	
+	@OneToMany(mappedBy = "odontograma", cascade = CascadeType.ALL)
+	private List<Marcacao> marcacoes;
 
 	public Odontograma() {
 	}
@@ -112,6 +116,21 @@ public class Odontograma extends AbstractAtivo implements Entidade<Long> {
 	
 	public void adicionarDente(DenteOdontograma dente) {
 		dentes.add(dente);
+	}
+	
+	public void adicionarMarcacao(Marcacao marcacao) {
+		if(marcacoes == null) {
+			marcacoes = new ArrayList<Marcacao>();
+		}
+		marcacoes.add(marcacao);
+	}
+
+	public List<Marcacao> getMarcacoes() {
+		return marcacoes;
+	}
+
+	public void setMarcacoes(List<Marcacao> marcacoes) {
+		this.marcacoes = marcacoes;
 	}
 	
 

@@ -41,9 +41,12 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	width: 40%;
 	top: 50%;
 }
+
 .login {
+	
 }
-.login button{
+
+.login button {
 	font-size: 18px;
 }
 
@@ -69,31 +72,72 @@ body .ui-fluid .ui-calendar .ui-datepicker-trigger.ui-button {
 	background: #CCC;
 }
 
-div.ui-chkbox span.ui-chkbox-icon{
-	background-image: url(/odonto-system-manager/javax.faces.resource/images/ui-icons_222222_256x240.png.jsf?ln=primefaces-admin-1.0.0-RC15) !important;
+div.ui-chkbox span.ui-chkbox-icon {
+	background-image:
+		url(/odonto-system-manager/javax.faces.resource/images/ui-icons_222222_256x240.png.jsf?ln=primefaces-admin-1.0.0-RC15)
+		!important;
 	display: inline;
 }
-.mx-auto{
+
+.mx-auto {
 	margin: auto;
 }
-.titulo-coluna{
+
+.my-auto {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.titulo-coluna {
 	font-size: 18px;
 	font-weight: bold;
 }
-.pergunta-anamnese{
+
+.pergunta-anamnese {
 	font-size: 16px;
 	color: #666;
 }
-.ui-datatable-header.ui-widget-header.ui-corner-top{
+
+.ui-datatable-header.ui-widget-header.ui-corner-top {
 	background: #0288d1 !important;
 	color: #fafafa;
 	font-weight: normal !important;
 	font-size: 22px !important;
 }
-.card{
+
+.card {
 	border-radius: 3px;
 }
-.texto-sem-odontograma{
+
+.texto-sem-odontograma {
 	color: #3c3c3c;
 	font-size: 18px;
+}
+
+.marcacao {
+	margin-bottom: 5px;
+	border: 1px solid #eeeeee;
+	border-radius: 5px;
+	padding: 0px !important;
+}
+.marcacao:hover{
+	background: #fafafa;
+}
+
+.marcacoes::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+.marcacoes::-webkit-scrollbar-track {
+}
+ 
+.marcacoes::-webkit-scrollbar-thumb {
+    background: #e3e3e3; 
+}
+
+.circulo-marcacao {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	border-radius: 50%;
 }

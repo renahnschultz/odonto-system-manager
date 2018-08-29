@@ -113,9 +113,9 @@ public class Dente implements Entidade<Long> {
 	
 	public String percentualTamanho() {
 		if(id.toString().contains("8") || id.toString().contains("7") || id.toString().contains("6")) {
-			return Double.valueOf(7).toString() + "%";
+			return Double.valueOf(6.8).toString() + "%";
 		}
-		return Double.valueOf(5).toString() + "%";
+		return Double.valueOf(4.9).toString() + "%";
 	}
 
 }
