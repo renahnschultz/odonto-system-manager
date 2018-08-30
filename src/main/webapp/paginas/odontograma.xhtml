@@ -217,14 +217,18 @@
 				widgetVar="dialogMarcacao"
 				modal="true"
 				width="80vw"
+				draggable="false"
+				resizable="false"
 				header="Editar marcacao">
 				<h:form
 					id="formDialogMarcacao"
 					styleClass="ui-g"
 					prependId="false">
-					<div
-						class="ui-g-6"
-						style="padding: 0px;">
+					<div class="ui-g-4">
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['informacoes']}</div>
 						<div class="ui-g-2">
 							<div
 								class="circulo-marcacao mx-auto my-auto"
@@ -256,7 +260,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="ui-g-6">
+					<div
+						class="ui-g-4"
+						style="border-left: 1px solid #eee;">
 						<div
 							class="ui-g-12"
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
@@ -264,7 +270,8 @@
 							<p:commandButton
 								value="#{msgs['adicionar.servico']}"
 								icon="fa fa-plus"
-								styleClass="btn btn-primary" style="width: auto;float:right;"></p:commandButton>
+								styleClass="btn btn-primary"
+								style="width: auto;float:right;"></p:commandButton>
 						</div>
 						<div
 							class="ui-g-12"
@@ -277,18 +284,39 @@
 								style="float:right"></h:outputText>
 						</div>
 					</div>
-					<div class="ui-g-12" style="text-align:center;">
+					<div
+						class="ui-g-4"
+						style="border-left: 1px solid #eee;">
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['comentarios']}</div>
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['comentarios']}</div>
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['comentarios']}</div>
+					</div>
+					<div
+						class="ui-g-12"
+						style="text-align: center;">
 						<p:commandButton
-								value="#{msgs['salvar']}"
-								icon="fa fa-check"
-								action="#{bean.salvar()}"
-								onstart="PF('statusDialog').show();"
-								oncomplete="PF('statusDialog').hide();PF('dialogMarcacao').hide();"
-								styleClass="btn btn-success" style="width: auto;margin:auto;"></p:commandButton>
-						<p:commandButton
-								value="#{msgs['cancelar']}"
-								icon="fa fa-times"
-								styleClass="btn btn-danger" style="width: auto;margin:auto;margin-left: 10px;"></p:commandButton>
+							value="#{msgs['salvar']}"
+							icon="fa fa-check"
+							action="#{bean.salvar()}"
+							onstart="PF('statusDialog').show();"
+							oncomplete="PF('statusDialog').hide();PF('dialogMarcacao').hide();"
+							styleClass="btn btn-success"
+							style="width: auto;margin:auto;"></p:commandButton>
+						<p:button
+							value="#{msgs['cancelar']}"
+							icon="fa fa-times"
+							onclick="PF('dialogMarcacao').hide();"
+							styleClass="btn btn-danger"
+							style="width: auto;margin:auto;margin-left: 10px;"></p:button>
 					</div>
 				</h:form>
 			</p:dialog>
