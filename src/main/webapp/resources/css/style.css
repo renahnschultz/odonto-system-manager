@@ -121,7 +121,8 @@ div.ui-chkbox span.ui-chkbox-icon {
 	padding: 0px !important;
 }
 .marcacao:hover{
-	background: #fafafa;
+	background: #BBDEFB;
+	cursor: pointer;
 }
 
 .marcacoes::-webkit-scrollbar {
@@ -141,3 +142,6 @@ div.ui-chkbox span.ui-chkbox-icon {
 	position: relative;
 	border-radius: 50%;
 }
+.inline{
+	display:inline-block;
+	}

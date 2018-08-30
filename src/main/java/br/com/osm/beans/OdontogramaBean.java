@@ -73,12 +73,6 @@ public class OdontogramaBean implements Serializable {
 		}
 	}
 
-	public void imprimirMarcacoes() {
-		for(Marcacao marcacao : odontograma.getMarcacoes()) {
-			PrimeFaces.current().executeScript("drawCoordinates(" + marcacao.getPosX().toString() +", " + marcacao.getPosY().toString() + ", #canvas" + marcacao.getDente().getDente().getId().toString() + ", false)");
-		}
-	}
-
 	public void criarNovoOdontograma() throws OSMException {
 		try {
 			List<Dente> dentes = denteDAO.listarTudo();
@@ -128,6 +122,10 @@ public class OdontogramaBean implements Serializable {
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
+	}
+	
+	public void editarMarcacao(Marcacao marcacao) {
+		this.marcacao = marcacao;
 	}
 
 	public void salvar() {
