@@ -133,4 +133,12 @@ public class DenteOdontograma implements Entidade<Long> {
 		marcacoes.add(marcacao);
 	}
 
+	public List<Marcacao> getMarcacoes() {
+		return marcacoes;
+	}
+
+	public void setMarcacoes(List<Marcacao> marcacoes) {
+		this.marcacoes = marcacoes;
+	}
+
 }

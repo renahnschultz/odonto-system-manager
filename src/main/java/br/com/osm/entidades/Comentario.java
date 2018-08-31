@@ -2,6 +2,7 @@ package br.com.osm.entidades;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -20,8 +21,8 @@ import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
 import br.com.osm.enuns.UnidadeMedida;
 @Entity
-@Table(name = "marcacao")
-public class Comentario implements Entidade<Long> {
+@Table(name = "comentario")
+public class Comentario extends AbstractAtivo implements Entidade<Long> {
 
 	/**
 	 * @author Renahn 28-07-2018
@@ -37,7 +38,8 @@ public class Comentario implements Entidade<Long> {
 	private String comentario;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data;
+	@Column(name = "data", nullable = false)
+	private Date data = new Date();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_odontologo")
@@ -46,10 +48,6 @@ public class Comentario implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_marcacao")
 	private Marcacao marcacao;
-
-
-	@Transient
-	private Date dataHora;
 
 	public Comentario() {
 	}
@@ -92,14 +90,6 @@ public class Comentario implements Entidade<Long> {
 
 	public void setMarcacao(Marcacao marcacao) {
 		this.marcacao = marcacao;
-	}
-
-	public Date getDataHora() {
-		return dataHora;
-	}
-
-	public void setDataHora(Date dataHora) {
-		this.dataHora = dataHora;
 	}
 
 	@Override

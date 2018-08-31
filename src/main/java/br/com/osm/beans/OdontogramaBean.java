@@ -12,12 +12,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeFacesContext;
-import org.primefaces.context.RequestContext;
-
+import br.com.osm.dao.ComentarioDAO;
 import br.com.osm.dao.DenteDAO;
+import br.com.osm.dao.MarcacaoDAO;
 import br.com.osm.dao.OdontogramaDAO;
+import br.com.osm.entidades.Comentario;
 import br.com.osm.entidades.Dente;
 import br.com.osm.entidades.DenteOdontograma;
 import br.com.osm.entidades.Marcacao;
@@ -41,6 +40,10 @@ public class OdontogramaBean implements Serializable {
 	transient private OdontogramaDAO odontogramaDAO;
 	@Inject
 	transient private DenteDAO denteDAO;
+	@Inject
+	transient private MarcacaoDAO marcacaoDAO;
+	@Inject
+	transient private ComentarioDAO comentarioDAO;
 	private Odontograma odontograma;
 
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
@@ -48,6 +51,11 @@ public class OdontogramaBean implements Serializable {
 	
 	private Marcacao marcacao = new Marcacao();
 	private Long denteId;
+	private Comentario comentarioAdicionar = new Comentario();
+	
+	private Double posX;
+	private Double posY;
+	private String cor;
 
 	public OdontogramaBean() {
 	}
@@ -116,6 +124,9 @@ public class OdontogramaBean implements Serializable {
 			marcacao.getDente().adicionarMarcacao(marcacao);
 			marcacao.setOdontograma(odontograma);
 			marcacao.setDataHora(new Date());
+			marcacao.setPosX(posX);
+			marcacao.setPosY(posY);
+			marcacao.setCor(cor);
 			odontograma.adicionarMarcacao(marcacao);
 			marcacao = new Marcacao();
 			salvar();
@@ -124,13 +135,42 @@ public class OdontogramaBean implements Serializable {
 		}
 	}
 	
+	public void comentarMarcacao() {
+		try {
+			comentarioAdicionar.setOdontologo(usuarioLogado);
+			comentarioAdicionar.setMarcacao(marcacao);
+			comentarioDAO.getEntityManager().getTransaction().begin();
+			comentarioDAO.salvar(comentarioAdicionar);
+			comentarioDAO.getEntityManager().getTransaction().commit();
+			comentarioAdicionar = new Comentario();
+			marcacao.adicionarComentario(comentarioAdicionar);
+		}catch(Exception e) {
+			throw new RuntimeException("Erro ao comentar marcacao.", e);
+		}
+	}
+	
 	public void editarMarcacao(Marcacao marcacao) {
 		this.marcacao = marcacao;
+	}
+
+	public void removerMarcacao(Marcacao marcacao) {
+		try {
+			this.marcacao = marcacao;
+			marcacaoDAO.excluir(marcacao);
+			odontograma.getMarcacoes().remove(marcacao);
+			marcacao.getDente().getMarcacoes().remove(marcacao);
+			marcacao = new Marcacao();
+			salvar();
+		} catch (OSMException e) {
+			throw new RuntimeException("Erro ao remover marcacao.", e);
+		}
 	}
 
 	public void salvar() {
 		try {
 			new OdontogramaWebService(odontogramaDAO).salvar(odontograma);
+			marcacao = new Marcacao();
+			comentarioAdicionar = new Comentario();
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
@@ -158,6 +198,38 @@ public class OdontogramaBean implements Serializable {
 
 	public void setMarcacao(Marcacao marcacao) {
 		this.marcacao = marcacao;
+	}
+
+	public Comentario getComentarioAdicionar() {
+		return comentarioAdicionar;
+	}
+
+	public void setComentarioAdicionar(Comentario comentarioAdicionar) {
+		this.comentarioAdicionar = comentarioAdicionar;
+	}
+
+	public Double getPosX() {
+		return posX;
+	}
+
+	public void setPosX(Double posX) {
+		this.posX = posX;
+	}
+
+	public Double getPosY() {
+		return posY;
+	}
+
+	public void setPosY(Double posY) {
+		this.posY = posY;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
 
 }

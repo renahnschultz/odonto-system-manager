@@ -1,5 +1,6 @@
 package br.com.osm.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.generico.AbstractAtivo;
@@ -60,7 +63,8 @@ public class Marcacao implements Entidade<Long> {
 	@OneToMany(mappedBy = "marcacao", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios;
 
-	@Transient
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_hora", nullable = false)
 	private Date dataHora;
 
 	public Marcacao() {
@@ -193,6 +197,13 @@ public class Marcacao implements Entidade<Long> {
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+	
+	public void adicionarComentario(Comentario comentario) {
+		if(comentarios == null) {
+			comentarios = new ArrayList<Comentario>();
+		}
+		comentarios.add(comentario);
 	}
 	
 	

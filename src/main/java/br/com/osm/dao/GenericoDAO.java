@@ -25,6 +25,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
+
 import br.com.generico.AbstractAtivo;
 import br.com.generico.Filtro;
 import br.com.osm.entidades.Entidade;
@@ -117,6 +119,7 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 			} else {
 				entityManager.merge(tipoClasse);
 			}
+			entityManager.flush();
 		} catch (ConstraintViolationException e) {
 			throw e;
 		} catch (Exception e) {
@@ -126,8 +129,10 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 
 	public void excluir(TipoClasse tipoClasse) throws OSMException {
 		try {
+			entityManager.getTransaction().begin();
 			tipoClasse = entityManager.merge(tipoClasse);
 			entityManager.remove(tipoClasse);
+			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			throw new OSMException(e, "erro.dao.generico.apagar", tipo.getSimpleName());
 		}
@@ -227,7 +232,7 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
 		}
 	}
-	
+
 	public List<TipoClasse> listarTudo() throws OSMException {
 		try {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
@@ -425,6 +430,7 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+
 	public EntityManager getEntityManager() {
 		return this.entityManager;
 	}

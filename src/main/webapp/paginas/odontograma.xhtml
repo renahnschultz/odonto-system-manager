@@ -31,13 +31,13 @@
 				prependId="false">
 				<h:inputHidden
 					id="hiddenX"
-					value="#{bean.marcacao.posX}" />
+					value="#{bean.posX}" />
 				<h:inputHidden
 					id="hiddenY"
-					value="#{bean.marcacao.posY}" />
+					value="#{bean.posY}" />
 				<h:inputHidden
 					id="cor"
-					value="#{bean.marcacao.cor}" />
+					value="#{bean.cor}" />
 				<h:inputHidden
 					id="denteId"
 					value="#{bean.denteId}" />
@@ -197,14 +197,21 @@
 												class="my-auto mx-auto fa fa-pencil"
 												style="display: table; position: relative;" />
 										</p:commandLink>
-										<div
-											class="ui-g-6"
-											onclick="removerMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
+										<p:commandLink
+											styleClass="ui-g-6"
+											onclick="removerMarcacaoJS(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
+											actionListener="#{bean.removerMarcacao(marcacao)}"
+											update="@form"
+											oncomplete="sizingCanvas(); imprimirMarcacoes()"
 											style="font-size: 28px; color: #f44336;">
+											<p:confirm
+												header="#{msgs['confirmacao.de.exclusao']}"
+												message="#{msgs['tem.certeza.que.deseja.excluir.este.registro']}"
+												icon="fa fa-alert" />
 											<span
-												class="my-auto mx-auto fa fa-times"
+												class="my-auto mx-auto fa fa-trash"
 												style="display: table; position: relative;" />
-										</div>
+										</p:commandLink>
 									</div>
 								</div>
 							</p:repeat>
@@ -251,7 +258,7 @@
 								<p:inputTextarea
 									style="border: none;"
 									value="#{bean.marcacao.descricao}"
-									rows="4"
+									rows="3"
 									id="descricaoMarcacao">
 								</p:inputTextarea>
 								<p:outputLabel
@@ -292,13 +299,40 @@
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
 							#{msgs['comentarios']}</div>
 						<div
-							class="ui-g-12"
-							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
-							#{msgs['comentarios']}</div>
+							class="ui-g-12 ui-g"
+							style="padding: 0px;">
+							<p:outputPanel id="comentariosMarcacao">
+								<p:repeat var="comentario" value="#{bean.marcacao.comentarios}">
+									<div class="ui-g-12">
+										#{comentario.comentario}
+									</div>
+								</p:repeat>
+							</p:outputPanel>
+						</div>
 						<div
 							class="ui-g-12"
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
-							#{msgs['comentarios']}</div>
+							<div
+								class="ui-material"
+								style="bottom: 0px;">
+								<p:inputText
+									id="comentarioAdicionar"
+									placeholder="#{msgs['comente.aqui']}"
+									onkeypress="comentar(event);"
+									value="#{bean.comentarioAdicionar.comentario}"></p:inputText>
+								<p:outputLabel
+									value="#{msgs['comentario']}"
+									for="comentarioAdicionar"></p:outputLabel>
+							</div>
+							<p:remoteCommand
+								id="comentarMarcacao"
+								name="comentarMarcacao"
+								action="#{bean.comentarMarcacao()}"
+								process="comentarioAdicionar @this"
+								update="comentariosMarcacao comentarioAdicionar"
+								onstart="PF('statusDialog').show();"
+								oncomplete="PF('statusDialog').hide();"></p:remoteCommand>
+						</div>
 					</div>
 					<div
 						class="ui-g-12"
@@ -308,7 +342,10 @@
 							icon="fa fa-check"
 							action="#{bean.salvar()}"
 							onstart="PF('statusDialog').show();"
-							oncomplete="PF('statusDialog').hide();PF('dialogMarcacao').hide();"
+							oncomplete="PF('statusDialog').hide();"
+							onsuccess="PF('dialogMarcacao').hide();"
+							process="@form"
+							update="panelMarcacoes"
 							styleClass="btn btn-success"
 							style="width: auto;margin:auto;"></p:commandButton>
 						<p:button
@@ -339,6 +376,10 @@
 	        	drawCoordinates(x,y,'canvas' + id, false);
 		    }
 
+	        function removerMarcacaoJS(x, y, id){
+	        	limparRetangulo(x,y,'canvas' + id);
+	        }
+	        
 	        function removerMarcacao(x, y, id){
 	        	limparRetangulo(x,y,'canvas' + id);
 	        	$('#hiddenX').val(x);
@@ -406,6 +447,12 @@
 					var dados = chamada.split(',');
 					drawCoordinates(dados[0].trim(), dados[1].trim(), 'canvas' + dados[2].trim(), false)
 				});
+			}
+
+			function comentar(e) {
+			    if (e.keyCode == 13) {
+			        comentarMarcacao();
+			    }
 			}
 
 			imprimirMarcacoes();
