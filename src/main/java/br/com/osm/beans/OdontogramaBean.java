@@ -230,4 +230,12 @@ public class OdontogramaBean implements Serializable {
 		this.cor = cor;
 	}
 
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}
+
 }

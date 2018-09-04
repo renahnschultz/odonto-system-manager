@@ -331,6 +331,7 @@
 												update="comentariosMarcacao"
 												onstart="PF('statusDialog').show();"
 												oncomplete="PF('statusDialog').hide();"
+												rendered="#{bean.usuarioLogado.id eq comentario.odontologo.id}"
 												action="#{bean.excluirComentario(comentario)}"></p:commandLink>
 											<span style="font-size: 11px; float: right;"> <h:outputText
 													value="#{comentario.data}">
