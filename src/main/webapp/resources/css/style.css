@@ -120,20 +120,22 @@ div.ui-chkbox span.ui-chkbox-icon {
 	border-radius: 5px;
 	padding: 0px !important;
 }
-.marcacao:hover{
+
+.marcacao:hover {
 	background: #BBDEFB;
 	cursor: pointer;
 }
 
-.marcacoes::-webkit-scrollbar {
-    width: 6px;
+.marcacoes::-webkit-scrollbar, .comentarios::-webkit-scrollbar {
+	width: 6px;
 }
- 
-.marcacoes::-webkit-scrollbar-track {
+
+.marcacoes::-webkit-scrollbar-track, .comentarios::-webkit-scrollbar-track {
+	
 }
- 
-.marcacoes::-webkit-scrollbar-thumb {
-    background: #e3e3e3; 
+
+.marcacoes::-webkit-scrollbar-thumb, .comentarios::-webkit-scrollbar-thumb {
+	background: #e3e3e3;
 }
 
 .circulo-marcacao {
@@ -142,6 +144,28 @@ div.ui-chkbox span.ui-chkbox-icon {
 	position: relative;
 	border-radius: 50%;
 }
-.inline{
-	display:inline-block;
-	}
+
+.inline {
+	display: inline-block;
+}
+
+.excluirComentario {
+	color: red !important;
+	font-size: 11px !important;
+	width: auto !important;
+	display: none;
+}
+
+.comentario {
+	
+}
+.comentario:hover{
+	background: #fafafa;
+}
+.comentario:hover .nomeUsuarioComentario {
+	display: none;
+}
+
+.comentario:hover .excluirComentario {
+	display: inline-block;
+}

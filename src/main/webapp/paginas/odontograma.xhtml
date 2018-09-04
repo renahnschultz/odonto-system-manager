@@ -221,6 +221,16 @@
 					</div>
 				</h:panelGroup>
 			</h:form>
+
+
+
+
+			<!-- 			DIALOGO MARCAÇÃO -->
+
+
+
+
+
 			<p:dialog
 				id="dialogMarcacao"
 				widgetVar="dialogMarcacao"
@@ -301,13 +311,34 @@
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
 							#{msgs['comentarios']}</div>
 						<div
-							class="ui-g-12 ui-g"
-							style="padding: 0px;">
+							class="ui-g-12 ui-g comentarios"
+							style="padding: 0px; height: 30vh; overflow-y: scroll;">
 							<p:outputPanel id="comentariosMarcacao">
 								<p:repeat
 									var="comentario"
 									value="#{bean.marcacao.comentarios}">
-									<div class="ui-g-12">#{comentario.comentario}</div>
+									<p:outputPanel
+										styleClass="ui-g-12 comentario"
+										rendered="#{comentario.ativo eq 'ATIVO'}">
+										<p>#{comentario.comentario}</p>
+										<div>
+											<span
+												class="nomeUsuarioComentario"
+												style="font-size: 11px; font-weight: bold;">#{comentario.odontologo.nomeCompleto}</span>
+											<p:commandLink
+												styleClass="excluirComentario text-danger"
+												value="Excluir"
+												update="comentariosMarcacao"
+												onstart="PF('statusDialog').show();"
+												oncomplete="PF('statusDialog').hide();"
+												action="#{bean.excluirComentario(comentario)}"></p:commandLink>
+											<span style="font-size: 11px; float: right;"> <h:outputText
+													value="#{comentario.data}">
+													<f:convertDateTime pattern="dd/MM/yy HH:mm" />
+												</h:outputText>
+											</span>
+										</div>
+									</p:outputPanel>
 								</p:repeat>
 							</p:outputPanel>
 						</div>

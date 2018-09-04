@@ -255,5 +255,9 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	    return idade;
 	}
+	
+	public String getNomeCompleto() {
+		return nome + " " + sobrenome;
+	}
 
 }

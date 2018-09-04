@@ -127,6 +127,15 @@ public class OdontogramaBean implements Serializable {
 		}
 	}
 	
+	public void excluirComentario(Comentario comentario) {
+		try {
+			marcacao.getComentarios().remove(comentario);
+			new ComentarioWebService(comentarioDAO).excluir(comentario.getId());
+		}catch(Exception e) {
+			throw new RuntimeException("Erro ao remover comentario.", e);
+		}
+	}
+	
 	public void editarMarcacao(Marcacao marcacao) {
 			try {
 				this.marcacao = marcacaoDAO.recuperar(marcacao);
