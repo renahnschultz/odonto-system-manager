@@ -1,6 +1,7 @@
 package br.com.osm.entidades;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
 import br.com.osm.enuns.TipoOdontograma;
+import br.com.osm.util.OrdenaDentesOdontograma;
 
 @Entity
 @Table(name = "odontograma")
@@ -76,6 +78,7 @@ public class Odontograma extends AbstractAtivo implements Entidade<Long> {
 	}
 
 	public List<DenteOdontograma> getDentes() {
+		Collections.sort(dentes, new OrdenaDentesOdontograma());
 		return dentes;
 	}
 

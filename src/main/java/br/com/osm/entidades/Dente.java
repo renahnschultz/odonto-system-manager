@@ -21,7 +21,6 @@ public class Dente implements Entidade<Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@OrdenacaoPadrao
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -31,6 +30,7 @@ public class Dente implements Entidade<Long> {
 	@Column(name = "img", nullable = false, length = 45)
 	private String img;
 	
+	@OrdenacaoPadrao
 	@Column(name = "ordem", nullable = false)
 	private Integer ordem;
 

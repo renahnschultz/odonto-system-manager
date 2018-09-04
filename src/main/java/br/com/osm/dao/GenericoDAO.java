@@ -119,7 +119,6 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 			} else {
 				entityManager.merge(tipoClasse);
 			}
-			entityManager.flush();
 		} catch (ConstraintViolationException e) {
 			throw e;
 		} catch (Exception e) {
@@ -129,10 +128,8 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 
 	public void excluir(TipoClasse tipoClasse) throws OSMException {
 		try {
-			entityManager.getTransaction().begin();
 			tipoClasse = entityManager.merge(tipoClasse);
 			entityManager.remove(tipoClasse);
-			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			throw new OSMException(e, "erro.dao.generico.apagar", tipo.getSimpleName());
 		}

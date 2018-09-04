@@ -188,19 +188,20 @@ public abstract class OSMServiceBase<PK extends Serializable, TipoClasse extends
 		try {
 			TipoClasse tipoClasse = dao.pesquisarPor(id);
 			validacaoExcluir(tipoClasse);
-			dao.getEntityManager().getTransaction().begin();
+			if(!dao.getEntityManager().getTransaction().isActive())
+				dao.getEntityManager().getTransaction().begin();
 			if (tipoClasse instanceof AbstractAtivo) {
 				AbstractAtivo abstractAtivo = (AbstractAtivo) tipoClasse;
 				abstractAtivo.setAtivo(StatusAtivo.EXCLUIDO);
 				dao.salvar(tipoClasse);
 				dao.flush();
 			} else {
+				dao.flush();
 				dao.excluir(tipoClasse);
 				dao.flush();
 			}
 			dao.getEntityManager().getTransaction().commit();
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put(CriaJsonRetorno.MENSAGEM, mensagens.excluidoComSucesso());
 			if (logger.isLoggable(Level.FINE)) {
 				logger.fine("excluido com sucesso");
 			}

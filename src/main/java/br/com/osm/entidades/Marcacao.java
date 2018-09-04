@@ -25,7 +25,7 @@ import br.com.osm.annotations.OrdenacaoPadrao;
 import br.com.osm.enuns.UnidadeMedida;
 @Entity
 @Table(name = "marcacao")
-public class Marcacao implements Entidade<Long> {
+public class Marcacao extends AbstractAtivo implements Entidade<Long> {
 
 	/**
 	 * @author Renahn 28-07-2018

@@ -5,6 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
@@ -161,10 +162,11 @@
 								var="marcacao"
 								varStatus="status"
 								value="#{bean.odontograma.marcacoes}">
-								<div
-									class="marcacao ui-g-12 ui-g"
-									onmouseout="removerDestaque(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
-									onmouseover="destacarMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})">
+								<p:outputPanel
+									rendered="#{marcacao.ativo eq 'ATIVO'}"
+									styleClass="marcacao ui-g-12 ui-g"
+									pt:onmouseout="removerDestaque(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
+									pt:onmouseover="destacarMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})">
 									<div class="ui-g-2">
 										<div
 											class="circulo-marcacao mx-auto my-auto"
@@ -192,7 +194,7 @@
 											actionListener="#{bean.editarMarcacao(marcacao)}"
 											oncomplete="PF('dialogMarcacao').show()"
 											update="formDialogMarcacao"
-											style="font-size: 28px; color: #444;">
+											style="font-size: 24px; color: #444;">
 											<span
 												class="my-auto mx-auto fa fa-pencil"
 												style="display: table; position: relative;" />
@@ -203,7 +205,7 @@
 											actionListener="#{bean.removerMarcacao(marcacao)}"
 											update="@form"
 											oncomplete="sizingCanvas(); imprimirMarcacoes()"
-											style="font-size: 28px; color: #f44336;">
+											style="font-size: 24px; color: #f44336;">
 											<p:confirm
 												header="#{msgs['confirmacao.de.exclusao']}"
 												message="#{msgs['tem.certeza.que.deseja.excluir.este.registro']}"
@@ -213,7 +215,7 @@
 												style="display: table; position: relative;" />
 										</p:commandLink>
 									</div>
-								</div>
+								</p:outputPanel>
 							</p:repeat>
 						</p:outputPanel>
 					</div>
@@ -302,10 +304,10 @@
 							class="ui-g-12 ui-g"
 							style="padding: 0px;">
 							<p:outputPanel id="comentariosMarcacao">
-								<p:repeat var="comentario" value="#{bean.marcacao.comentarios}">
-									<div class="ui-g-12">
-										#{comentario.comentario}
-									</div>
+								<p:repeat
+									var="comentario"
+									value="#{bean.marcacao.comentarios}">
+									<div class="ui-g-12">#{comentario.comentario}</div>
 								</p:repeat>
 							</p:outputPanel>
 						</div>

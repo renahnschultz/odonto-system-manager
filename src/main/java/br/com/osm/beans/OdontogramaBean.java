@@ -23,11 +23,13 @@ import br.com.osm.entidades.Marcacao;
 import br.com.osm.entidades.Odontograma;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
+import br.com.osm.rest.ComentarioWebService;
+import br.com.osm.rest.MarcacaoWebService;
 import br.com.osm.rest.OdontogramaWebService;
 import br.com.osm.util.FacesUtil;
 
 /**
- * Classe responsável pelo controle da tela de cadastro de Anamnese.
+ * Classe responsável pelo controle da tela de Odontograma.
  *
  * @author Renahn 28-07-2018
  *
@@ -64,18 +66,6 @@ public class OdontogramaBean implements Serializable {
 	public void init() {
 		try {
 			odontograma = odontogramaDAO.odontogramaDoPaciente(usuarioLogado);
-			Collections.sort(odontograma.getDentes(), new Comparator<DenteOdontograma>() {
-
-				@Override
-				public int compare(DenteOdontograma o1, DenteOdontograma o2) {
-					if(o1.getDente().getOrdem() > o2.getDente().getOrdem()) {
-						return 1;
-					} else if(o1.getDente().getOrdem() < o2.getDente().getOrdem()) {
-						return -1;
-					}
-					return 0;
-				}
-			});
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
@@ -88,18 +78,6 @@ public class OdontogramaBean implements Serializable {
 			odontograma.setPaciente(usuarioLogado);
 			odontograma.setDentes(new ArrayList<DenteOdontograma>());
 			inicializarDentes(dentes);
-			Collections.sort(odontograma.getDentes(), new Comparator<DenteOdontograma>() {
-
-				@Override
-				public int compare(DenteOdontograma o1, DenteOdontograma o2) {
-					if(o1.getDente().getOrdem() > o2.getDente().getOrdem()) {
-						return -1;
-					} else if(o1.getDente().getOrdem() > o2.getDente().getOrdem()) {
-						return 1;
-					}
-					return 0;
-				}
-			});
 			salvar();
 		} catch (Exception e) {
 			throw new OSMException(e, "Erro ao iniciar anamnese.");
@@ -114,6 +92,7 @@ public class OdontogramaBean implements Serializable {
 	
 	public void processarMarcacao() {
 		try {
+			marcacao = new Marcacao();
 			for(DenteOdontograma dente : odontograma.getDentes()) {
 				if(dente.getDente().getId() == denteId) {
 					marcacao.setDente(dente);
@@ -130,6 +109,7 @@ public class OdontogramaBean implements Serializable {
 			odontograma.adicionarMarcacao(marcacao);
 			marcacao = new Marcacao();
 			salvar();
+			odontograma = odontogramaDAO.recuperar(odontograma);
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
@@ -139,35 +119,44 @@ public class OdontogramaBean implements Serializable {
 		try {
 			comentarioAdicionar.setOdontologo(usuarioLogado);
 			comentarioAdicionar.setMarcacao(marcacao);
-			comentarioDAO.getEntityManager().getTransaction().begin();
-			comentarioDAO.salvar(comentarioAdicionar);
-			comentarioDAO.getEntityManager().getTransaction().commit();
-			comentarioAdicionar = new Comentario();
 			marcacao.adicionarComentario(comentarioAdicionar);
+			new ComentarioWebService(comentarioDAO).salvar(comentarioAdicionar);
+			comentarioAdicionar = new Comentario();
 		}catch(Exception e) {
 			throw new RuntimeException("Erro ao comentar marcacao.", e);
 		}
 	}
 	
 	public void editarMarcacao(Marcacao marcacao) {
-		this.marcacao = marcacao;
+			try {
+				this.marcacao = marcacaoDAO.recuperar(marcacao);
+			} catch (Exception e) {
+				throw new RuntimeException("Erro ao recuperar marcacao.", e);
+			}
 	}
 
 	public void removerMarcacao(Marcacao marcacao) {
 		try {
-			this.marcacao = marcacao;
-			marcacaoDAO.excluir(marcacao);
-			odontograma.getMarcacoes().remove(marcacao);
-			marcacao.getDente().getMarcacoes().remove(marcacao);
+			for(Comentario comentario : marcacao.getComentarios()) {
+				new ComentarioWebService(comentarioDAO).excluir(comentario.getId());
+			}
+			new MarcacaoWebService(marcacaoDAO).excluir(marcacao.getId());
 			marcacao = new Marcacao();
-			salvar();
-		} catch (OSMException e) {
+			odontograma = odontogramaDAO.recuperar(odontograma);
+		} catch (Exception e) {
 			throw new RuntimeException("Erro ao remover marcacao.", e);
 		}
 	}
 
 	public void salvar() {
 		try {
+			if(marcacao != null && marcacao.getId() != null) {
+				int index = odontograma.getMarcacoes().indexOf(marcacao);
+				if(index != -1) {
+					odontograma.getMarcacoes().remove(index);
+					odontograma.getMarcacoes().add(index, marcacao);
+				}
+			}
 			new OdontogramaWebService(odontogramaDAO).salvar(odontograma);
 			marcacao = new Marcacao();
 			comentarioAdicionar = new Comentario();
