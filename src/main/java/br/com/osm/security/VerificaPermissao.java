@@ -36,8 +36,10 @@ import org.primefaces.util.Base64;
 
 import br.com.osm.beans.LoginBean;
 import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.message.Mensagens;
 import br.com.osm.util.Constantes;
+import br.com.osm.util.FacesUtil;
 import br.com.osm.viewconfig.Paginas;
 
 @Named
@@ -118,20 +120,23 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 	}
 
 	/**
-	 * Verifica se o {@link Colaborador} autenticado na sessão da aplicação possui determinada permissão.
+	 * Verifica se o Usuario autenticado na sessão da aplicação possui determinada permissão.
 	 *
 	 * @param role
 	 *            A permissão que será validada.
 	 * @return
 	 *
 	 *         <li>
-	 *         <b>true</b> - Se o colaborador tem a permissão
+	 *         <b>true</b> - Se o Usuario tem a permissão
 	 *         </li>
 	 *         <li>
-	 *         <b>false</b> - Se o colaborador NÃO tem a permissão
+	 *         <b>false</b> - Se o Usuario NÃO tem a permissão
 	 *         </li>
 	 */
 	public boolean temPermissao(String role) {
+		if (role.equals("odontologo")) {
+			return TipoUsuario.ODONTOLOGO.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
+		}
 		if (role.equals("osm")) {
 			return request.get().isUserInRole(role);
 		}

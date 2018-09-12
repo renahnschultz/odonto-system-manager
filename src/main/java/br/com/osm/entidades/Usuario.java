@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -78,6 +79,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, 
             fetch = FetchType.LAZY)
 	private Anamnese anamnese;
+
+	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY)
+	private List<HorarioOdontologo> horariosOdontologo;
 
 	public Usuario() {
 	}
@@ -258,6 +263,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	
 	public String getNomeCompleto() {
 		return nome + " " + sobrenome;
+	}
+
+	public List<HorarioOdontologo> getHorariosOdontologo() {
+		return horariosOdontologo;
+	}
+
+	public void setHorariosOdontologo(List<HorarioOdontologo> horariosOdontologo) {
+		this.horariosOdontologo = horariosOdontologo;
 	}
 
 }
