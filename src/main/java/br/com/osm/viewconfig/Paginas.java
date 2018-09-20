@@ -47,6 +47,14 @@ public interface Paginas extends ViewConfig {
 	@Restricao(value = {"odontologo"})
 	public class HorarioOdontologo implements ViewConfig {
 	}
+
+	@Restricao(value = {"paciente", "odontologo", "secretario"})
+	public class Agendamento implements ViewConfig {
+	}
+
+	@Restricao(value = {"odontologo", "secretario"})
+	public class AprovarAgendamento implements ViewConfig {
+	}
 	
 	public class registroPaciente implements ViewConfig {
 	}

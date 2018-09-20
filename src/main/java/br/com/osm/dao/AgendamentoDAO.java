@@ -1,9 +1,16 @@
 package br.com.osm.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import br.com.osm.entidades.Agendamento;
+import br.com.osm.entidades.Odontograma;
+import br.com.osm.enuns.SituacaoAgendamento;
+import br.com.osm.exception.OSMException;
 
 public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 
@@ -14,6 +21,22 @@ public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 	@Inject
 	public AgendamentoDAO(EntityManager entityManager) {
 		super(Agendamento.class, entityManager);
+	}
+	
+	public List<Agendamento> buscarAgendamentosPendentes() throws OSMException {
+		try {
+			StringBuilder sql = new StringBuilder("SELECT p FROM ")
+					.append(tipo.getSimpleName())
+					.append(" AS p ")
+					.append(" WHERE p.situacao = :situacao");
+			TypedQuery<Agendamento> query = entityManager.createQuery(sql.toString(), Agendamento.class);
+			query.setParameter("situacao", SituacaoAgendamento.PENDENTE);
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
+		}
 	}
 	
 }

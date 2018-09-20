@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['aprovar.agendamento']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-g">
+			<h:form
+				id="formAgendamentos"
+				prependId="false"
+				styleClass="ui-g-12 ui-fluid ui-g">
+				<p:remoteCommand
+					name="buscarAgendamentos"
+					update="dataTableAgendamentos"
+					action="#{agendamentoBean.buscarAgendamentosAprovar()}"
+					async="true"></p:remoteCommand>
+				<p:messages autoUpdate="true"></p:messages>
+				<div class="ui-g-12">
+					<h2 style="margin-bottom: 15px;">#{msgs['agendamentos']}</h2>
+				</div>
+				<p:outputPanel
+					id="dataTableAgendamentos"
+					class="ui-g-12">
+					<p:outputPanel
+						rendered="#{agendamentoBean.carregandoAgendamentos}"
+						style="text-align:center;font-weight:bold;font-size: 20px;">
+						#{msgs['carregando']}
+					</p:outputPanel>
+					<p:dataTable
+						value="#{agendamentoBean.agendamentosAprovar}"
+						var="agendamento"
+						id="tableAgendamento"
+						rows="20"
+						paginator="true"
+						paginatorPosition="bottom"
+						rendered="#{!agendamentoBean.carregandoAgendamentos}">
+						<p:column headerText="#{msgs['odontologo']}">
+							<h:outputText value="#{agendamento.odontologo.nomeCompleto}"></h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['paciente']}">
+							<h:outputText value="#{agendamento.paciente.nomeCompleto}"></h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['data']}">
+							<h:outputText value="#{agendamento.dataHora}">
+								<f:convertDateTime pattern="dd/MM/yy hh:mm"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['situacao']}">
+							<h:outputText value="#{msgs[agendamento.situacao.descricao]}" />
+						</p:column>
+						<p:column headerText="#{msgs['acoes']}">
+							<p:commandButton
+								icon="fa fa-thumbs-up"
+								id="aprovar"
+								style="width: auto;"
+								update="dataTableAgendamentos"
+								action="#{agendamentoBean.aprovarReprovar(agendamento, 1)}"></p:commandButton>
+							<p:commandButton
+								icon="fa fa-thumbs-down"
+								id="reprovar"
+								style="width: auto;"
+								update="dataTableAgendamentos"
+								action="#{agendamentoBean.aprovarReprovar(agendamento, 2)}"></p:commandButton>
+							<p:tooltip
+								for="aprovar"
+								position="top"
+								value="#{msgs['aprovar.agendamento']}"></p:tooltip>
+							<p:tooltip
+								for="reprovar"
+								position="top"
+								value="#{msgs['reprovar.agendamento']}"></p:tooltip>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</h:form>
+		</div>
+		<script type="text/javascript">
+        //<![CDATA[
+        	$(document).ready(buscarAgendamentos());
+        //]]>
+		</script>
+	</ui:define>
+</ui:composition>
+</html>

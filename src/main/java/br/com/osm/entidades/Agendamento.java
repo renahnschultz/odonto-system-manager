@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
 import br.com.osm.enuns.SituacaoAgendamento;
+
 @Entity
 @Table(name = "agendamento")
 public class Agendamento extends AbstractAtivo implements Entidade<Long> {
@@ -35,12 +36,13 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_odontologo")
 	private Usuario odontologo;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_paciente")
 	private Usuario paciente;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_hora", nullable = false)
 	private Date dataHora;
 
 	@Enumerated
@@ -131,7 +133,5 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 	public String toString() {
 		return "Agendamento [id=" + id + ", dataHora=" + dataHora + "]";
 	}
-	
-	
 
 }
