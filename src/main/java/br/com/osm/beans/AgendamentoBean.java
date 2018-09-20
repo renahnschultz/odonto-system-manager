@@ -24,6 +24,10 @@ import br.com.osm.rest.ServicoWebService;
 @ViewScoped
 public class AgendamentoBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Inject
 	transient private ServicoDAO servicoDAO;
 	private Servico servico = new Servico();
