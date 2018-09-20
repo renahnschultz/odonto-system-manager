@@ -65,7 +65,7 @@
 						icon="fa fa-lock"
 						rendered="#{!usuarioBean.alterarSenha}"
 						action="#{usuarioBean.iniciarAlteracaoSenha()}"
-						update="@form"/>
+						update="@form" />
 				</p:panelGrid>
 			</div>
 			<div class="ui-g-6">
@@ -177,7 +177,16 @@
 		responsive="true"
 		showHeader="false"
 		appendTo="@(body)">
-		<p:graphicImage />
+		<div class="lds-roller">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
 	</p:dialog>
 
 	<div class="wrapper">
@@ -274,17 +283,17 @@
 			id="content"
 			class="content-wrapper">
 			<ui:insert name="content-wrapper" />
-<!-- 			<section class="content-header"> -->
-<!-- 				<h1 style="background: #0288d1;text-align: center;border-radius: 3px;padding: 10px; color: #fff;margin-left: 3px;"> -->
-<!-- 					<ui:insert name="title"> -->
-<!-- 						<h:outputText -->
-<!-- 							value="#{title}" -->
-<!-- 							rendered="false" /> -->
-<!-- 					</ui:insert> -->
-<!-- 					<small><ui:insert name="description" /></small> -->
-<!-- 				</h1> -->
-<!-- 				<ui:insert name="content-header" /> -->
-<!-- 			</section> -->
+			<!-- 			<section class="content-header"> -->
+			<!-- 				<h1 style="background: #0288d1;text-align: center;border-radius: 3px;padding: 10px; color: #fff;margin-left: 3px;"> -->
+			<!-- 					<ui:insert name="title"> -->
+			<!-- 						<h:outputText -->
+			<!-- 							value="#{title}" -->
+			<!-- 							rendered="false" /> -->
+			<!-- 					</ui:insert> -->
+			<!-- 					<small><ui:insert name="description" /></small> -->
+			<!-- 				</h1> -->
+			<!-- 				<ui:insert name="content-header" /> -->
+			<!-- 			</section> -->
 			<section class="content">
 				<ui:insert name="content-begin" />
 				<ui:fragment rendered="true">
@@ -421,14 +430,6 @@
                     }
                 });
                 //]]>
-            </script>
-	</ui:fragment>
-
-	<ui:fragment rendered="#{not empty skin}">
-		<script type="text/javascript">
-                $(document).ready(function () {
-                    store('layout.skin', null);
-                });
             </script>
 	</ui:fragment>
 

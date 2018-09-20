@@ -21,12 +21,15 @@ import javax.inject.Named;
 
 import org.apache.deltaspike.core.api.message.MessageContext;
 
+import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.entidades.Usuario;
 import br.com.osm.enuns.SimNao;
 import br.com.osm.enuns.SimNaoOutro;
 import br.com.osm.enuns.TipoResposta;
 import br.com.osm.enuns.TipoServico;
 import br.com.osm.enuns.TipoUsuario;
 import br.com.osm.enuns.UnidadeMedida;
+import br.com.osm.exception.OSMException;
 
 /**
  *
@@ -43,6 +46,9 @@ public class OSMProducer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private MessageContext mensagens;
+	
+	@Inject
+	private transient UsuarioDAO usuarioDAO;
 
 	@PostConstruct
 	public void postConstruct() {
@@ -116,6 +122,17 @@ public class OSMProducer implements Serializable {
 			lista.add(object);
 		}
 		return lista;
+	}
+
+	@Named
+	@Produces
+	public List<Usuario> odontologosSelect() {
+		try {
+			return usuarioDAO.buscarOdontologos();
+		} catch (OSMException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String currencyCode() {

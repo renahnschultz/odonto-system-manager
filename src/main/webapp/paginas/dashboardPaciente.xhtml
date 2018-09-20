@@ -11,7 +11,41 @@
 <ui:composition template="/template/template_geral.xhtml">
 	<ui:define name="title">#{msgs['dashboard']}</ui:define>
 	<ui:define name="card">
-		<p:button value="Anamnese" class="btn btn-warning" outcome="anamnese.jsf"></p:button>
+		<div class="ui-g">
+			<div class="ui-g-6 ui-g">
+				<div class="ui-g-3">
+					<p:graphicImage
+						value="/images/user.png"
+						width="100%" />
+				</div>
+				<div class="ui-g-9 ui-g">
+					<div class="ui-g-12">
+						<h2>#{loginBean.usuario.nomeCompleto}</h2>
+						<p>#{loginBean.usuario.cpf}</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-g-6 ui-g">
+				<h2>#{msgs['suas.informacoes']}</h2>
+				<div class="ui-g-12">
+					<p:button
+						value="Anamnese"
+						class="btn btn-primary"
+						icon="fa fa-heartbeat"
+						outcome="anamnese.jsf"></p:button>
+				</div>
+			</div>
+			<div class="ui-g-6 ui-g">
+				<h2>#{msgs['seus.agendamentos']}</h2>
+				<div class="ui-g-12">
+					<p:button
+						value="Agendar Consulta"
+						class="btn btn-primary"
+						icon="fa fa-clock-o"
+						outcome="agendamento.jsf"></p:button>
+				</div>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>
 </html>

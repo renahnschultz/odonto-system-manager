@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['agendamento']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-g">
+			<h:form
+				id="formBuscaHorario"
+				prependId="false"
+				styleClass="ui-g-6 ui-fluid ui-g">
+				<h2 style="margin-bottom: 15px;">#{msgs['buscar.horarios']}</h2>
+				<p:outputPanel class="ui-material ui-g-8">
+					<p:selectOneMenu
+						id="odontologo"
+						value="#{agendamentoBean.odontologo}"
+						required="true">
+						<f:selectItem itemLabel="#{msgs['selecione']}"></f:selectItem>
+						<f:selectItems
+							value="#{odontologosSelect}"
+							var="odontologo"
+							itemLabel="#{odontologo.nomeCompleto}"
+							itemValue="#{odontologo}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:outputLabel
+						for="odontologo"
+						value="#{msgs['odontologo']}" />
+				</p:outputPanel>
+				<p:outputPanel class="ui-material ui-g-4">
+					<p:calendar
+						id="data"
+						value="#{agendamentoBean.data}"
+						pattern="dd/MM/yy"></p:calendar>
+					<p:outputLabel
+						for="data"
+						value="#{msgs['data']}" />
+				</p:outputPanel>
+				<p:commandButton
+					icon="fa fa-search"
+					styleClass="ui-g-12 btn btn-primary"
+					action="#{agendamentoBean.buscarHorarios}"
+					value="#{msgs['buscar.horarios']}"></p:commandButton>
+			</h:form>
+			<div class="ui-g-6">
+				<h2>Horários</h2>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
