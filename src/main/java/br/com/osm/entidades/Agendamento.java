@@ -49,6 +49,12 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "situacao", nullable = false)
 	private SituacaoAgendamento situacao;
 
+	public Agendamento(Usuario odontologo, Date dataHora) {
+		super();
+		this.odontologo = odontologo;
+		this.dataHora = dataHora;
+	}
+
 	public Agendamento() {
 	}
 
@@ -98,7 +104,6 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 		int result = 1;
 		result = prime * result + ((dataHora == null) ? 0 : dataHora.hashCode());
 		result = prime * result + ((odontologo == null) ? 0 : odontologo.hashCode());
-		result = prime * result + ((paciente == null) ? 0 : paciente.hashCode());
 		return result;
 	}
 
@@ -120,11 +125,6 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 			if (other.odontologo != null)
 				return false;
 		} else if (!odontologo.equals(other.odontologo))
-			return false;
-		if (paciente == null) {
-			if (other.paciente != null)
-				return false;
-		} else if (!paciente.equals(other.paciente))
 			return false;
 		return true;
 	}

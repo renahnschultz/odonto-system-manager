@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -128,11 +129,21 @@ public class OSMProducer implements Serializable {
 	@Produces
 	public List<Usuario> odontologosSelect() {
 		try {
-			return usuarioDAO.buscarOdontologos();
+			List<Usuario> buscarOdontologos = usuarioDAO.buscarOdontologos();
+			for (Usuario usuario : buscarOdontologos) {
+				
+			}
+			return buscarOdontologos;
 		} catch (OSMException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Named
+	@Produces
+	public TimeZone timeZoneUser() {
+		return TimeZone.getTimeZone("GMT");
 	}
 
 	public String currencyCode() {

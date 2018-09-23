@@ -84,6 +84,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 			fetch = FetchType.LAZY)
 	private List<HorarioOdontologo> horariosOdontologo;
 
+	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY)
+	private List<Agendamento> agendamentos;
+
 	public Usuario() {
 	}
 
@@ -271,6 +275,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setHorariosOdontologo(List<HorarioOdontologo> horariosOdontologo) {
 		this.horariosOdontologo = horariosOdontologo;
+	}
+
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
+	public void setAgendamentos(List<Agendamento> agendamentos) {
+		this.agendamentos = agendamentos;
 	}
 
 }

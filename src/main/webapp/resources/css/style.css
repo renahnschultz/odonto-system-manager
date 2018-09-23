@@ -274,18 +274,11 @@ div.ui-chkbox span.ui-chkbox-icon {
 	left: 10px;
 }
 
-@
-keyframes lds-roller { 0% {
-	transform: rotate(0deg);
+.panel-grid-agendamento label {
+	color: #999999;
 }
-100%
-{
-transform
-:
- 
-rotate
-(360deg);
 
-  
-}
+.panel-grid-agendamento {
+	text-transform: uppercase;
+	font-size: 16px;
 }

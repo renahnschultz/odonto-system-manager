@@ -6,7 +6,9 @@ package br.com.osm.dao;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CacheRetrieveMode;
@@ -24,8 +26,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 import javax.validation.ConstraintViolationException;
-
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import br.com.generico.AbstractAtivo;
 import br.com.generico.Filtro;
@@ -441,6 +441,39 @@ public class GenericoDAO<PK extends Serializable, TipoClasse extends Entidade<?>
 		if (transaction.isActive()) {
 			transaction.rollback();
 		}
+	}
+	
+	/**
+	 * Altera o horário de uma data para a primeira hora minuto segundo do dia.
+	 *
+	 * @param date
+	 *            A data que será convertida.
+	 * @return A data midificada.
+	 */
+	public static Date dataPrimeiraHora(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+	/**
+	 * Altera o horário de uma data para a primeira hora minuto segundo do dia.
+	 *
+	 * @param date
+	 *            A data que será convertida.
+	 * @return A data midificada.
+	 */
+	public static Date dataUltimaHora(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
+		return calendar.getTime();
 	}
 
 }

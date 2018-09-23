@@ -11,9 +11,6 @@
 
 	<ui:define name="head">
 		<title>OSM - <ui:insert name="title" /></title>
-		<h:outputStylesheet
-			library="css"
-			name="starter.css" />
 	</ui:define>
 
 	<ui:define name="logo-lg">
@@ -91,6 +88,18 @@
 							<span>#{msgs['pergunta.anamnese']}</span>
 						</p:link></li>
 				</ul></li>
+			<li><p:link
+					outcome="agendamento.jsf"
+					rendered="#{loginBean.usuario.tipo eq 'PACIENTE'}">
+					<i class="fa fa-clock-o"></i>
+					<span>#{msgs['agendamento']}</span>
+				</p:link></li>
+			<li><p:link
+					outcome="aprovarAgendamento.jsf"
+					rendered="#{verificaPermissao.temPermissao('aprovar-agendamento')}">
+					<i class="fa fa-thumbs-up"></i>
+					<span>#{msgs['aprovar.agendamento']}</span>
+				</p:link></li>
 			<li><p:link
 					outcome="horarioOdontologo.jsf"
 					rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">

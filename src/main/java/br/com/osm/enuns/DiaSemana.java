@@ -2,13 +2,13 @@ package br.com.osm.enuns;
 
 public enum DiaSemana {
 
-	DOMINGO("domingo"),
 	SEGUNDA("segunda"),
 	TERCA("terca"),
 	QUARTA("quarta"),
 	QUINTA("quinta"),
 	SEXTA("sexta"),
-	SABADO("sabado");
+	SABADO("sabado"),
+	DOMINGO("domingo");
 	
 	private String descricao;
 	

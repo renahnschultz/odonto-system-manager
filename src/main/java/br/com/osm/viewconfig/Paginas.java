@@ -59,18 +59,22 @@ public interface Paginas extends ViewConfig {
 	public class registroPaciente implements ViewConfig {
 	}
 
+	@Restricao(value = {"paciente"})
 	public class DashboardPaciente implements ViewConfig {
 
 	}
 
+	@Restricao(value = {"odontologo"})
 	public class DashboardOdontologo implements ViewConfig {
 
 	}
 
+	@Restricao(value = {"secretario"})
 	public class DashboardSecretario implements ViewConfig {
 
 	}
 
+	@Restricao(value = {"administrador-clinica"})
 	public class DashboardAdministrador implements ViewConfig {
 
 	}

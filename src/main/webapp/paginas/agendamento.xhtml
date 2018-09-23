@@ -15,53 +15,169 @@
 			<h:form
 				id="formBuscaHorario"
 				prependId="false"
-				styleClass="ui-g-6 ui-fluid ui-g">
-				<p:messages autoUpdate="true"></p:messages>
-				<div class="ui-g-12">
-					<h2 style="margin-bottom: 15px;">#{msgs['buscar.horarios']}</h2>
+				styleClass="ui-g-6 ui-fluid">
+				<div class="ui-g">
+					<p:messages autoUpdate="true"></p:messages>
+					<div class="ui-g-12">
+						<h2 style="margin-bottom: 15px;">#{msgs['buscar.horarios']}</h2>
+					</div>
+					<div class="ui-g-8">
+						<p:outputPanel class="ui-material">
+							<p:selectOneMenu
+								id="odontologo"
+								value="#{agendamentoBean.odontologo}"
+								required="true">
+								<f:selectItem
+									itemLabel="#{msgs['selecione']}"
+									itemValue=""></f:selectItem>
+								<f:selectItems
+									value="#{odontologosSelect}"
+									var="odontologo"
+									itemLabel="#{odontologo.nomeCompleto}"
+									itemValue="#{odontologo}">
+
+								</f:selectItems>
+							</p:selectOneMenu>
+							<p:outputLabel
+								for="odontologo"
+								value="#{msgs['odontologo']}" />
+						</p:outputPanel>
+					</div>
+					<div class="ui-g-4">
+						<p:outputPanel class="ui-material">
+							<p:calendar
+								id="data"
+								required="true"
+								value="#{agendamentoBean.data}"
+								pattern="dd/MM/yy"></p:calendar>
+							<p:outputLabel
+								for="data"
+								value="#{msgs['data']}" />
+						</p:outputPanel>
+					</div>
+					<p:commandButton
+						icon="fa fa-search"
+						styleClass="ui-g-12 btn btn-primary"
+						onstart="PF('statusDialog').show();"
+						update="listaHorarios"
+						oncomplete="PF('statusDialog').hide();"
+						actionListener="#{agendamentoBean.buscarHorarios()}"
+						value="#{msgs['buscar.horarios']}"></p:commandButton>
 				</div>
-				<div class="ui-g-8">
-					<p:outputPanel class="ui-material">
-						<p:selectOneMenu
-							id="odontologo"
-							value="#{agendamentoBean.odontologo}"
-							required="true">
-							<f:selectItem itemLabel="#{msgs['selecione']}" itemValue=""></f:selectItem>
-							<f:selectItems
-								value="#{odontologosSelect}"
-								var="odontologo"
-								itemLabel="#{odontologo.nomeCompleto}"
-								itemValue="#{odontologo}">
-								
-							</f:selectItems>
-						</p:selectOneMenu>
-						<p:outputLabel
-							for="odontologo"
-							value="#{msgs['odontologo']}" />
-					</p:outputPanel>
-				</div>
-				<div class="ui-g-4">
-					<p:outputPanel class="ui-material">
-						<p:calendar
-							id="data"
-							required="true"
-							value="#{agendamentoBean.data}"
-							pattern="dd/MM/yy"></p:calendar>
-						<p:outputLabel
-							for="data"
-							value="#{msgs['data']}" />
-					</p:outputPanel>
-				</div>
-				<p:commandButton
-					icon="fa fa-search"
-					styleClass="ui-g-12 btn btn-primary"
-					actionListener="#{agendamentoBean.buscarHorarios()}"
-					value="#{msgs['buscar.horarios']}"></p:commandButton>
 			</h:form>
 			<div class="ui-g-6">
-				<h2>Horários</h2>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<h2>Horários Disponíveis</h2>
+					</div>
+					<h:form
+						id="listaHorarios"
+						prependId="false"
+						class="ui-g-12">
+						<p:repeat
+							var="horario"
+							value="#{agendamentoBean.agendamentosDisponiveis}">
+							<div
+								class="ui-g-12"
+								style="border-left: 5px solid #8bc34a; margin-bottom: 5px;">
+								<div class="ui-g-8">
+									<h3>#{horario.odontologo.nomeCompleto}</h3>
+									<h4>#{horario.odontologo.cro}</h4>
+									<p:commandButton
+										value="#{msgs['solicitar.agendamento']}"
+										icon="fa fa-clock-o"
+										action="#{agendamentoBean.configNovoAgendamento()}"
+										onstart="PF('statusDialog').show()"
+										oncomplete="PF('statusDialog').hide(); PF('modalAgendamento').show()"
+										update="formAgendamento"
+										styleClass="btn btn-success">
+										<f:setPropertyActionListener
+											value="#{horario}"
+											target="#{agendamentoBean.agendamentoNovo}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+								<div class="ui-g-4">
+									<h1>
+										<h:outputText value="#{horario.dataHora}">
+											<f:convertDateTime
+												pattern="HH:mm"
+												locale="pt_BR"
+												timeZone="GMT-3"></f:convertDateTime>
+										</h:outputText>
+									</h1>
+									<h3>
+										<h:outputText value="#{horario.dataHora}">
+											<f:convertDateTime
+												pattern="dd/MM/yy"
+												locale="pt_BR"
+												timeZone="GMT-3"></f:convertDateTime>
+										</h:outputText>
+									</h3>
+								</div>
+							</div>
+						</p:repeat>
+					</h:form>
+				</div>
 			</div>
 		</div>
+		<p:dialog
+			modal="true"
+			header="#{msgs['confirmar.agendamento']}"
+			width="70vw"
+			id="modalAgendamento"
+			widgetVar="modalAgendamento">
+			<h:form
+				id="formAgendamento"
+				prependId="false">
+				<p:panelGrid
+					columns="2"
+					layout="grid"
+					styleClass="panel-grid-agendamento">
+					<p:outputLabel value="#{msgs['odontologo']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['paciente']}"></p:outputLabel>
+					<h:outputText
+						value="#{agendamentoBean.agendamentoNovo.odontologo.nomeCompleto}"></h:outputText>
+					<h:outputText
+						value="#{agendamentoBean.agendamentoNovo.paciente.nomeCompleto}"></h:outputText>
+					<p:outputLabel value="#{msgs['cro']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['cpf']}"></p:outputLabel>
+					<h:outputText
+						value="#{agendamentoBean.agendamentoNovo.odontologo.cro}"></h:outputText>
+					<h:outputText
+						value="#{agendamentoBean.agendamentoNovo.paciente.cpf}"></h:outputText>
+					<p:outputLabel value="#{msgs['data']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['hora']}"></p:outputLabel>
+					<h:outputText value="#{agendamentoBean.agendamentoNovo.dataHora}">
+						<f:convertDateTime
+							pattern="dd/MM/yy"
+							locale="pt_BR"
+							timeZone="GMT-3"></f:convertDateTime>
+					</h:outputText>
+					<h:outputText value="#{agendamentoBean.agendamentoNovo.dataHora}">
+						<f:convertDateTime
+							pattern="HH:mm"
+							locale="pt_BR"
+							timeZone="GMT-3"></f:convertDateTime>
+					</h:outputText>
+					<h:panelGroup>
+						<p:commandButton
+							value="#{msgs['confirmar']}"
+							icon="fa fa-check"
+							action="#{agendamentoBean.confirmarAgendamento()}"
+							onstart="PF('statusDialog').show()"
+							oncomplete="PF('statusDialog').hide()"
+							styleClass="btn btn-success"
+							update="listaHorarios"
+							onsuccess="PF('modalAgendamento').hide()"></p:commandButton>
+						<p:commandButton
+							value="#{msgs['cancelar']}"
+							icon="fa fa-times"
+							styleClass="btn btn-danger"
+							onclick="PF('modalAgendamento').hide()"></p:commandButton>
+					</h:panelGroup>
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>
