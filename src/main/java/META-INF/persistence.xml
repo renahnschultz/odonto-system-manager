@@ -33,7 +33,7 @@
 				value="true" />
 			<property name="eclipselink.jdbc.write-connections.max"
 				value="50" />
-			<property name="eclipselink.logging.level" value="OFF" />
+			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.target-database" value="MySQL" />
 			<property name="eclipselink.logging.session" value="false" />
 			<property name="eclipselink.logging.thread" value="false" />

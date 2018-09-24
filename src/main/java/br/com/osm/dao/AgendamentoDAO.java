@@ -40,7 +40,28 @@ public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 		}
 	}
 
-	public List<Agendamento> buscarAgendamentosAprovados(Usuario odontologo, Date dia) throws OSMException {
+	public List<Agendamento> buscarAgendamentosAprovados(Usuario odontologo, Date diaInicio, Date diaFim) throws OSMException {
+		try {
+			StringBuilder sql = new StringBuilder("SELECT p FROM ")
+					.append(tipo.getSimpleName())
+					.append(" AS p ")
+					.append(" WHERE p.situacao = :situacao ")
+					.append(" AND p.odontologo = :odontologo ")
+					.append(" AND p.dataHora BETWEEN :inicioDia AND :fimDia ");
+			TypedQuery<Agendamento> query = entityManager.createQuery(sql.toString(), Agendamento.class);
+			query.setParameter("situacao", SituacaoAgendamento.APROVADO);
+			query.setParameter("odontologo", odontologo);
+			query.setParameter("inicioDia", dataPrimeiraHora(diaInicio));
+			query.setParameter("fimDia", dataUltimaHora(diaFim));
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
+		}
+	}
+	
+	public List<Agendamento> buscarAgendamentosAprovadosEPendentes(Usuario odontologo, Date dia) throws OSMException {
 		try {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())

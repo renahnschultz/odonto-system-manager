@@ -134,10 +134,10 @@
 						<p:spacer></p:spacer>
 						<h:panelGroup>
 							<p:outputLabel
-								for="telefone"
+								for="telefone1"
 								value="#{msgs['telefone']}" />
 							<p:inputText
-								id="telefone"
+								id="telefone1"
 								required="true"
 								value="#{usuarioBean.usuario.telefone}" />
 						</h:panelGroup>
@@ -152,21 +152,21 @@
 						</h:panelGroup>
 						<h:panelGroup>
 							<p:outputLabel
-								for="senha"
+								for="senha1"
 								value="#{msgs['senha']}" />
 							<p:password
-								id="senha"
+								id="senha1"
 								value="#{usuarioBean.usuario.senha}"
-								match="senha2"
+								match="senha22"
 								label="#{msgs['senha']}"
 								required="true" />
 						</h:panelGroup>
 						<h:panelGroup>
 							<p:outputLabel
-								for="senha2"
+								for="senha22"
 								value="#{msgs['repita.a.senha']}" />
 							<p:password
-								id="senha2"
+								id="senha22"
 								value="#{usuarioBean.usuario.senha}"
 								label="#{msgs['repita.a.senha']}"
 								required="true" />
@@ -248,7 +248,7 @@
 					<h:outputText value="#{usuario.id}" />
 				</p:column>
 				<p:column headerText="#{msgs['nome']}">
-					<h:outputText value="#{usuario.nome}" />
+					<h:outputText value="#{usuario.nomeCompleto}" />
 				</p:column>
 				<p:column headerText="#{msgs['tipo']}">
 					<h:outputText value="#{msgs[usuario.tipo.descricao]}" />

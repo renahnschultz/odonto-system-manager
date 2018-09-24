@@ -52,7 +52,7 @@ public interface Paginas extends ViewConfig {
 	public class Agendamento implements ViewConfig {
 	}
 
-	@Restricao(value = {"odontologo", "secretario"})
+	@Restricao(value = {"aprovar-agendamento"})
 	public class AprovarAgendamento implements ViewConfig {
 	}
 	

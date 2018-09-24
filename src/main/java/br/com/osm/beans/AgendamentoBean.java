@@ -53,6 +53,7 @@ public class AgendamentoBean implements Serializable {
 	private List<Agendamento> agendamentosAprovar;
 	private boolean carregandoAgendamentos = true;
 	private Agendamento agendamentoNovo;
+	private Agendamento agendamentoAprovar;
 
 	public AgendamentoBean() {
 	}
@@ -63,7 +64,7 @@ public class AgendamentoBean implements Serializable {
 				return;
 			}
 			agendamentosDisponiveis = new ArrayList<Agendamento>();
-			List<Agendamento> agendamentosDoDia = agendamentoDAO.buscarAgendamentosAprovados(odontologo, data);
+			List<Agendamento> agendamentosDoDia = agendamentoDAO.buscarAgendamentosAprovadosEPendentes(odontologo, data);
 			HorarioOdontologo primeiroPeriodo = null;
 			HorarioOdontologo segundoPeriodo = null;
 			LocalDate dia = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -140,15 +141,15 @@ public class AgendamentoBean implements Serializable {
 		}
 	}
 
-	public void aprovarReprovar(Agendamento agendamento, Integer valor) {
+	public void aprovarReprovar(Integer valor) {
 		try {
 			if (valor == 1) {
-				agendamento.setSituacao(SituacaoAgendamento.APROVADO);
+				agendamentoAprovar.setSituacao(SituacaoAgendamento.APROVADO);
 			} else if (valor == 2) {
-				agendamento.setSituacao(SituacaoAgendamento.REPROVADO);
+				agendamentoAprovar.setSituacao(SituacaoAgendamento.REPROVADO);
 			}
-			new AgendamentoWebService(agendamentoDAO).salvar(agendamento);
-			agendamentosAprovar.remove(agendamento);
+			new AgendamentoWebService(agendamentoDAO).salvar(agendamentoAprovar);
+			agendamentosAprovar.remove(agendamentoAprovar);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao aprovar/reprovar agendamento", e);
@@ -229,6 +230,14 @@ public class AgendamentoBean implements Serializable {
 
 	public void setAgendamentoNovo(Agendamento agendamentoNovo) {
 		this.agendamentoNovo = agendamentoNovo;
+	}
+
+	public Agendamento getAgendamentoAprovar() {
+		return agendamentoAprovar;
+	}
+
+	public void setAgendamentoAprovar(Agendamento agendamentoAprovar) {
+		this.agendamentoAprovar = agendamentoAprovar;
 	}
 
 }

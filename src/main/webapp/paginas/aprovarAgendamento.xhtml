@@ -49,7 +49,10 @@
 						</p:column>
 						<p:column headerText="#{msgs['data']}">
 							<h:outputText value="#{agendamento.dataHora}">
-								<f:convertDateTime pattern="dd/MM/yy hh:mm"></f:convertDateTime>
+								<f:convertDateTime
+									pattern="dd/MM/yy hh:mm"
+									locale="pt_BR"
+									timeZone="GMT-3"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
 						<p:column headerText="#{msgs['situacao']}">
@@ -61,13 +64,15 @@
 								id="aprovar"
 								style="width: auto;"
 								update="dataTableAgendamentos"
-								action="#{agendamentoBean.aprovarReprovar(agendamento, 1)}"></p:commandButton>
+								action="#{agendamentoBean.aprovarReprovar(1)}">
+								<f:setPropertyActionListener value="#{agendamento}" target="#{agendamentoBean.agendamentoAprovar}"></f:setPropertyActionListener>
+								</p:commandButton>
 							<p:commandButton
 								icon="fa fa-thumbs-down"
 								id="reprovar"
 								style="width: auto;"
 								update="dataTableAgendamentos"
-								action="#{agendamentoBean.aprovarReprovar(agendamento, 2)}"></p:commandButton>
+								action="#{agendamentoBean.aprovarReprovar(2)}"></p:commandButton>
 							<p:tooltip
 								for="aprovar"
 								position="top"

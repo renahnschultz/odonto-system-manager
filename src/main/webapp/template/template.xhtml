@@ -89,6 +89,12 @@
 						</p:link></li>
 				</ul></li>
 			<li><p:link
+					outcome="agenda.jsf"
+					rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">
+					<i class="fa fa-calendar"></i>
+					<span>#{msgs['agenda']}</span>
+				</p:link></li>
+			<li><p:link
 					outcome="agendamento.jsf"
 					rendered="#{loginBean.usuario.tipo eq 'PACIENTE'}">
 					<i class="fa fa-clock-o"></i>
