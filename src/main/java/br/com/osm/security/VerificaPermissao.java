@@ -137,6 +137,9 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 		if (role.equals("odontologo")) {
 			return TipoUsuario.ODONTOLOGO.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
 		}
+		if (role.equals("secretario")) {
+			return TipoUsuario.SECRETARIO.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
+		}
 		if (role.equals("osm")) {
 			return request.get().isUserInRole(role);
 		}

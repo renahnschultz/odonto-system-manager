@@ -118,6 +118,12 @@
 					<i class="fa fa-id-badge"></i>
 					<span>#{msgs['anamnese']}</span>
 				</p:link></li>
+			<li><p:link
+					outcome="configuracao.jsf"
+					rendered="#{verificaPermissao.temPermissao('administrador')}">
+					<i class="fa fa-cog"></i>
+					<span>#{msgs['configuracao']}</span>
+				</p:link></li>
 		</ul>
 	</ui:define>
 

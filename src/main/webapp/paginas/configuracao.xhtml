@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['configuracao']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-datatable-header ui-widget-header ui-corner-top">
+			<div class="ui-g">
+				<div class="ui-g-4"></div>
+				<div
+					class="ui-g-4"
+					style="text-align: center;">#{msgs['configuracao']}</div>
+				<div class="ui-g-4"></div>
+			</div>
+		</div>
+		<h:form styleClass="ui-g ui-fluid">
+			<div
+				class="ui-g-12"
+				style="color: #607d8b; text-align: center;">
+				#{msgs['info.configuracao']}</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputMask
+						id="cnpj"
+						value="#{configuracaoBean.configuracao.cnpj}"
+						maxlength="14"
+						mask="99.999.999/9999-99"
+						required="true"></p:inputMask>
+					<p:outputLabel
+						for="cnpj"
+						value="#{msgs['cnpj']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="razaoSocial"
+						value="#{configuracaoBean.configuracao.razaoSocial}"
+						maxlength="100"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="razaoSocial"
+						value="#{msgs['razao.social']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="fantasia"
+						value="#{configuracaoBean.configuracao.fantasia}"
+						maxlength="100"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="fantasia"
+						value="#{msgs['fantasia']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="endereco"
+						value="#{configuracaoBean.configuracao.endereco}"
+						maxlength="200"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="endereco"
+						value="#{msgs['endereco']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="bairro"
+						value="#{configuracaoBean.configuracao.bairro}"
+						maxlength="100"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="bairro"
+						value="#{msgs['bairro']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="cidade"
+						value="#{configuracaoBean.configuracao.cidade}"
+						maxlength="100"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="cidade"
+						value="#{msgs['cidade']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="estado"
+						value="#{configuracaoBean.configuracao.estado}"
+						maxlength="100"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="estado"
+						value="#{msgs['estado']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputMask
+						id="tel1"
+						mask="(99) 9999-9999"
+						value="#{configuracaoBean.configuracao.telefone1}"
+						maxlength="15"
+						required="true"></p:inputMask>
+					<p:outputLabel
+						for="tel1"
+						value="#{msgs['telefone']} 1" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputMask
+						id="tel2"
+						mask="(99) 9999-9999"
+						value="#{configuracaoBean.configuracao.telefone2}"
+						maxlength="15"></p:inputMask>
+					<p:outputLabel
+						for="tel2"
+						value="#{msgs['telefone']} 2" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputText
+						id="email"
+						value="#{configuracaoBean.configuracao.email}"
+						maxlength="120"
+						type="email"
+						required="true"></p:inputText>
+					<p:outputLabel
+						for="email"
+						value="#{msgs['email']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:inputNumber
+						id="valorMulta"
+						minValue="0"
+						decimalPlaces="2"
+						decimalSeparator=","
+						emptyValue="0"
+						padControl="true"
+						symbol="R$"
+						value="#{configuracaoBean.configuracao.valorMulta}"
+						maxValue="999"
+						placeholder="#{msgs['valor.multa']}"
+						required="true"></p:inputNumber>
+					<p:outputLabel
+						for="valorMulta"
+						value="#{msgs['valor.multa']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:outputPanel class="ui-material">
+					<p:selectOneMenu
+						id="multa"
+						value="#{configuracaoBean.configuracao.multa}">
+						<f:selectItems
+							var="simNao"
+							value="#{simNaoProducer}"
+							itemValue="#{simNao}"
+							itemLabel="#{msgs[simNao.descricao]}" />
+					</p:selectOneMenu>
+					<p:outputLabel
+						for="multa"
+						value="#{msgs['multa']}" />
+				</p:outputPanel>
+			</div>
+			<div class="ui-g-6">
+				<p:commandButton
+					value="#{msgs['salvar']}"
+					styleClass="btn btn-success"
+					action="#{configuracaoBean.salvar()}"
+					process="@form"
+					update="@form"
+					icon="fa fa-check">
+				</p:commandButton>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

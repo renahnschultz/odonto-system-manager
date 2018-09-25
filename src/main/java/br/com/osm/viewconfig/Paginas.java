@@ -55,6 +55,13 @@ public interface Paginas extends ViewConfig {
 	@Restricao(value = {"aprovar-agendamento"})
 	public class AprovarAgendamento implements ViewConfig {
 	}
+
+	@Restricao(value = {"odontologo"})
+	public class Agenda implements ViewConfig {
+	}
+	@Restricao(value = {"administrador"})
+	public class Configuracao implements ViewConfig {
+	}
 	
 	public class registroPaciente implements ViewConfig {
 	}
