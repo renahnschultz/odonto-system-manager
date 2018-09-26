@@ -22,7 +22,7 @@ import br.com.osm.enuns.SituacaoAgendamento;
 
 @Entity
 @Table(name = "configuracao")
-public class Configuracao extends AbstractAtivo implements Entidade<Long> {
+public class Configuracao implements Entidade<Long> {
 
 	/**
 	 * @author Renahn 28-07-2018
@@ -40,6 +40,9 @@ public class Configuracao extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "fantasia", nullable = false, length = 100)
 	private String fantasia;
 	
+	@Column(name = "cep", nullable = false, length = 9)
+	private String cep;
+	
 	@Column(name = "endereco", nullable = false, length = 100)
 	private String endereco;
 	
@@ -52,7 +55,7 @@ public class Configuracao extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "estado", nullable = false, length = 50)
 	private String estado;
 
-	@Column(name = "cnpj", nullable = false, length = 14)
+	@Column(name = "cnpj", nullable = false, length = 18)
 	private String cnpj;
 
 	@Column(name = "telefone_1", nullable = false, length = 15)
@@ -176,6 +179,14 @@ public class Configuracao extends AbstractAtivo implements Entidade<Long> {
 
 	public void setMulta(SimNao multa) {
 		this.multa = multa;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	

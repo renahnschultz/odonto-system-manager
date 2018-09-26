@@ -2,6 +2,7 @@ package br.com.osm.beans;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,11 +28,14 @@ public class ConfiguracaoBean implements Serializable {
 	public ConfiguracaoBean() {
 	}
 	
+	@PostConstruct
 	public void init() {
 		try {
-			setConfiguracao(configuracaoDAO.pesquisarPor(1L));
+			configuracao = configuracaoDAO.pesquisarPor(1L);
 			if(getConfiguracao() == null) {
-				setConfiguracao(new Configuracao());
+				Configuracao configuracao2 = new Configuracao();
+				configuracao2.setId(1L);
+				configuracao =  configuracao2;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -41,11 +45,9 @@ public class ConfiguracaoBean implements Serializable {
 
 	public void salvar() {
 		new ConfiguracaoWebService(configuracaoDAO).salvar(getConfiguracao());
-		cancelar();
 	}
 
 	public void cancelar() {
-		setConfiguracao(new Configuracao());
 	}
 
 	public Configuracao getConfiguracao() {
