@@ -22,32 +22,30 @@
 			name="apple-mobile-web-app-capable"
 			content="yes" />
 	</f:facet>
-	<title>Odonto System - <ui:insert name="titulo" />
+	<title>Odonto System - Acesso Negado
 	</title>
 	<h:outputStylesheet
 		name="style.css"
 		library="css" />
-	<h:outputStylesheet
-		name="sb-admin.css"
-		library="css" />
-	<h:outputStylesheet
-		name="bootstrap.min.css"
-		library="css" />
-	<ui:insert name="head" />
-
 </h:head>
 <body style="background: #F44336; height: 100vh;">
 	<div
-		class="row"
+		class="ui-g"
 		style="text-align: center; top: 45%; position: absolute; width: 100%; transform: translateY(-50%);">
-		<div class="col-6">
+		<div class="ui-g-12">
+			<p:messages
+			style="display:none;"
+				autoUpdate="true"
+				globalOnly="true"></p:messages>
+		</div>
+		<div class="ui-g-6">
 			<img
 				src="../images/dente.png"
 				width="150px"
 				style="float: right;" />
 		</div>
 		<div
-			class="col-6"
+			class="ui-g-6"
 			style="text-align: left;">
 			<div class="col-6">
 				<div class="col-12">

@@ -19,6 +19,7 @@ import org.primefaces.model.ScheduleModel;
 
 import br.com.osm.dao.AgendamentoDAO;
 import br.com.osm.entidades.Agendamento;
+import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.util.FacesUtil;
 
@@ -39,6 +40,9 @@ public class AgendaBean implements Serializable {
 	@Inject
 	transient private AgendamentoDAO agendamentoDAO;
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
+	
+	@Inject
+	private AtendimentoBean atendimentoBean;
 
 	private ScheduleModel agendaModel;
 	private Agendamento agendamento;
@@ -70,7 +74,15 @@ public class AgendaBean implements Serializable {
 	}
 	
 	public void iniciarAtendimento() {
-		
+		try {
+			Atendimento atendimento = new Atendimento();
+			atendimento.setAgendamento(agendamento);
+			atendimento.setDataInicio(new Date());
+			atendimentoBean.setAtendimento(atendimento);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao iniciar atendimento.",e);
+		}
 	}
 	
 	public void onEventSelect(SelectEvent selectEvent) {

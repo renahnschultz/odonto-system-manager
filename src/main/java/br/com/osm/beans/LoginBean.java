@@ -32,6 +32,7 @@ import br.com.osm.message.Mensagens;
 import br.com.osm.security.VerificaPermissao;
 import br.com.osm.util.Constantes;
 import br.com.osm.viewconfig.Paginas;
+import br.com.osm.viewconfig.Paginas.DashboardPaciente;
 
 /**
  *
@@ -81,21 +82,23 @@ public class LoginBean implements Serializable {
 	public void init() {
 	}
 
-	public void verificarAutenticacao() {
+	public Class<? extends ViewConfig> verificarAutenticacao() {
 		if (isAutenticado()) {
 			if (TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardPaciente.class);
+				 return Paginas.DashboardPaciente.class;
 			} else if (TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardOdontologo.class);
+				 return Paginas.DashboardOdontologo.class;
 			} else if (TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardSecretario.class);
+				 return Paginas.DashboardSecretario.class;
 			} else if (TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardAdministrador.class);
+				 return Paginas.DashboardAdministrador.class;
 			}
+			return null;
 		}
+		return null;
 	}
 
-	public void autenticar() {
+	public Class<? extends ViewConfig> autenticar() {
 		try {
 			//executa essa query apenas paga garantir que as tabelas serão criadas pelo JPA
 			usuario = usuarioDAO.pesquisar(Filtro.criarNovoFiltro()
@@ -111,20 +114,22 @@ public class LoginBean implements Serializable {
 			nomeUsuario = usuario.getNome();
 			usuario.getPermissoes();
 			if (TipoUsuario.PACIENTE.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardPaciente.class);
+				 return Paginas.DashboardPaciente.class;
 			} else if (TipoUsuario.ODONTOLOGO.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardOdontologo.class);
+				 return Paginas.DashboardOdontologo.class;
 			} else if (TipoUsuario.SECRETARIO.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardSecretario.class);
+				 return Paginas.DashboardSecretario.class;
 			} else if (TipoUsuario.ADMINISTRADOR.equals(usuario.getTipo()) || TipoUsuario.ADMINISTRADOR_CLINICA.equals(usuario.getTipo())) {
-				viewNavigationHandler.navigateTo(Paginas.DashboardAdministrador.class);
+				 return Paginas.DashboardAdministrador.class;
 			}
+			return null;
 		} catch (ServletException e) {
 			logger.warning("Usuário ou senha inválidos: " + login + ", " + senha);
 			mensagens.addError().erroAoRealizarLoginUsuarioSenhaInvalidos();
 		} catch (OSMException e) {
 			logger.log(Level.SEVERE, "Erro ao pesquisar Usuário com login: " + login, e);
 		}
+		return null;
 	}
 
 	public Class<? extends ViewConfig> logout() {

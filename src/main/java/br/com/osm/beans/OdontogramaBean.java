@@ -39,6 +39,8 @@ import br.com.osm.util.FacesUtil;
 public class OdontogramaBean implements Serializable {
 
 	@Inject
+	private AtendimentoBean atendimentoBean;
+	@Inject
 	transient private OdontogramaDAO odontogramaDAO;
 	@Inject
 	transient private DenteDAO denteDAO;
@@ -65,7 +67,7 @@ public class OdontogramaBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			odontograma = odontogramaDAO.odontogramaDoPaciente(usuarioLogado);
+			odontograma = odontogramaDAO.odontogramaDoPaciente(atendimentoBean.getAtendimento().getAgendamento().getPaciente());
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
