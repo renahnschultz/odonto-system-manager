@@ -22,7 +22,9 @@ import javax.inject.Named;
 
 import org.apache.deltaspike.core.api.message.MessageContext;
 
+import br.com.osm.dao.ServicoDAO;
 import br.com.osm.dao.UsuarioDAO;
+import br.com.osm.entidades.Servico;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.enuns.SimNao;
 import br.com.osm.enuns.SimNaoOutro;
@@ -50,6 +52,8 @@ public class OSMProducer implements Serializable {
 	
 	@Inject
 	private transient UsuarioDAO usuarioDAO;
+	@Inject
+	private transient ServicoDAO servicoDAO;
 
 	@PostConstruct
 	public void postConstruct() {

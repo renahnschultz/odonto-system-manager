@@ -86,4 +86,9 @@ public interface Paginas extends ViewConfig {
 
 	}
 
+	@Restricao(value = {"odontologo"})
+	public class Odontograma implements ViewConfig {
+		
+	}
+
 }

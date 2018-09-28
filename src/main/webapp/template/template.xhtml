@@ -113,6 +113,12 @@
 					<span>#{msgs['meu.horario']}</span>
 				</p:link></li>
 			<li><p:link
+					outcome="odontograma.jsf"
+					rendered="#{loginBean.usuario.tipo eq 'ODONTOLOGO'}">
+					<i class="fa fa-clock-o"></i>
+					<span>#{msgs['odontograma']}</span>
+				</p:link></li>
+			<li><p:link
 					outcome="anamnese.jsf"
 					rendered="#{loginBean.usuario.tipo eq 'PACIENTE'}">
 					<i class="fa fa-id-badge"></i>

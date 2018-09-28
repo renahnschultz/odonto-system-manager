@@ -24,8 +24,14 @@
 				<div class="ui-g-4"></div>
 			</div>
 		</div>
-		<div
-			class="ui-fluid"
+		<p:outputPanel rendered="#{atendimentoBean.atendimento eq null}">
+			<p
+				style="background: #f44336; margin: 20px; border-radius: 60px; padding: 20px; text-align: center; color: #fff;">Nenhum
+				atendimento em execução.</p>
+		</p:outputPanel>
+		<p:outputPanel
+			rendered="#{atendimentoBean.atendimento ne null}"
+			styleClass="ui-fluid"
 			style="padding: 10px;">
 			<h:form
 				id="formOdontograma"
@@ -290,7 +296,10 @@
 								value="#{msgs['adicionar.servico']}"
 								icon="fa fa-plus"
 								styleClass="btn btn-primary"
-								style="width: auto;float:right;"></p:commandButton>
+								action="#{odontogramaBean.novoServico()}"
+								oncomplete="PF('novoServico').show(); PF('dialogMarcacao').hide()"
+								style="width: auto;float:right;">
+							</p:commandButton>
 						</div>
 						<div
 							class="ui-g-12"
@@ -391,7 +400,159 @@
 					</div>
 				</h:form>
 			</p:dialog>
-		</div>
+			<p:dialog
+				id="novoServico"
+				widgetVar="novoServico"
+				modal="true"
+				width="80vw"
+				draggable="false"
+				resizable="false"
+				onHide="PF('dialogMarcacao').show()"
+				header="#{msgs['novo.servico']}">
+				<h:form
+					styleClass="ui-g"
+					prependId="false"
+					id="formServico">
+					<div
+						class="ui-g-6"
+						style="padding: 0px;">
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['servico']}</div>
+						<div class="ui-g-12">
+							<p:outputLabel value="#{msgs['selecione.servico.abaixo']}"></p:outputLabel>
+							<br /> <br />
+							<div
+								class="ui-material"
+								style="bottom: 0px;">
+								<p:autoComplete
+									completeMethod="#{odontogramaBean.completeServico}"
+									var="servico"
+									itemLabel="#{servico.nome}"
+									value="#{odontogramaBean.acaoServico.servico}"
+									placeholder="Digite o nome de um serviço ..."
+									id="completeServico"
+									itemValue="#{servico}">
+									<p:ajax
+										event="itemSelect"
+										process="@this"
+										update="@form"></p:ajax>
+								</p:autoComplete>
+								<p:outputLabel
+									value="#{msgs['servico']}"
+									for="completeServico"></p:outputLabel>
+							</div>
+						</div>
+						<p:outputPanel
+							rendered="#{odontogramaBean.acaoServico.servico ne null}">
+							<div
+								class="ui-g-6"
+								style="font-size: 16px;">
+								<p:outputLabel value="#{msgs['descricao']}"></p:outputLabel>
+								<br />
+								<h:outputText
+									value="#{odontogramaBean.acaoServico.servico.descricao}"></h:outputText>
+							</div>
+							<div
+								class="ui-g-6"
+								style="font-size: 16px;">
+								<div class="ui-g-12">
+									<p:outputLabel value="#{msgs['tipo']}"></p:outputLabel>
+									<br />
+									<h:outputText
+										value="#{msgs[odontogramaBean.acaoServico.servico.tipo.descricao]}"></h:outputText>
+								</div>
+								<div class="ui-g-12">
+									<p:outputLabel value="#{msgs['preco']}"></p:outputLabel>
+									<br />
+									<h:outputText
+										value="#{odontogramaBean.acaoServico.servico.precoSugerido}">
+										<f:convertNumber
+											currencyCode="BRL"
+											currencySymbol="R$"
+											maxFractionDigits="2"
+											minFractionDigits="2"
+											type="currency"></f:convertNumber>
+									</h:outputText>
+								</div>
+							</div>
+						</p:outputPanel>
+					</div>
+					<p:outputPanel
+						id="listaMateriais"
+						styleClass="ui-g-6"
+						style="padding: 0px;">
+						<div
+							class="ui-g-12"
+							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
+							#{msgs['materiais']}</div>
+						<div
+							class="ui-g-12"
+							style="padding: 0px;">
+							<div class="ui-g-6">
+								<div
+									class="ui-material"
+									style="bottom: 0px;">
+									<p:autoComplete
+										completeMethod="#{odontogramaBean.completeMaterial}"
+										var="material"
+										itemLabel="#{material.nome}"
+										value="#{odontogramaBean.novoMaterial.material}"
+										placeholder="Digite o nome de um material ..."
+										id="completeMaterial"
+										itemValue="#{material}">
+										<p:ajax
+											event="itemSelect"
+											process="@this"
+											update="panelUnidade"></p:ajax>
+									</p:autoComplete>
+									<p:outputLabel
+										value="#{msgs['material']}"
+										for="completeServico"></p:outputLabel>
+								</div>
+							</div>
+							<p:outputPanel
+								id="panelUnidade"
+								class="ui-g-3">
+								<div
+									class="ui-material"
+									style="bottom: 0px;">
+									<p:inputNumber
+										value="#{odontogramaBean.novoMaterial.quantidade}"
+										placeholder="Qtd."
+										decimalPlaces="2"
+										decimalSeparator="."
+										emptyValue="0"
+										minValue="0" />
+									<p:outputLabel
+										value="Qtd."
+										for="completeServico"></p:outputLabel>
+								</div>
+								<p>#{msgs[odontogramaBean.novoMaterial.material.medida.descricao]}</p>
+							</p:outputPanel>
+							<div class="ui-g-3">
+								<p:commandButton
+									id="adicionarMaterial"
+									styleClass="btn btn-primary"
+									action="#{odontogramaBean.adicionarMaterial()}"
+									onstart="PF('statusDialog').show()"
+									oncomplete="PF('statusDialog').hide()"
+									update="listaMateriais"
+									icon="fa fa-plus"></p:commandButton>
+							</div>
+						</div>
+						<div class="ui-g-12">
+							<p:repeat
+								var="material"
+								value="#{odontogramaBean.acaoServico.materiais}">
+								<div class="ui-g-12">#{material.material.nome}</div>
+							</p:repeat>
+						</div>
+					</p:outputPanel>
+				</h:form>
+			</p:dialog>
+		</p:outputPanel>
 		<script type="text/javascript">
         //<![CDATA[
         

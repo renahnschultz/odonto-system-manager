@@ -62,6 +62,9 @@ public class Marcacao extends AbstractAtivo implements Entidade<Long> {
 	
 	@OneToMany(mappedBy = "marcacao", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios;
+	
+	@OneToMany(mappedBy = "marcacao", cascade = CascadeType.ALL)
+	private List<AcaoServico> servicos;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_hora", nullable = false)

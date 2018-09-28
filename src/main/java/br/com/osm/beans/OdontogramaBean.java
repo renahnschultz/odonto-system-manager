@@ -2,8 +2,6 @@ package br.com.osm.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +13,18 @@ import javax.inject.Named;
 import br.com.osm.dao.ComentarioDAO;
 import br.com.osm.dao.DenteDAO;
 import br.com.osm.dao.MarcacaoDAO;
+import br.com.osm.dao.MaterialDAO;
 import br.com.osm.dao.OdontogramaDAO;
+import br.com.osm.dao.ServicoDAO;
+import br.com.osm.entidades.AcaoServico;
+import br.com.osm.entidades.AcaoServicoMaterial;
 import br.com.osm.entidades.Comentario;
 import br.com.osm.entidades.Dente;
 import br.com.osm.entidades.DenteOdontograma;
 import br.com.osm.entidades.Marcacao;
+import br.com.osm.entidades.Material;
 import br.com.osm.entidades.Odontograma;
+import br.com.osm.entidades.Servico;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
 import br.com.osm.rest.ComentarioWebService;
@@ -45,6 +49,10 @@ public class OdontogramaBean implements Serializable {
 	@Inject
 	transient private DenteDAO denteDAO;
 	@Inject
+	transient private ServicoDAO servicoDAO;
+	@Inject
+	transient private MaterialDAO materialDAO;
+	@Inject
 	transient private MarcacaoDAO marcacaoDAO;
 	@Inject
 	transient private ComentarioDAO comentarioDAO;
@@ -60,6 +68,10 @@ public class OdontogramaBean implements Serializable {
 	private Double posX;
 	private Double posY;
 	private String cor;
+	
+	private AcaoServico acaoServico;
+	
+	private AcaoServicoMaterial novoMaterial;
 
 	public OdontogramaBean() {
 	}
@@ -175,6 +187,38 @@ public class OdontogramaBean implements Serializable {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
 	}
+	
+	
+	public void novoServico() {
+		acaoServico = new AcaoServico();
+		novoMaterial = new AcaoServicoMaterial();
+	}
+	
+	public List<Servico> completeServico(String complete) {
+		try {
+			List<Servico> entidades = servicoDAO.autoComplete(complete);
+			return entidades;
+		} catch (OSMException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Material> completeMaterial(String complete) {
+		try {
+			List<Material> entidades = materialDAO.autoComplete(complete);
+			return entidades;
+		} catch (OSMException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void adicionarMaterial() {
+		acaoServico.getMateriais().add(novoMaterial);
+		novoMaterial = new AcaoServicoMaterial();
+	}
+	
 
 	public Odontograma getOdontograma() {
 		return odontograma;
@@ -238,6 +282,22 @@ public class OdontogramaBean implements Serializable {
 
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
+	}
+
+	public AcaoServico getAcaoServico() {
+		return acaoServico;
+	}
+
+	public void setAcaoServico(AcaoServico acaoServico) {
+		this.acaoServico = acaoServico;
+	}
+
+	public AcaoServicoMaterial getNovoMaterial() {
+		return novoMaterial;
+	}
+
+	public void setNovoMaterial(AcaoServicoMaterial novoMaterial) {
+		this.novoMaterial = novoMaterial;
 	}
 
 }
