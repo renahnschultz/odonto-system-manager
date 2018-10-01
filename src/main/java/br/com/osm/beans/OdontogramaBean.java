@@ -10,6 +10,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.osm.dao.AcaoServicoDAO;
 import br.com.osm.dao.ComentarioDAO;
 import br.com.osm.dao.DenteDAO;
 import br.com.osm.dao.MarcacaoDAO;
@@ -27,6 +28,7 @@ import br.com.osm.entidades.Odontograma;
 import br.com.osm.entidades.Servico;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.exception.OSMException;
+import br.com.osm.rest.AcaoServicoWebService;
 import br.com.osm.rest.ComentarioWebService;
 import br.com.osm.rest.MarcacaoWebService;
 import br.com.osm.rest.OdontogramaWebService;
@@ -56,21 +58,23 @@ public class OdontogramaBean implements Serializable {
 	transient private MarcacaoDAO marcacaoDAO;
 	@Inject
 	transient private ComentarioDAO comentarioDAO;
+	@Inject
+	transient private AcaoServicoDAO acaoServicoDAO;
+	
 	private Odontograma odontograma;
 
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
-	
-	
+
 	private Marcacao marcacao = new Marcacao();
 	private Long denteId;
 	private Comentario comentarioAdicionar = new Comentario();
-	
+
 	private Double posX;
 	private Double posY;
 	private String cor;
-	
+
 	private AcaoServico acaoServico;
-	
+
 	private AcaoServicoMaterial novoMaterial;
 
 	public OdontogramaBean() {
@@ -103,12 +107,12 @@ public class OdontogramaBean implements Serializable {
 			odontograma.adicionarDente(new DenteOdontograma(odontograma, dente));
 		}
 	}
-	
+
 	public void processarMarcacao() {
 		try {
 			marcacao = new Marcacao();
-			for(DenteOdontograma dente : odontograma.getDentes()) {
-				if(dente.getDente().getId() == denteId) {
+			for (DenteOdontograma dente : odontograma.getDentes()) {
+				if (dente.getDente().getId() == denteId) {
 					marcacao.setDente(dente);
 					break;
 				}
@@ -128,7 +132,7 @@ public class OdontogramaBean implements Serializable {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
 	}
-	
+
 	public void comentarMarcacao() {
 		try {
 			comentarioAdicionar.setOdontologo(usuarioLogado);
@@ -136,31 +140,31 @@ public class OdontogramaBean implements Serializable {
 			marcacao.adicionarComentario(comentarioAdicionar);
 			new ComentarioWebService(comentarioDAO).salvar(comentarioAdicionar);
 			comentarioAdicionar = new Comentario();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Erro ao comentar marcacao.", e);
 		}
 	}
-	
+
 	public void excluirComentario(Comentario comentario) {
 		try {
 			marcacao.getComentarios().remove(comentario);
 			new ComentarioWebService(comentarioDAO).excluir(comentario.getId());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Erro ao remover comentario.", e);
 		}
 	}
-	
+
 	public void editarMarcacao(Marcacao marcacao) {
-			try {
-				this.marcacao = marcacaoDAO.recuperar(marcacao);
-			} catch (Exception e) {
-				throw new RuntimeException("Erro ao recuperar marcacao.", e);
-			}
+		try {
+			this.marcacao = marcacaoDAO.recuperar(marcacao);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao recuperar marcacao.", e);
+		}
 	}
 
 	public void removerMarcacao(Marcacao marcacao) {
 		try {
-			for(Comentario comentario : marcacao.getComentarios()) {
+			for (Comentario comentario : marcacao.getComentarios()) {
 				new ComentarioWebService(comentarioDAO).excluir(comentario.getId());
 			}
 			new MarcacaoWebService(marcacaoDAO).excluir(marcacao.getId());
@@ -173,9 +177,9 @@ public class OdontogramaBean implements Serializable {
 
 	public void salvar() {
 		try {
-			if(marcacao != null && marcacao.getId() != null) {
+			if (marcacao != null && marcacao.getId() != null) {
 				int index = odontograma.getMarcacoes().indexOf(marcacao);
-				if(index != -1) {
+				if (index != -1) {
 					odontograma.getMarcacoes().remove(index);
 					odontograma.getMarcacoes().add(index, marcacao);
 				}
@@ -187,13 +191,12 @@ public class OdontogramaBean implements Serializable {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
 		}
 	}
-	
-	
+
 	public void novoServico() {
 		acaoServico = new AcaoServico();
 		novoMaterial = new AcaoServicoMaterial();
 	}
-	
+
 	public List<Servico> completeServico(String complete) {
 		try {
 			List<Servico> entidades = servicoDAO.autoComplete(complete);
@@ -213,12 +216,52 @@ public class OdontogramaBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	public void adicionarMaterial() {
-		acaoServico.getMateriais().add(novoMaterial);
-		novoMaterial = new AcaoServicoMaterial();
+		if (novoMaterial.getMaterial() != null && novoMaterial.getQuantidade() != null) {
+			if(acaoServico.getMateriais().contains(novoMaterial)) {
+				acaoServico.getMateriais().remove(novoMaterial);
+			}
+			novoMaterial.setAcaoServico(acaoServico);
+			acaoServico.getMateriais().add(novoMaterial);
+			novoMaterial = new AcaoServicoMaterial();
+		}
 	}
 	
+	public void salvarAcaoServico() {
+		try {
+			acaoServico.setData(new Date());
+			acaoServico.setMarcacao(marcacao);
+			acaoServico.setAtendimento(atendimentoBean.getAtendimento());
+			atendimentoBean.adicionarAcaoServico(acaoServico);
+			new AcaoServicoWebService(acaoServicoDAO).salvar(acaoServico);
+			cancelarAcaoServico();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao comentar marcacao.", e);
+		}
+	}
+	
+	public void cancelarAcaoServico() {
+		acaoServico = new AcaoServico();
+	}
+	
+	public void removerMaterial(AcaoServicoMaterial material) {
+		acaoServico.getMateriais().remove(material);
+	}
+	
+	public void servicoSelecionado() {
+		acaoServico.setPreco(acaoServico.getServico().getPrecoSugerido());
+	}
+	
+	public void excluirAcaoServico(AcaoServico servico) {
+		try {
+			marcacao.getServicos().remove(servico);
+			new AcaoServicoWebService(acaoServicoDAO).excluir(servico.getId());
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao excluir Ação de Serviço.", e);
+		}
+	}
 
 	public Odontograma getOdontograma() {
 		return odontograma;

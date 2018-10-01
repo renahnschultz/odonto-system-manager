@@ -64,7 +64,7 @@ public class Marcacao extends AbstractAtivo implements Entidade<Long> {
 	private List<Comentario> comentarios;
 	
 	@OneToMany(mappedBy = "marcacao", cascade = CascadeType.ALL)
-	private List<AcaoServico> servicos;
+	private List<AcaoServico> servicos = new ArrayList<AcaoServico>();
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_hora", nullable = false)
@@ -207,6 +207,22 @@ public class Marcacao extends AbstractAtivo implements Entidade<Long> {
 			comentarios = new ArrayList<Comentario>();
 		}
 		comentarios.add(comentario);
+	}
+
+	public List<AcaoServico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<AcaoServico> servicos) {
+		this.servicos = servicos;
+	}
+	
+	public Double totalServicos() {
+		Double total = 0.0;
+		for (AcaoServico servico : servicos) {
+			total += servico.getPreco();
+		}
+		return total;
 	}
 	
 	

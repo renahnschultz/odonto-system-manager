@@ -1,7 +1,10 @@
 package br.com.osm.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,13 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
 @Entity
 @Table(name = "atendimento")
@@ -45,6 +47,9 @@ public class Atendimento implements Entidade<Long> {
 	
 	@Column(name = "valor_total", nullable = false)
 	private Double valorTotal = 0.0;
+	
+	@OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL)
+	private List<AcaoServico> servicos = new ArrayList<AcaoServico>();
 
 	public Atendimento() {
 	}
@@ -112,6 +117,20 @@ public class Atendimento implements Entidade<Long> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<AcaoServico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(List<AcaoServico> servicos) {
+		this.servicos = servicos;
+	}
+	
+	public void adicionarServico(AcaoServico servico) {
+		if(!servicos.contains(servico)) {
+			servicos.add(servico);
+		}
 	}
 	
 

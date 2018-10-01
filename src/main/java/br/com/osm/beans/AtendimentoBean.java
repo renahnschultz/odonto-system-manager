@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.osm.dao.ConfiguracaoDAO;
+import br.com.osm.entidades.AcaoServico;
 import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Configuracao;
 import br.com.osm.rest.ConfiguracaoWebService;
@@ -39,6 +40,10 @@ public class AtendimentoBean implements Serializable {
 
 	public void setAtendimento(Atendimento atendimento) {
 		this.atendimento = atendimento;
+	}
+	
+	public void adicionarAcaoServico(AcaoServico servico) {
+		atendimento.adicionarServico(servico);
 	}
 
 

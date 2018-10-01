@@ -131,17 +131,18 @@ div.ui-chkbox span.ui-chkbox-icon {
 	cursor: pointer;
 }
 
-.marcacoes::-webkit-scrollbar, .comentarios::-webkit-scrollbar {
+.marcacoes::-webkit-scrollbar, .comentarios::-webkit-scrollbar,
+	.scroll-p::-webkit-scrollbar {
 	width: 6px;
 }
 
-.marcacoes::-webkit-scrollbar-track, .comentarios::-webkit-scrollbar-track
-	{
+.marcacoes::-webkit-scrollbar-track, .comentarios::-webkit-scrollbar-track,
+	.scroll-p::-webkit-scrollbar-track {
 	
 }
 
-.marcacoes::-webkit-scrollbar-thumb, .comentarios::-webkit-scrollbar-thumb
-	{
+.marcacoes::-webkit-scrollbar-thumb, .comentarios::-webkit-scrollbar-thumb,
+	.scroll-p::-webkit-scrollbar-thumb {
 	background: #e3e3e3;
 }
 
@@ -281,4 +282,16 @@ div.ui-chkbox span.ui-chkbox-icon {
 .panel-grid-agendamento {
 	text-transform: uppercase;
 	font-size: 16px;
+}
+
+.botao-excluir-acao-servico {
+	display: none;
+}
+
+.acao-servico-linha{
+	min-height: 25px;
+	margin-bottom: 5px;
+}
+.acao-servico-linha:hover .botao-excluir-acao-servico {
+	display: inline-block;
 }

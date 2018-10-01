@@ -18,9 +18,11 @@ import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import br.com.osm.dao.AgendamentoDAO;
+import br.com.osm.dao.AtendimentoDAO;
 import br.com.osm.entidades.Agendamento;
 import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.rest.AtendimentoWebService;
 import br.com.osm.util.FacesUtil;
 
 /**
@@ -39,6 +41,8 @@ public class AgendaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	transient private AgendamentoDAO agendamentoDAO;
+	@Inject
+	transient private AtendimentoDAO atendimentoDAO;
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
 	
 	@Inject
@@ -78,6 +82,8 @@ public class AgendaBean implements Serializable {
 			Atendimento atendimento = new Atendimento();
 			atendimento.setAgendamento(agendamento);
 			atendimento.setDataInicio(new Date());
+			atendimento.setDataFim(new Date());
+			new AtendimentoWebService(atendimentoDAO).salvar(atendimento);
 			atendimentoBean.setAtendimento(atendimento);
 		}catch(Exception e) {
 			e.printStackTrace();
