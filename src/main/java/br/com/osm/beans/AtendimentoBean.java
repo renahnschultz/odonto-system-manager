@@ -8,11 +8,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.osm.dao.AtendimentoDAO;
+import br.com.osm.dao.DebitoDAO;
 import br.com.osm.entidades.AcaoServico;
-import br.com.osm.entidades.Agendamento;
 import br.com.osm.entidades.Atendimento;
+import br.com.osm.entidades.Debito;
 import br.com.osm.enuns.SituacaoAgendamento;
 import br.com.osm.rest.AtendimentoWebService;
+import br.com.osm.rest.DebitoWebService;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
@@ -23,15 +25,17 @@ import br.com.osm.rest.AtendimentoWebService;
 @Named
 @SessionScoped
 public class AtendimentoBean implements Serializable {
-	
+
 	@Inject
 	transient private AtendimentoDAO atendimentoDAO;
+	@Inject
+	transient private DebitoDAO debitoDAO;
 
 	private Atendimento atendimento;
 
 	public AtendimentoBean() {
 	}
-	
+
 	public void salvar() {
 	}
 
@@ -45,26 +49,33 @@ public class AtendimentoBean implements Serializable {
 	public void setAtendimento(Atendimento atendimento) {
 		this.atendimento = atendimento;
 	}
-	
+
 	public void adicionarAcaoServico(AcaoServico servico) {
 		atendimento.adicionarServico(servico);
 	}
-	
+
 	public void removerAcaoServico(AcaoServico servico) {
 		atendimento.removerServico(servico);
 	}
-	
+
 	public void finalizarAtendimento() {
 		try {
 			atendimento.setDataFim(new Date());
 			atendimento.getAgendamento().setSituacao(SituacaoAgendamento.FINALIZADO);
 			new AtendimentoWebService(atendimentoDAO).salvar(atendimento);
+			if (atendimento.getValorTotal() > 0.0) {
+				Debito debito = new Debito();
+				debito.setAgendamento(atendimento.getAgendamento());
+				debito.setValor(atendimento.getValorTotal());
+				debito.setMotivo("Débito de atendimento finalizado.");
+				debito.setData(new Date());
+				new DebitoWebService(debitoDAO).salvar(debito);
+			}
 			atendimento = null;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao iniciar atendimento.",e);
+			throw new RuntimeException("Erro ao iniciar atendimento.", e);
 		}
 	}
-
 
 }

@@ -105,7 +105,7 @@
 						icon="fa fa-stop"
 						action="#{atendimentoBean.finalizarAtendimento()}"
 						onstart="PF('statusDialog').show()"
-						oncomplete="PF('statusDialog').hide()"
+						oncomplete="PF('statusDialog').hide(); refreshPage();"
 						update="topMenu"
 						rendered="#{atendimentoBean.atendimento ne null}"
 						styleClass="btn btn-warning"
@@ -505,6 +505,10 @@
 		<script type="text/javascript">
                 //<![CDATA[
                 /* hide info messages */
+                
+                function refreshPage(){
+                	location.reload();
+                }
                 $(document).on("pfAjaxComplete", function () {
                     var $messages = $("div[id$='info-messages']");
                     if ($messages.length) {

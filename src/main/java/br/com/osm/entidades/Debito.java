@@ -23,7 +23,7 @@ import br.com.osm.enuns.UnidadeMedida;
 
 @Entity
 @Table(name = "debito")
-public class Debito extends AbstractAtivo implements Entidade<Long> {
+public class Debito implements Entidade<Long> {
 
 	/**
 	 * @author Renahn 28-07-2018
