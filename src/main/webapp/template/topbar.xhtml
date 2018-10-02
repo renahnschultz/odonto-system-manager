@@ -2,6 +2,7 @@
 <ui:composition
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
@@ -14,8 +15,20 @@
 #layout-menu_menu span.ui-menuitem-text {
 	margin-left: 2px;
 }
+
+.link-atendimento {
+	display: none;
+}
 </style>
 	<ul class="nav navbar-nav">
+		<li><a
+			href="#"
+			class="atendimento-link"
+			onclick="abrirModalAtendimento()"
+			style="display: #{atendimentoBean.atendimento ne null ? 'block' : 'none'}">
+				<span style="color: #4caf50;"><i class="fa fa-play"></i></span> <span
+				class="hidden-xs">#{atendimentoBean.atendimento.agendamento.paciente.nomeCompleto}</span>
+		</a></li>
 		<li class="dropdown user user-menu"><a
 			href="#"
 			class="dropdown-toggle"
@@ -56,4 +69,5 @@
 					</h:form></li>
 			</ul></li>
 	</ul>
+
 </ui:composition>

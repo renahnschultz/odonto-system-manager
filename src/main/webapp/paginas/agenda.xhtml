@@ -95,6 +95,7 @@
 							onstart="PF('statusDialog').show()"
 							oncomplete="PF('statusDialog').hide()"
 							rendered="#{atendimentoBean.atendimento eq null}"
+							update="topMenu"
 							styleClass="btn btn-success"
 							onsuccess="PF('modalAgendamento').hide()"></p:commandButton>
 						<p:commandButton

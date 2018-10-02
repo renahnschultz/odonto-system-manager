@@ -33,7 +33,7 @@ public class Atendimento implements Entidade<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_agendamento")
 	private Agendamento agendamento;
 
@@ -130,6 +130,14 @@ public class Atendimento implements Entidade<Long> {
 	public void adicionarServico(AcaoServico servico) {
 		if(!servicos.contains(servico)) {
 			servicos.add(servico);
+			this.valorTotal += servico.getPreco();
+		}
+	}
+
+	public void removerServico(AcaoServico servico) {
+		if(servicos.contains(servico)) {
+			servicos.remove(servico);
+			this.valorTotal -= servico.getPreco();
 		}
 	}
 	

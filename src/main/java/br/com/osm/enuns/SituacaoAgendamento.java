@@ -4,7 +4,9 @@ public enum SituacaoAgendamento {
 
 	PENDENTE("pendente"),
 	APROVADO("aprovado"),
-	REPROVADO("reprovado");
+	REPROVADO("reprovado"),
+	EXECUCAO("em.execucao"),
+	FINALIZADO("finalizado");
 	
 	private String descricao;
 	

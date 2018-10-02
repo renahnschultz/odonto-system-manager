@@ -256,6 +256,7 @@ public class OdontogramaBean implements Serializable {
 	public void excluirAcaoServico(AcaoServico servico) {
 		try {
 			marcacao.getServicos().remove(servico);
+			atendimentoBean.removerAcaoServico(servico);
 			new AcaoServicoWebService(acaoServicoDAO).excluir(servico.getId());
 		}catch(Exception e) {
 			e.printStackTrace();

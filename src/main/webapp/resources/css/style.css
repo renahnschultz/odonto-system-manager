@@ -288,10 +288,12 @@ div.ui-chkbox span.ui-chkbox-icon {
 	display: none;
 }
 
-.acao-servico-linha{
+.acao-servico-linha {
 	min-height: 25px;
 	margin-bottom: 5px;
 }
+
 .acao-servico-linha:hover .botao-excluir-acao-servico {
 	display: inline-block;
 }
+

@@ -22,6 +22,7 @@ import br.com.osm.dao.AtendimentoDAO;
 import br.com.osm.entidades.Agendamento;
 import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.enuns.SituacaoAgendamento;
 import br.com.osm.rest.AtendimentoWebService;
 import br.com.osm.util.FacesUtil;
 
@@ -40,9 +41,9 @@ public class AgendaBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Inject
-	transient private AgendamentoDAO agendamentoDAO;
-	@Inject
 	transient private AtendimentoDAO atendimentoDAO;
+	@Inject
+	transient private AgendamentoDAO agendamentoDAO;
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
 	
 	@Inject
@@ -79,6 +80,8 @@ public class AgendaBean implements Serializable {
 	
 	public void iniciarAtendimento() {
 		try {
+			agendamento = agendamentoDAO.recuperar(agendamento);
+			agendamento.setSituacao(SituacaoAgendamento.EXECUCAO);
 			Atendimento atendimento = new Atendimento();
 			atendimento.setAgendamento(agendamento);
 			atendimento.setDataInicio(new Date());
