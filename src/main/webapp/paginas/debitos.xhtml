@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['debitos']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-g">
+			<h:form
+				id="formBuscaHorario"
+				prependId="false"
+				styleClass="ui-g-6 ui-fluid">
+				<div class="ui-g">
+					<p:messages autoUpdate="true"></p:messages>
+					<div class="ui-g-12">
+						<h2 style="margin-bottom: 15px;">#{msgs['buscar.debitos']}</h2>
+					</div>
+					<div class="ui-g-12">
+						<h5 style="margin-bottom: 15px;">#{msgs['info.debitos']}</h5>
+					</div>
+					<div class="ui-g-12">
+						<p:outputPanel class="ui-material">
+							<p:autoComplete
+								completeMethod="#{pagamentoBean.completePaciente}"
+								var="paciente"
+								itemLabel="#{paciente.nomeCompleto}"
+								value="#{pagamentoBean.paciente}"
+								placeholder="#{msgs['autocomplete.paciente']}"
+								id="completePaciente"
+								itemValue="#{paciente}">
+							</p:autoComplete>
+							<p:outputLabel
+								for="completePaciente"
+								value="#{msgs['paciente']}" />
+						</p:outputPanel>
+					</div>
+					<p:commandButton
+						icon="fa fa-search"
+						styleClass="ui-g-12 btn btn-primary"
+						onstart="PF('statusDialog').show();"
+						update="listaDebitos"
+						oncomplete="PF('statusDialog').hide();"
+						actionListener="#{pagamentoBean.buscarDebitos()}"
+						value="#{msgs['buscar.debitos']}"></p:commandButton>
+				</div>
+			</h:form>
+			<div class="ui-g-6">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<h2>#{msgs['debitos.do.paciente']}</h2>
+					</div>
+					<h:form
+						id="listaDebitos"
+						prependId="false"
+						class="ui-g-12">
+						<p:repeat
+							var="debito"
+							value="#{pagamentoBean.debitosPaciente}">
+							<div
+								class="ui-g-12"
+								style="border-left: 5px solid #8bc34a; margin-bottom: 5px;">
+								<div class="ui-g-8">
+									<h3>#{debito.agendamento.paciente.nomeCompleto}</h3>
+									<h4>#{debito.agendamento.odontologo.nomeCompleto}</h4>
+									<p:commandButton
+										value="#{msgs['informacoes']}"
+										icon="fa fa-plus"
+										action="#{pagamentoBean.infoDebito()}"
+										onstart="PF('statusDialog').show()"
+										oncomplete="PF('statusDialog').hide(); PF('dialogDebito').show()"
+										update="formDebito"
+										styleClass="btn btn-info">
+										<f:setPropertyActionListener
+											value="#{debito}"
+											target="#{pagamentoBean.debito}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</div>
+								<div class="ui-g-4">
+									<h1>
+										<h:outputText value="#{debito.valor}">
+											<f:convertNumber
+												type="currency"
+												currencyCode="BRL"
+												currencySymbol="R$ "
+												maxFractionDigits="2"
+												minFractionDigits="2"></f:convertNumber>
+										</h:outputText>
+									</h1>
+									<h3>
+										<h:outputText value="#{debito.data}">
+											<f:convertDateTime
+												pattern="dd/MM/yy"
+												locale="pt_BR"
+												timeZone="GMT-3"></f:convertDateTime>
+										</h:outputText>
+									</h3>
+								</div>
+							</div>
+						</p:repeat>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+		<p:dialog
+			id="dialogDebito"
+			widgetVar="dialogDebito"
+			modal="true"
+			width="80vw"
+			height="80vh"
+			draggable="false"
+			resizable="false"
+			header="#{msgs['informacoes.debito']}">
+			<h:form
+				id="formDebito"
+				styleClass="ui-g panel-grid-agendamento"
+				prependId="false">
+				<div class="ui-g-4">
+					<div
+						class="ui-g-12"
+						style="padding: 0px; font-size: 26px; font-weight: bold; color: #3c3c3c;">
+						#{msgs['informacoes.debito']}</div>
+					<div class="ui-g-12">#{pagamentoBean.debito.motivo}</div>
+					<div class="ui-g-12">
+						<p:outputLabel value="#{msgs['devedor']}"></p:outputLabel>
+						<br />
+						<h:outputText
+							value="#{pagamentoBean.debito.agendamento.paciente.nomeCompleto}"></h:outputText>
+					</div>
+					<div class="ui-g-6">
+						<p:outputLabel value="#{msgs['cpf']}"></p:outputLabel>
+						<br />
+						<h:outputText
+							value="#{pagamentoBean.debito.agendamento.paciente.cpf}"></h:outputText>
+					</div>
+					<div class="ui-g-6">
+						<p:outputLabel value="#{msgs['data']}"></p:outputLabel>
+						<br />
+						<h:outputText value="#{pagamentoBean.debito.data}">
+							<f:convertDateTime
+								pattern="dd/MM/yy"
+								locale="pt_BR"
+								timeZone="GMT-3"></f:convertDateTime>
+						</h:outputText>
+					</div>
+					<div class="ui-g-6">
+						<p:outputLabel value="#{msgs['valor.total']}"></p:outputLabel>
+						<br />
+						<h:outputText value="#{pagamentoBean.debito.valor}">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+					</div>
+					<div class="ui-g-6">
+						<p:outputLabel value="#{msgs['valor.pago']}"></p:outputLabel>
+						<br />
+						<h:outputText value="#{pagamentoBean.debito.totalPago()}">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+					</div>
+					<div
+						class="ui-g-12"
+						style="text-align: center;">
+						<p:outputLabel value="#{msgs['valor.restante']}"></p:outputLabel>
+						<br />
+							<h:outputText
+								value="#{pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()}"
+								style="font-size: 20px; font-weight: bold; color: #{(pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()) eq 0.00 ? '#8bc34a' : '#f44336'};">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText>
+					</div>
+				</div>
+				<p:outputPanel
+					id="painelDeServicos"
+					styleClass="ui-g-4"
+					style="border-left: 1px solid #eee;">
+					<div
+						class="ui-g-12"
+						style="padding: 0px; font-size: 26px; font-weight: bold; color: #3c3c3c; margin-bottom: 10px;">
+						#{msgs['servicos.realizados']}</div>
+					<p:repeat
+						var="servico"
+						value="#{pagamentoBean.debito.agendamento.atendimento.servicos}">
+						<div
+							class="ui-g-12 acao-servico-linha"
+							style="padding: 0px; font-size: 14px; color: #676767;">
+							<h:outputText
+								value="#{servico.servico.nome}"
+								style="float:left"></h:outputText>
+							<h:outputText
+								value="#{servico.preco}"
+								style="float:right">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText>
+						</div>
+					</p:repeat>
+					<div
+						class="ui-g-12"
+						style="padding: 0px; font-size: 18px; font-weight: bold; color: #676767;">
+						<h:outputText
+							value="#{msgs['total']}"
+							style="float:left"></h:outputText>
+						<h:outputText
+							value="#{pagamentoBean.debito.agendamento.atendimento.totalServicos()}"
+							style="float:right">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+					</div>
+				</p:outputPanel>
+				<p:outputPanel
+					id="listaPagamentos"
+					styleClass="ui-g-4"
+					style="border-left: 1px solid #eee;">
+					<div
+						class="ui-g-12"
+						style="padding: 0px; font-size: 26px; font-weight: bold; color: #3c3c3c;">
+						#{msgs['pagamentos.realizados']}</div>
+					<p:repeat
+						var="pagamento"
+						value="#{pagamentoBean.debito.pagamentos}">
+						<div
+							class="ui-g-12 acao-servico-linha"
+							style="padding: 0px; font-size: 14px; color: #676767;">
+							<h:outputText
+								value="#{pagamento.data}"
+								style="float:left"></h:outputText>
+							<h:outputText
+								value="#{pagamento.valor}"
+								style="float:right">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText>
+						</div>
+					</p:repeat>
+					<div
+						class="ui-g-12"
+						style="padding: 0px; font-size: 18px; font-weight: bold; color: #676767;">
+						<h:outputText
+							value="#{msgs['total']}"
+							style="float:left"></h:outputText>
+						<h:outputText
+							value="#{pagamentoBean.debito.totalPago()}"
+							style="float:right">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+					</div>
+				</p:outputPanel>
+				<div
+					class="ui-g-12"
+					style="text-align: center;">
+					<p:commandButton
+						value="#{msgs['pagamento.parcial']}"
+						icon="fa fa-money"
+						action="#{pagamentoBean.salvar()}"
+						onstart="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide();"
+						onsuccess="PF('dialogMarcacao').hide();"
+						process="@form"
+						rendered="#{debito.valor > debito.totalPago()}"
+						update="listaDebitos"
+						styleClass="btn btn-primary"
+						style="width: auto;margin:auto;"></p:commandButton>
+					<p:commandButton
+						value="#{msgs['pagamento.total']}"
+						icon="fa fa-money"
+						action="#{pagamentoBean.quitarDebito()}"
+						onstart="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide();"
+						onsuccess="PF('dialogMarcacao').hide();"
+						process="@form"
+						update="listaPagamentos"
+						rendered="#{debito.valor > debito.totalPago()}"
+						styleClass="btn btn-success"
+						style="width: auto;margin:auto;margin-left: 10px;">
+						<p:confirm
+							header="#{msgs['confirmacao.quitacao']}"
+							message="#{msgs['tem.certeza.que.deseja.quitar.este.debito']}"
+							icon="fa fa-alert" />
+					</p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

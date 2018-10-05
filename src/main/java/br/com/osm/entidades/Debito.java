@@ -1,6 +1,7 @@
 package br.com.osm.entidades;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +50,10 @@ public class Debito implements Entidade<Long> {
 
 	@Column(name = "valor", nullable = false)
 	private Double valor;
+	
+	@OneToMany(mappedBy = "debito", cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY)
+	private List<Pagamento> pagamentos;
 
 	public Debito() {
 	}
@@ -115,6 +121,22 @@ public class Debito implements Entidade<Long> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+	
+	public Double totalPago() {
+		Double total = 0.0;
+		for (Pagamento pagamento : pagamentos) {
+			total += pagamento.getValor();
+		}
+		return total;
 	}
 
 

@@ -141,5 +141,13 @@ public class Atendimento implements Entidade<Long> {
 		}
 	}
 	
+	public Double totalServicos() {
+		Double total = 0.0;
+		for (AcaoServico servico : servicos) {
+			total += servico.getPreco();
+		}
+		return total;
+	}
+	
 
 }

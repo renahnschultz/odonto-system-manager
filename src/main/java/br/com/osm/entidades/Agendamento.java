@@ -139,4 +139,12 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 		return "Agendamento [id=" + id + ", dataHora=" + dataHora + "]";
 	}
 
+	public Atendimento getAtendimento() {
+		return atendimento;
+	}
+
+	public void setAtendimento(Atendimento atendimento) {
+		this.atendimento = atendimento;
+	}
+
 }

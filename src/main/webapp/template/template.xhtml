@@ -125,6 +125,12 @@
 					<span>#{msgs['anamnese']}</span>
 				</p:link></li>
 			<li><p:link
+					outcome="debitos.jsf"
+					rendered="#{verificaPermissao.temPermissao('receber')}">
+					<i class="fa fa-money"></i>
+					<span>#{msgs['debitos']}</span>
+				</p:link></li>
+			<li><p:link
 					outcome="configuracao.jsf"
 					rendered="#{verificaPermissao.temPermissao('administrador')}">
 					<i class="fa fa-cog"></i>

@@ -91,4 +91,9 @@ public interface Paginas extends ViewConfig {
 		
 	}
 
+	@Restricao(value = {"receber"})
+	public class Debitos implements ViewConfig {
+		
+	}
+
 }
