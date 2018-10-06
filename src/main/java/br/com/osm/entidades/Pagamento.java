@@ -2,7 +2,6 @@ package br.com.osm.entidades;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -15,11 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
-import br.com.osm.enuns.UnidadeMedida;
+import br.com.osm.enuns.TipoPagamento;
 @Entity
 @Table(name = "pagamento")
 public class Pagamento implements Entidade<Long> {
@@ -48,6 +45,11 @@ public class Pagamento implements Entidade<Long> {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_debito")
 	private Debito debito;
+	
+	@Enumerated
+	@Column(name = "tipo", nullable = false)
+	private TipoPagamento tipo;
+
 
 	public Pagamento() {
 	}
@@ -115,6 +117,14 @@ public class Pagamento implements Entidade<Long> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public TipoPagamento getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoPagamento tipo) {
+		this.tipo = tipo;
 	}
 
 	

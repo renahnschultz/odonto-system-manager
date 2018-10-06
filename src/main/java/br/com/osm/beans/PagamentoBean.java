@@ -15,8 +15,9 @@ import br.com.osm.dao.UsuarioDAO;
 import br.com.osm.entidades.Debito;
 import br.com.osm.entidades.Pagamento;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.enuns.SimNao;
 import br.com.osm.exception.OSMException;
-import br.com.osm.rest.PagamentoWebService;
+import br.com.osm.rest.DebitoWebService;
 import br.com.osm.util.FacesUtil;
 
 /**
@@ -42,6 +43,7 @@ public class PagamentoBean implements Serializable {
 
 	private Usuario paciente;
 	private Debito debito;
+	private Pagamento pagamento = new Pagamento();
 
 	private List<Debito> debitosPaciente;
 
@@ -102,7 +104,8 @@ public class PagamentoBean implements Serializable {
 				pagamento.setValor(pagamento.getValor() - pagamento1.getValor());
 			}
 			debito.getPagamentos().add(pagamento);
-			new PagamentoWebService(pagamentoDAO).salvar(pagamento);
+			debito.setQuitado(SimNao.SIM);
+			new DebitoWebService(debitoDAO).salvar(debito);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao quitar débito do paciente.", e);
@@ -131,6 +134,14 @@ public class PagamentoBean implements Serializable {
 
 	public void setDebitosPaciente(List<Debito> debitosPaciente) {
 		this.debitosPaciente = debitosPaciente;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
 }

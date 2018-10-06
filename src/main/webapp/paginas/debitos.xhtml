@@ -185,16 +185,16 @@
 						style="text-align: center;">
 						<p:outputLabel value="#{msgs['valor.restante']}"></p:outputLabel>
 						<br />
-							<h:outputText
-								value="#{pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()}"
-								style="font-size: 20px; font-weight: bold; color: #{(pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()) eq 0.00 ? '#8bc34a' : '#f44336'};">
-								<f:convertNumber
-									type="currency"
-									currencyCode="BRL"
-									currencySymbol="R$ "
-									maxFractionDigits="2"
-									minFractionDigits="2"></f:convertNumber>
-							</h:outputText>
+						<h:outputText
+							value="#{pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()}"
+							style="font-size: 20px; font-weight: bold; color: #{(pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()) eq 0.00 ? '#8bc34a' : '#f44336'};">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
 					</div>
 				</div>
 				<p:outputPanel
@@ -302,10 +302,52 @@
 						oncomplete="PF('statusDialog').hide();"
 						onsuccess="PF('dialogMarcacao').hide();"
 						process="@form"
-						rendered="#{debito.valor > debito.totalPago()}"
+						rendered="#{pagamentoBean.debito.valor > pagamentoBean.debito.totalPago()}"
 						update="listaDebitos"
 						styleClass="btn btn-primary"
 						style="width: auto;margin:auto;"></p:commandButton>
+					<p:commandButton
+						value="#{msgs['pagamento.total']}"
+						icon="fa fa-money"
+						type="button"
+						onclick="PF('dialogPagamentoTotal').show();PF('dialogDebito').hide()"
+						update="formPagamentoTotal"
+						rendered="#{pagamentoBean.debito.valor > pagamentoBean.debito.totalPago()}"
+						styleClass="btn btn-success"
+						style="width: auto;margin:auto;margin-left: 10px;">
+					</p:commandButton>
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog
+			id="dialogPagamentoTotal"
+			widgetVar="dialogPagamentoTotal"
+			modal="true"
+			width="80vw"
+			draggable="false"
+			resizable="false"
+			header="#{msgs['pagamento.total']}">
+			<h:form
+				id="formPagamentoTotal"
+				prependId="false"
+				styleClass="ui-g panel-grid-agendamento">
+				<div
+					class="ui-g-12">
+					<p:outputLabel value="#{msgs['tipo.pagamento']}"></p:outputLabel>
+					<p:selectOneRadio
+						id="tipoPagamento"
+						value="#{pagamentoBean.pagamento.tipo}"
+						layout="grid"
+						columns="5">
+						<f:selectItems
+							value="#{tiposPagamento}"
+							var="tipo"
+							itemLabel="#{msgs[tipo.descricao]}"
+							itemValue="#{tipo}" />
+					</p:selectOneRadio>
+				</div>
+				<div class="ui-g-12">
 					<p:commandButton
 						value="#{msgs['pagamento.total']}"
 						icon="fa fa-money"
@@ -315,7 +357,6 @@
 						onsuccess="PF('dialogMarcacao').hide();"
 						process="@form"
 						update="listaPagamentos"
-						rendered="#{debito.valor > debito.totalPago()}"
 						styleClass="btn btn-success"
 						style="width: auto;margin:auto;margin-left: 10px;">
 						<p:confirm
@@ -325,6 +366,16 @@
 					</p:commandButton>
 				</div>
 			</h:form>
+		</p:dialog>
+		<p:dialog
+			id="dialogPagamentoParcial"
+			widgetVar="dialogPagamentoParcial"
+			modal="true"
+			width="80vw"
+			draggable="false"
+			resizable="false"
+			header="#{msgs['pagamento.total']}">
+
 		</p:dialog>
 	</ui:define>
 </ui:composition>

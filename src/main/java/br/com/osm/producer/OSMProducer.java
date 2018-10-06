@@ -24,10 +24,10 @@ import org.apache.deltaspike.core.api.message.MessageContext;
 
 import br.com.osm.dao.ServicoDAO;
 import br.com.osm.dao.UsuarioDAO;
-import br.com.osm.entidades.Servico;
 import br.com.osm.entidades.Usuario;
 import br.com.osm.enuns.SimNao;
 import br.com.osm.enuns.SimNaoOutro;
+import br.com.osm.enuns.TipoPagamento;
 import br.com.osm.enuns.TipoResposta;
 import br.com.osm.enuns.TipoServico;
 import br.com.osm.enuns.TipoUsuario;
@@ -114,6 +114,16 @@ public class OSMProducer implements Serializable {
 	public List<SimNaoOutro> simNaoOutroProducer() {
 		List<SimNaoOutro> lista = new ArrayList<SimNaoOutro>();
 		for (SimNaoOutro object : SimNaoOutro.values()) {
+			lista.add(object);
+		}
+		return lista;
+	}
+
+	@Named
+	@Produces
+	public List<TipoPagamento> tiposPagamento() {
+		List<TipoPagamento> lista = new ArrayList<TipoPagamento>();
+		for (TipoPagamento object : TipoPagamento.values()) {
 			lista.add(object);
 		}
 		return lista;

@@ -17,11 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
-import br.com.osm.enuns.UnidadeMedida;
+import br.com.osm.enuns.SimNao;
 
 @Entity
 @Table(name = "debito")
@@ -54,6 +52,10 @@ public class Debito implements Entidade<Long> {
 	@OneToMany(mappedBy = "debito", cascade = CascadeType.ALL, 
 			fetch = FetchType.LAZY)
 	private List<Pagamento> pagamentos;
+
+	@Enumerated
+	@Column(name = "quitado", nullable = false)
+	private SimNao quitado;
 
 	public Debito() {
 	}
@@ -137,6 +139,14 @@ public class Debito implements Entidade<Long> {
 			total += pagamento.getValor();
 		}
 		return total;
+	}
+
+	public SimNao getQuitado() {
+		return quitado;
+	}
+
+	public void setQuitado(SimNao quitado) {
+		this.quitado = quitado;
 	}
 
 

@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.osm.entidades.Debito;
 import br.com.osm.entidades.Usuario;
-import br.com.osm.enuns.TipoUsuario;
+import br.com.osm.enuns.SimNao;
 import br.com.osm.exception.OSMException;
 
 public class DebitoDAO extends GenericoDAO<Long, Debito> {
@@ -28,9 +28,10 @@ public class DebitoDAO extends GenericoDAO<Long, Debito> {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())
 					.append(" AS p ")
-					.append(" WHERE p.agendamento.paciente = :paciente");
+					.append(" WHERE p.agendamento.paciente = :paciente AND p.quitado = :quitado");
 			TypedQuery<Debito> query = entityManager.createQuery(sql.toString(), Debito.class);
 			query.setParameter("paciente", paciente);
+			query.setParameter("quitado", SimNao.NAO);
 			return query.getResultList();
 		} catch (NoResultException e) {
 			return null;
