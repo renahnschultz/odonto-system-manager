@@ -34,6 +34,10 @@
 								placeholder="#{msgs['autocomplete.paciente']}"
 								id="completePaciente"
 								itemValue="#{paciente}">
+								<p:column>
+									<h:outputText value="#{paciente.nomeCompleto}" /><br/>
+									<h:outputText value="#{paciente.cpf}" />
+								</p:column>
 							</p:autoComplete>
 							<p:outputLabel
 								for="completePaciente"
@@ -186,7 +190,7 @@
 						<p:outputLabel value="#{msgs['valor.restante']}"></p:outputLabel>
 						<br />
 						<h:outputText
-							value="#{pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()}"
+							value="#{pagamentoBean.debito.valorRestante()}"
 							style="font-size: 20px; font-weight: bold; color: #{(pagamentoBean.debito.valor - pagamentoBean.debito.totalPago()) eq 0.00 ? '#8bc34a' : '#f44336'};">
 							<f:convertNumber
 								type="currency"
@@ -270,7 +274,8 @@
 									currencySymbol="R$ "
 									maxFractionDigits="2"
 									minFractionDigits="2"></f:convertNumber>
-							</h:outputText>
+							</h:outputText><br/>
+							<p style="font-size: 12px;">#{msgs[pagamento.tipo.descricao]}</p>
 						</div>
 					</p:repeat>
 					<div
@@ -297,13 +302,10 @@
 					<p:commandButton
 						value="#{msgs['pagamento.parcial']}"
 						icon="fa fa-money"
-						action="#{pagamentoBean.salvar()}"
-						onstart="PF('statusDialog').show();"
-						oncomplete="PF('statusDialog').hide();"
-						onsuccess="PF('dialogMarcacao').hide();"
-						process="@form"
+						type="button"
+						onclick="PF('dialogPagamentoParcial').show();PF('dialogDebito').hide()"
 						rendered="#{pagamentoBean.debito.valor > pagamentoBean.debito.totalPago()}"
-						update="listaDebitos"
+						update="formPagamentoParcial"
 						styleClass="btn btn-primary"
 						style="width: auto;margin:auto;"></p:commandButton>
 					<p:commandButton
@@ -332,8 +334,7 @@
 				id="formPagamentoTotal"
 				prependId="false"
 				styleClass="ui-g panel-grid-agendamento">
-				<div
-					class="ui-g-12">
+				<div class="ui-g-12">
 					<p:outputLabel value="#{msgs['tipo.pagamento']}"></p:outputLabel>
 					<p:selectOneRadio
 						id="tipoPagamento"
@@ -354,9 +355,9 @@
 						action="#{pagamentoBean.quitarDebito()}"
 						onstart="PF('statusDialog').show();"
 						oncomplete="PF('statusDialog').hide();"
-						onsuccess="PF('dialogMarcacao').hide();"
+						onsuccess="PF('dialogPagamentoTotal').hide();"
 						process="@form"
-						update="listaPagamentos"
+						update="listaDebitos"
 						styleClass="btn btn-success"
 						style="width: auto;margin:auto;margin-left: 10px;">
 						<p:confirm
@@ -367,6 +368,13 @@
 				</div>
 			</h:form>
 		</p:dialog>
+		
+		
+		
+		
+		
+		
+		
 		<p:dialog
 			id="dialogPagamentoParcial"
 			widgetVar="dialogPagamentoParcial"
@@ -375,7 +383,50 @@
 			draggable="false"
 			resizable="false"
 			header="#{msgs['pagamento.total']}">
-
+			<h:form
+				id="formPagamentoParcial"
+				prependId="false"
+				styleClass="ui-g panel-grid-agendamento">
+				<div class="ui-g-12">
+					<p:outputLabel value="#{msgs['valor']}"></p:outputLabel>
+					<br />
+					<p:inputNumber
+						value="#{pagamentoBean.pagamento.valor}"
+						decimalPlaces="2"
+						symbol="R$ "
+						decimalSeparator=","
+						emptyValue="0"
+						maxValue="#{pagamentoBean.debito.valorRestante()}"
+						minValue="0"></p:inputNumber>
+				</div>
+				<div class="ui-g-12">
+					<p:outputLabel value="#{msgs['tipo.pagamento']}"></p:outputLabel>
+					<p:selectOneRadio
+						id="tipoPagamentoParcial"
+						value="#{pagamentoBean.pagamento.tipo}"
+						layout="grid"
+						columns="5">
+						<f:selectItems
+							value="#{tiposPagamento}"
+							var="tipo"
+							itemLabel="#{msgs[tipo.descricao]}"
+							itemValue="#{tipo}" />
+					</p:selectOneRadio>
+				</div>
+				<div class="ui-g-12">
+					<p:commandButton
+						value="#{msgs['pagamento.parcial']}"
+						icon="fa fa-money"
+						action="#{pagamentoBean.pagarParcialmente()}"
+						onstart="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide();"
+						onsuccess="PF('dialogPagamentoParcial').hide();"
+						process="@form"
+						update="listaDebitos"
+						styleClass="btn btn-primary"
+						style="width: auto;margin:auto;"></p:commandButton>
+				</div>
+			</h:form>
 		</p:dialog>
 	</ui:define>
 </ui:composition>

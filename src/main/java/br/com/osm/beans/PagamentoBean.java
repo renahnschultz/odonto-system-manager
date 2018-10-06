@@ -100,15 +100,36 @@ public class PagamentoBean implements Serializable {
 			pagamento.setRecebedor(FacesUtil.getUsuarioLogado());
 			pagamento.setValor(debito.getValor());
 			pagamento.setDebito(debito);
+			pagamento.setTipo(this.pagamento.getTipo());
 			for (Pagamento pagamento1 : debito.getPagamentos()) {
 				pagamento.setValor(pagamento.getValor() - pagamento1.getValor());
 			}
 			debito.getPagamentos().add(pagamento);
 			debito.setQuitado(SimNao.SIM);
 			new DebitoWebService(debitoDAO).salvar(debito);
+			this.pagamento = new Pagamento();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao quitar débito do paciente.", e);
+		}
+	}
+	
+	public void pagarParcialmente() {
+		try {
+			if(pagamento.getValor() == debito.valorRestante()) {
+				quitarDebito();
+				return;
+			}
+			pagamento.setData(new Date());
+			pagamento.setRecebedor(FacesUtil.getUsuarioLogado());
+			pagamento.setDebito(debito);
+			debito.getPagamentos().add(pagamento);
+			debito.setQuitado(SimNao.NAO);
+			new DebitoWebService(debitoDAO).salvar(debito);
+			this.pagamento = new Pagamento();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao pagar parcialmente débito do paciente.", e);
 		}
 	}
 

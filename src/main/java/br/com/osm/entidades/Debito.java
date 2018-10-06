@@ -149,5 +149,9 @@ public class Debito implements Entidade<Long> {
 		this.quitado = quitado;
 	}
 
+	public Double valorRestante() {
+		Double total = valor - totalPago();
+		return total;
+	}
 
 }
