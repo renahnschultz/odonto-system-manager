@@ -140,5 +140,12 @@ public class DenteOdontograma implements Entidade<Long> {
 	public void setMarcacoes(List<Marcacao> marcacoes) {
 		this.marcacoes = marcacoes;
 	}
+	
+	public String getImg() {
+		if(EstadoDente.PROTESE.equals(this.estado)) {
+			return dente.getImg().replace(".png", "-protese.png");
+		}
+		return dente.getImg();
+	}
 
 }
