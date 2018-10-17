@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 
 import br.com.generico.AbstractAtivo;
 import br.com.osm.annotations.OrdenacaoPadrao;
+import br.com.osm.enuns.Genero;
 import br.com.osm.enuns.TipoUsuario;
 
 @Entity
@@ -87,6 +88,10 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, 
 			fetch = FetchType.LAZY)
 	private List<Agendamento> agendamentos;
+	
+	@Enumerated
+	@Column(name = "genero", nullable = false, length = 4)
+	private Genero genero;
 
 	public Usuario() {
 	}
@@ -283,6 +288,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 
 }
