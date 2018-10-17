@@ -54,6 +54,20 @@
 					process="@form"
 					action="#{bean.processarMarcacao()}"
 					update="panelMarcacoes"></p:remoteCommand>
+				<p:remoteCommand
+					id="ausentarDenteProcess"
+					name="ausentarDenteProcess"
+					process="@form"
+					oncomplete="sizingCanvas(); imprimirMarcacoes()"
+					action="#{bean.ausentarDente()}"
+					update="panelMarcacoes @form"></p:remoteCommand>
+				<p:remoteCommand
+					id="proteseDenteProcess"
+					name="proteseDenteProcess"
+					process="@form"
+					oncomplete="sizingCanvas(); imprimirMarcacoes()"
+					action="#{bean.proteseDente()}"
+					update="panelMarcacoes @form"></p:remoteCommand>
 				<h:panelGroup
 					rendered="#{bean.odontograma eq null}"
 					style="text-align:center;">
@@ -73,7 +87,7 @@
 					<div
 						id="divOdontograma"
 						class="ui-g-8"
-						style="border-right: 1px solid #eee;">
+						style="border-right: 1px solid #eee;width: 830px;">
 						<p:repeat
 							var="dente"
 							value="#{bean.odontograma.dentes}">
@@ -81,8 +95,9 @@
 								id="canvas#{dente.dente.id}"
 								class="canvas-odontograma"
 								width="#{dente.dente.percentualTamanho()}"
+								estado="#{dente.estado.ordinal()}"
 								height="40vh"
-								style="cursor: crosshair;background:url(../images/odontograma/#{dente.dente.img});background-position:center;background-repeat: no-repeat;background-size: 100%;"></canvas>
+								style="cursor: crosshair;#{dente.estado ne 'AUSENTE' ? 'background:url(../images/odontograma/'.concat(dente.img).concat(')') : ''};background-position:center;background-repeat: no-repeat;background-size: 100%;"></canvas>
 						</p:repeat>
 					</div>
 					<div class="ui-g-4">
@@ -113,17 +128,26 @@
 							class="ui-g-12"
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: #3c3c3c;">
 							#{msgs['ferramentas']}</div>
-						<div
-							class="ui-g-12 ui-g"
+						<p:outputPanel
+							id="ferramentas"
+							styleClass="ui-g-12 ui-g"
 							style="padding: 0px;">
+							<h:inputHidden
+								value="#{bean.ferramenta}"
+								id="ferramentaAtual"></h:inputHidden>
 							<p:outputPanel
 								id="marcarAusente"
 								class="ui-g-2"
-								style="font-size: 28px; color: #444;">
+								pt:onclick="ferramentaAusente()"
+								style="border-radius:3px;font-size: 28px; color: #444;cursor: pointer;#{bean.ferramenta eq 'AUSENTE' ? 'background: #cddc39;' : ''}">
 								<span
 									class="my-auto mx-auto fa fa-minus-square"
 									style="display: table; position: relative;" />
 							</p:outputPanel>
+							<p:remoteCommand
+								name="ferramentaAusente"
+								action="#{bean.setFerramenta('AUSENTE')}"
+								update="ferramentas"></p:remoteCommand>
 							<p:tooltip
 								id="marcarAusenteTooltip"
 								for="marcarAusente"
@@ -132,11 +156,16 @@
 							<p:outputPanel
 								id="marcarProtese"
 								class="ui-g-2"
-								style="font-size: 28px; color: #444;">
+								pt:onclick="ferramentaProtese()"
+								style="border-radius:3px;font-size: 28px; color: #444;cursor: pointer;#{bean.ferramenta eq 'PROTESE' ? 'background: #cddc39;' : ''}">
 								<span
 									class="my-auto mx-auto fa fa-wrench"
 									style="display: table; position: relative;" />
 							</p:outputPanel>
+							<p:remoteCommand
+								name="ferramentaProtese"
+								action="#{bean.setFerramenta('PROTESE')}"
+								update="ferramentas"></p:remoteCommand>
 							<p:tooltip
 								id="marcarProteseTooltip"
 								for="marcarProtese"
@@ -145,17 +174,22 @@
 							<p:outputPanel
 								id="marcar"
 								class="ui-g-2"
-								style="font-size: 28px; color: #444;">
+								pt:onclick="ferramentaMarcar()"
+								style="border-radius:3px;font-size: 28px; color: #444;cursor: pointer;#{bean.ferramenta eq 'MARCACAO' ? 'background: #cddc39;' : ''}">
 								<span
 									class="my-auto mx-auto fa fa-circle"
 									style="display: table; position: relative;" />
 							</p:outputPanel>
+							<p:remoteCommand
+								name="ferramentaMarcar"
+								action="#{bean.setFerramenta('MARCACAO')}"
+								update="ferramentas"></p:remoteCommand>
 							<p:tooltip
 								id="marcarTooltip"
 								for="marcar"
 								value="#{msgs['realizar.marcacao']}"
 								position="bottom" />
-						</div>
+						</p:outputPanel>
 						<div
 							class="ui-g-12"
 							style="padding: 0px; font-size: 28px; font-weight: bold; color: 3c3c3c;">
@@ -169,7 +203,7 @@
 								varStatus="status"
 								value="#{bean.odontograma.marcacoes}">
 								<p:outputPanel
-									rendered="#{marcacao.ativo eq 'ATIVO'}"
+									rendered="#{marcacao.ativo eq 'ATIVO' and marcacao.dente.estado ne 'AUSENTE'}"
 									styleClass="marcacao ui-g-12 ui-g"
 									pt:onmouseout="removerDestaque(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})"
 									pt:onmouseover="destacarMarcacao(#{marcacao.posX},#{marcacao.posY},#{marcacao.dente.dente.id})">
@@ -696,7 +730,7 @@
         
 	        $(document).ready(sizingCanvas());
 	        
-			var pointSize = 4;
+			var pointSize = 6;
 			var corPadrao = "#333333";
 			var corDestaque = "#ffab00";
 
@@ -740,9 +774,25 @@
 	        }
 	        
 	        $(document).on('click', ".canvas-odontograma", function(e){
-			     getPosition(e, $(this).attr('id')); 
+		        var ferramenta = $('#ferramentaAtual').val();
+		        if(ferramenta === "MARCACAO"){
+			    	getPosition(e, $(this).attr('id')); 
+			    }else if(ferramenta === "PROTESE"){
+					proteseDente($(this).attr('id'));
+				}else if(ferramenta === "AUSENTE"){
+					ausentarDente($(this).attr('id'));
+				}
 			});
-			
+
+			function ausentarDente(id){
+				$('#denteId').val(id.replace('canvas', ''));
+				ausentarDenteProcess();
+			}
+
+			function proteseDente(id){
+				$('#denteId').val(id.replace('canvas', ''));
+				proteseDenteProcess();
+			}
 			
 			function getPosition(event, id){
 				var canvas = document.getElementById(id);
@@ -759,6 +809,10 @@
 			}
 			
 			function drawCoordinates(x,y,id, stroke){	
+				var estado = $('#' + id).attr('estado');
+				if(estado == 2){
+					return;
+				}
 			  	var ctx = document.getElementById(id).getContext("2d");
 			  	if(stroke){
 				  	ctx.strokeStyle = corPadrao; // Red color

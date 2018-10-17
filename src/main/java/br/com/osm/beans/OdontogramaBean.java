@@ -27,6 +27,7 @@ import br.com.osm.entidades.Material;
 import br.com.osm.entidades.Odontograma;
 import br.com.osm.entidades.Servico;
 import br.com.osm.entidades.Usuario;
+import br.com.osm.enuns.EstadoDente;
 import br.com.osm.exception.OSMException;
 import br.com.osm.rest.AcaoServicoWebService;
 import br.com.osm.rest.ComentarioWebService;
@@ -60,7 +61,7 @@ public class OdontogramaBean implements Serializable {
 	transient private ComentarioDAO comentarioDAO;
 	@Inject
 	transient private AcaoServicoDAO acaoServicoDAO;
-	
+
 	private Odontograma odontograma;
 
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
@@ -76,6 +77,8 @@ public class OdontogramaBean implements Serializable {
 	private AcaoServico acaoServico;
 
 	private AcaoServicoMaterial novoMaterial;
+
+	private String ferramenta = "MARCACAO";
 
 	public OdontogramaBean() {
 	}
@@ -117,6 +120,9 @@ public class OdontogramaBean implements Serializable {
 					break;
 				}
 			}
+			if(marcacao.getDente().getEstado().equals(EstadoDente.AUSENTE)) {
+				return;
+			}
 			marcacao.setNome("Nome da marcação");
 			marcacao.getDente().adicionarMarcacao(marcacao);
 			marcacao.setOdontograma(odontograma);
@@ -130,6 +136,35 @@ public class OdontogramaBean implements Serializable {
 			odontograma = odontogramaDAO.recuperar(odontograma);
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao iniciar anamnese.", e);
+		}
+	}
+
+	public void ausentarDente() {
+		try {
+			for (DenteOdontograma dente : odontograma.getDentes()) {
+				if (dente.getDente().getId() == denteId) {
+					dente.setEstado(EstadoDente.AUSENTE);
+					break;
+				}
+			}
+			salvar();
+			odontograma = odontogramaDAO.recuperar(odontograma);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao ausentar dente.", e);
+		}
+	}
+	public void proteseDente() {
+		try {
+			for (DenteOdontograma dente : odontograma.getDentes()) {
+				if (dente.getDente().getId() == denteId) {
+					dente.setEstado(EstadoDente.PROTESE);
+					break;
+				}
+			}
+			salvar();
+			odontograma = odontogramaDAO.recuperar(odontograma);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao ausentar dente.", e);
 		}
 	}
 
@@ -219,7 +254,7 @@ public class OdontogramaBean implements Serializable {
 
 	public void adicionarMaterial() {
 		if (novoMaterial.getMaterial() != null && novoMaterial.getQuantidade() != null) {
-			if(acaoServico.getMateriais().contains(novoMaterial)) {
+			if (acaoServico.getMateriais().contains(novoMaterial)) {
 				acaoServico.getMateriais().remove(novoMaterial);
 			}
 			novoMaterial.setAcaoServico(acaoServico);
@@ -227,7 +262,7 @@ public class OdontogramaBean implements Serializable {
 			novoMaterial = new AcaoServicoMaterial();
 		}
 	}
-	
+
 	public void salvarAcaoServico() {
 		try {
 			acaoServico.setData(new Date());
@@ -240,25 +275,25 @@ public class OdontogramaBean implements Serializable {
 			throw new RuntimeException("Erro ao comentar marcacao.", e);
 		}
 	}
-	
+
 	public void cancelarAcaoServico() {
 		acaoServico = new AcaoServico();
 	}
-	
+
 	public void removerMaterial(AcaoServicoMaterial material) {
 		acaoServico.getMateriais().remove(material);
 	}
-	
+
 	public void servicoSelecionado() {
 		acaoServico.setPreco(acaoServico.getServico().getPrecoSugerido());
 	}
-	
+
 	public void excluirAcaoServico(AcaoServico servico) {
 		try {
 			marcacao.getServicos().remove(servico);
 			atendimentoBean.removerAcaoServico(servico);
 			new AcaoServicoWebService(acaoServicoDAO).excluir(servico.getId());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao excluir Ação de Serviço.", e);
 		}
@@ -342,6 +377,14 @@ public class OdontogramaBean implements Serializable {
 
 	public void setNovoMaterial(AcaoServicoMaterial novoMaterial) {
 		this.novoMaterial = novoMaterial;
+	}
+
+	public String getFerramenta() {
+		return ferramenta;
+	}
+
+	public void setFerramenta(String ferramenta) {
+		this.ferramenta = ferramenta;
 	}
 
 }
