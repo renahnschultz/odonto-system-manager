@@ -61,7 +61,6 @@ public class PacienteWebService extends OSMServiceBase<Long, Usuario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "cadastrar-usuarios", "editar-usuarios" })
 	public Response salvar(Usuario usuario) {
 		return super.salvar(usuario);
 	}

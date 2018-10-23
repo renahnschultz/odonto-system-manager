@@ -66,7 +66,7 @@ public class HorarioOdontologoWebService extends OSMServiceBase<Long, HorarioOdo
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-horario-odontologo" })
+	@Restricao({ "excluir-odontograma" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}
@@ -77,7 +77,7 @@ public class HorarioOdontologoWebService extends OSMServiceBase<Long, HorarioOdo
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "reativar-horario-odontologo" })
+	@Restricao({ "excluir-odontograma" })
 	public Response reativar(@PathParam("id") Long id) {
 		return super.reativar(id);
 	}

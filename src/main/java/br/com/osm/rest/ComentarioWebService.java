@@ -44,7 +44,7 @@ public class ComentarioWebService extends OSMServiceBase<Long, Comentario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "editar-odontograma" })
+	@Restricao({ "odontologo" })
 	public Response salvar(Comentario entidade) {
 		return super.salvar(entidade);
 	}
@@ -55,7 +55,7 @@ public class ComentarioWebService extends OSMServiceBase<Long, Comentario> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-odontograma" })
+	@Restricao({ "odontologo" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}

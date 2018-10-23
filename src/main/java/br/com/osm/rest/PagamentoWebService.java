@@ -55,7 +55,7 @@ public class PagamentoWebService extends OSMServiceBase<Long, Pagamento> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-pagamento" })
+	@Restricao({ "excluir-odontograma" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}

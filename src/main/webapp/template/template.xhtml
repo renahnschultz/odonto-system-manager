@@ -65,25 +65,25 @@
 				<ul class="treeview-menu">
 					<li><p:link
 							outcome="cadUsuario.jsf"
-							rendered="#{verificaPermissao.temPermissao('cadastrar-usuarios, visualizar-usuarios')}">
+							rendered="#{verificaPermissao.temPermissao('cadastrar-usuarios, visualizar-usuarios, editar-usuarios')}">
 							<i class="fa fa-users"></i>
 							<span>#{msgs['usuario']}</span>
 						</p:link></li>
 					<li><p:link
 							outcome="cadMaterial.jsf"
-							rendered="#{verificaPermissao.temPermissao('cadastrar-materiais, visualizar-materiais')}">
+							rendered="#{verificaPermissao.temPermissao('cadastrar-materiai, visualizar-materiai, editar-materiai')}">
 							<i class="fa fa-cube"></i>
 							<span>#{msgs['material']}</span>
 						</p:link></li>
 					<li><p:link
 							outcome="cadServicos.jsf"
-							rendered="#{verificaPermissao.temPermissao('cadastrar-servicos, visualizar-servicos')}">
+							rendered="#{verificaPermissao.temPermissao('cadastrar-servico, visualizar-servico, editar-servico')}">
 							<i class="fa fa-cog"></i>
 							<span>#{msgs['servico']}</span>
 						</p:link></li>
 					<li><p:link
 							outcome="cadPergunta.jsf"
-							rendered="#{verificaPermissao.temPermissao('cadastrar-perguntas, visualizar-perguntas')}">
+							rendered="#{verificaPermissao.temPermissao('cadastrar-pergunta, visualizar-pergunta, editar-pergunta')}">
 							<i class="fa fa-clock-o"></i>
 							<span>#{msgs['pergunta.anamnese']}</span>
 						</p:link></li>
