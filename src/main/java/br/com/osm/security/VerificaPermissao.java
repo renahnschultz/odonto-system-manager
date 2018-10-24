@@ -134,6 +134,12 @@ public class VerificaPermissao extends AbstractAccessDecisionVoter implements Co
 	 *         </li>
 	 */
 	public boolean temPermissao(String role) {
+		if (role.equals("administrador-clinica")) {
+			return TipoUsuario.ADMINISTRADOR_CLINICA.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
+		}
+		if (role.equals("paciente")) {
+			return TipoUsuario.PACIENTE.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
+		}
 		if (role.equals("odontologo")) {
 			return TipoUsuario.ODONTOLOGO.equals(FacesUtil.getUsuarioLogado().getTipo()) || request.get().isUserInRole("administrador");
 		}
