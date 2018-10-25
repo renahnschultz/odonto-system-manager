@@ -57,22 +57,31 @@
 		<role-name>administrador</role-name>
 	</security-role>
 	<security-role>
-		<role-name>visualizar-servicos</role-name>
+		<role-name>visualizar-servico</role-name>
 	</security-role>
 	<security-role>
-		<role-name>editar-servicos</role-name>
+		<role-name>cadastrar-servico</role-name>
 	</security-role>
 	<security-role>
-		<role-name>excluir-servicos</role-name>
+		<role-name>editar-servico</role-name>
 	</security-role>
 	<security-role>
-		<role-name>visualizar-materiais</role-name>
+		<role-name>excluir-servico</role-name>
 	</security-role>
 	<security-role>
-		<role-name>editar-materiais</role-name>
+		<role-name>cadastrar-material</role-name>
 	</security-role>
 	<security-role>
-		<role-name>excluir-materiais</role-name>
+		<role-name>visualizar-material</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-material</role-name>
+	</security-role>
+	<security-role>
+		<role-name>excluir-material</role-name>
+	</security-role>
+	<security-role>
+		<role-name>cadastrar-usuarios</role-name>
 	</security-role>
 	<security-role>
 		<role-name>visualizar-usuarios</role-name>
@@ -97,5 +106,14 @@
 	</security-role>
 	<security-role>
 		<role-name>editar-anamnese</role-name>
+	</security-role>
+	<security-role>
+		<role-name>receber</role-name>
+	</security-role>
+	<security-role>
+		<role-name>editar-agendamento</role-name>
+	</security-role>
+	<security-role>
+		<role-name>aprovar-agendamento</role-name>
 	</security-role>
 </web-app>
