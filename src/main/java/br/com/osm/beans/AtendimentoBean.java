@@ -3,6 +3,7 @@ package br.com.osm.beans;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,8 +14,10 @@ import br.com.osm.entidades.AcaoServico;
 import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Debito;
 import br.com.osm.enuns.SituacaoAgendamento;
+import br.com.osm.exception.OSMException;
 import br.com.osm.rest.AtendimentoWebService;
 import br.com.osm.rest.DebitoWebService;
+import br.com.osm.util.FacesUtil;
 
 /**
  * Classe responsável pelo controle da tela de cadastro de Paciente.
@@ -34,6 +37,15 @@ public class AtendimentoBean implements Serializable {
 	private Atendimento atendimento;
 
 	public AtendimentoBean() {
+	}
+
+	@PostConstruct
+	public void init() {
+		try {
+			atendimento = atendimentoDAO.atendimentoEmExecucao(FacesUtil.getUsuarioLogado());
+		} catch (OSMException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void salvar() {

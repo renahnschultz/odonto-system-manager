@@ -45,11 +45,13 @@ public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())
 					.append(" AS p ")
-					.append(" WHERE p.situacao = :situacao ")
+					.append(" WHERE p.situacao != :situacao ")
+					.append(" AND p.situacao != :situacao2 ")
 					.append(" AND p.odontologo = :odontologo ")
 					.append(" AND p.dataHora BETWEEN :inicioDia AND :fimDia ");
 			TypedQuery<Agendamento> query = entityManager.createQuery(sql.toString(), Agendamento.class);
-			query.setParameter("situacao", SituacaoAgendamento.APROVADO);
+			query.setParameter("situacao", SituacaoAgendamento.PENDENTE);
+			query.setParameter("situacao2", SituacaoAgendamento.REPROVADO);
 			query.setParameter("odontologo", odontologo);
 			query.setParameter("inicioDia", dataPrimeiraHora(diaInicio));
 			query.setParameter("fimDia", dataUltimaHora(diaFim));
@@ -66,12 +68,11 @@ public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())
 					.append(" AS p ")
-					.append(" WHERE (p.situacao = :situacao OR p.situacao = :situacao2) ")
+					.append(" WHERE p.situacao != :situacao ")
 					.append(" AND p.odontologo = :odontologo ")
 					.append(" AND p.dataHora BETWEEN :inicioDia AND :fimDia ");
 			TypedQuery<Agendamento> query = entityManager.createQuery(sql.toString(), Agendamento.class);
-			query.setParameter("situacao", SituacaoAgendamento.APROVADO);
-			query.setParameter("situacao2", SituacaoAgendamento.PENDENTE);
+			query.setParameter("situacao", SituacaoAgendamento.REPROVADO);
 			query.setParameter("odontologo", odontologo);
 			query.setParameter("inicioDia", dataPrimeiraHora(dia));
 			query.setParameter("fimDia", dataUltimaHora(dia));

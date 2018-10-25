@@ -94,7 +94,7 @@
 							action="#{agendaBean.iniciarAtendimento()}"
 							onstart="PF('statusDialog').show()"
 							oncomplete="PF('statusDialog').hide()"
-							rendered="#{atendimentoBean.atendimento eq null}"
+							rendered="#{atendimentoBean.atendimento eq null and agendaBean.agendamento.situacao eq 'APROVADO'}"
 							update="topMenu"
 							styleClass="btn btn-success"
 							onsuccess="PF('modalAgendamento').hide()"></p:commandButton>
