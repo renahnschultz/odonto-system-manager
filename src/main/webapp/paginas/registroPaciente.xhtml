@@ -71,6 +71,19 @@
 								value="#{msgs['email']}" />
 						</div>
 					</div>
+					<div class="ui-g-12">
+						<p:selectOneRadio
+							id="genero"
+							value="#{pacienteBean.usuario.genero}"
+							layout="responsive"
+							columns="2">
+							<f:selectItems
+								value="#{OSMProducer.generoProducer()}"
+								var="genero"
+								itemLabel="#{msgs[genero.descricao]}"
+								itemValue="#{genero}" />
+						</p:selectOneRadio>
+					</div>
 					<div class="ui-g-6">
 						<div class="ui-material">
 							<p:inputMask
@@ -113,7 +126,6 @@
 							<p:inputText
 								id="whatsApp"
 								value="#{pacienteBean.usuario.telefoneWhats}"
-								required="true"
 								placeholder="WhatsApp" />
 							<p:outputLabel
 								for="whatsApp"

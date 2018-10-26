@@ -67,10 +67,12 @@ public class AgendaBean implements Serializable {
 			List<Agendamento> agendamentos = agendamentoDAO.buscarAgendamentosAprovados(usuarioLogado, diaInicio, diaFim);
 			agendaModel = new DefaultScheduleModel();
 			for (Agendamento agendamento : agendamentos) {
-				agendaModel.addEvent(new DefaultScheduleEvent(agendamento.getPaciente().getNomeCompleto(),
+				DefaultScheduleEvent evento = new DefaultScheduleEvent(agendamento.getPaciente().getNomeCompleto(),
 						agendamento.getDataHora(),
 						Timestamp.valueOf(agendamento.getDataHora().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusMinutes(30)),
-						agendamento));
+						agendamento);
+				evento.setStyleClass(agendamento.getSituacao().getDescricao().replace("em.", ""));
+				agendaModel.addEvent(evento);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

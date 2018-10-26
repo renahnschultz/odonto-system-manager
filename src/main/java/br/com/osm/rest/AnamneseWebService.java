@@ -55,7 +55,7 @@ public class AnamneseWebService extends OSMServiceBase<Long, Anamnese> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "excluir-anamnese" })
+	@Restricao({ "excluir-odontograma" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}

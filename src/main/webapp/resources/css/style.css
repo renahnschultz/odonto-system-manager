@@ -296,10 +296,20 @@ div.ui-chkbox span.ui-chkbox-icon {
 .acao-servico-linha:hover .botao-excluir-acao-servico {
 	display: inline-block;
 }
-#ferramentas .ui-g-2{
+
+#ferramentas .ui-g-2 {
 	margin: 5px;
 }
-#ferramentas .ui-g-2:hover{
+
+#ferramentas .ui-g-2:hover {
 	background: #eee;
 }
 
+.finalizado {
+	background: #607d8b !important;
+	border: 1px solid #333 !important;
+}
+.execucao {
+	background: #4caf50 !important;
+	border: 1px solid #333 !important;
+}

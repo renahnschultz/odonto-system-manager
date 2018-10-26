@@ -270,6 +270,7 @@ public class OdontogramaBean implements Serializable {
 			acaoServico.setAtendimento(atendimentoBean.getAtendimento());
 			atendimentoBean.adicionarAcaoServico(acaoServico);
 			new AcaoServicoWebService(acaoServicoDAO).salvar(acaoServico);
+			marcacao.getServicos().add(acaoServico);
 			cancelarAcaoServico();
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao comentar marcacao.", e);

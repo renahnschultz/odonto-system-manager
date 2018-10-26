@@ -35,7 +35,8 @@
 								id="completePaciente"
 								itemValue="#{paciente}">
 								<p:column>
-									<h:outputText value="#{paciente.nomeCompleto}" /><br/>
+									<h:outputText value="#{paciente.nomeCompleto}" />
+									<br />
 									<h:outputText value="#{paciente.cpf}" />
 								</p:column>
 							</p:autoComplete>
@@ -68,7 +69,7 @@
 							value="#{pagamentoBean.debitosPaciente}">
 							<div
 								class="ui-g-12"
-								style="border-left: 5px solid #8bc34a; margin-bottom: 5px;">
+								style="background: #fafafa; margin-bottom: 10px; border-radius: 5px;">
 								<div class="ui-g-8">
 									<h3>#{debito.agendamento.paciente.nomeCompleto}</h3>
 									<h4>#{debito.agendamento.odontologo.nomeCompleto}</h4>
@@ -87,7 +88,9 @@
 								</div>
 								<div class="ui-g-4">
 									<h1>
-										<h:outputText value="#{debito.valor}">
+										<h:outputText
+											style="#{debito.quitado eq 'SIM' ? 'color: #8bc34a' : 'color: #f44336'}"
+											value="#{debito.valor}">
 											<f:convertNumber
 												type="currency"
 												currencyCode="BRL"
@@ -104,6 +107,12 @@
 												timeZone="GMT-3"></f:convertDateTime>
 										</h:outputText>
 									</h3>
+								</div>
+								<div class="ui-g-12">
+									<div style="width: 100%; height: 20px; border-radius: 10px;">
+										<div style="width: #{debito.percentualPago()};height: 20px;background: #cddc39;float: left;"></div>
+										<div style="width: #{debito.percentualRestante()};height: 20px;background: #f44336;float: left;"></div>
+									</div>
 								</div>
 							</div>
 						</p:repeat>
@@ -274,7 +283,8 @@
 									currencySymbol="R$ "
 									maxFractionDigits="2"
 									minFractionDigits="2"></f:convertNumber>
-							</h:outputText><br/>
+							</h:outputText>
+							<br />
 							<p style="font-size: 12px;">#{msgs[pagamento.tipo.descricao]}</p>
 						</div>
 					</p:repeat>
@@ -304,7 +314,7 @@
 						icon="fa fa-money"
 						type="button"
 						onclick="PF('dialogPagamentoParcial').show();PF('dialogDebito').hide()"
-						rendered="#{pagamentoBean.debito.valor > pagamentoBean.debito.totalPago()}"
+						rendered="#{pagamentoBean.debito.quitado eq 'NAO'}"
 						update="formPagamentoParcial"
 						styleClass="btn btn-primary"
 						style="width: auto;margin:auto;"></p:commandButton>
@@ -314,7 +324,7 @@
 						type="button"
 						onclick="PF('dialogPagamentoTotal').show();PF('dialogDebito').hide()"
 						update="formPagamentoTotal"
-						rendered="#{pagamentoBean.debito.valor > pagamentoBean.debito.totalPago()}"
+						rendered="#{pagamentoBean.debito.quitado eq 'NAO'}"
 						styleClass="btn btn-success"
 						style="width: auto;margin:auto;margin-left: 10px;">
 					</p:commandButton>
@@ -368,13 +378,13 @@
 				</div>
 			</h:form>
 		</p:dialog>
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		<p:dialog
 			id="dialogPagamentoParcial"
 			widgetVar="dialogPagamentoParcial"

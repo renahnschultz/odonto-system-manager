@@ -44,7 +44,7 @@ public class MarcacaoWebService extends OSMServiceBase<Long, Marcacao> {
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Transactional
-	@Restricao({ "editar-odontograma" })
+	@Restricao({ "odontologo" })
 	public Response salvar(Marcacao entidade) {
 		return super.salvar(entidade);
 	}
@@ -54,7 +54,7 @@ public class MarcacaoWebService extends OSMServiceBase<Long, Marcacao> {
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
 	@Produces({ MediaType.APPLICATION_JSON + ";charset=UTF-8" })
-	@Restricao({ "excluir-odontograma" })
+	@Restricao({ "odontologo" })
 	public Response excluir(@PathParam("id") Long id) {
 		return super.excluir(id);
 	}
