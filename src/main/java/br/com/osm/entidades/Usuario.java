@@ -73,22 +73,19 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "tipo", nullable = false, length = 16)
 	private TipoUsuario tipo;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_has_permissao", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_permissao"))
 	private List<Permissao> permissoes = new ArrayList<Permissao>();
-	
-	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, 
-            fetch = FetchType.LAZY)
+
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Anamnese anamnese;
 
-	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, 
-			fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<HorarioOdontologo> horariosOdontologo;
 
-	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, 
-			fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Agendamento> agendamentos;
-	
+
 	@Enumerated
 	@Column(name = "genero", nullable = false, length = 4)
 	private Genero genero;
@@ -224,9 +221,11 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	public void setPermissoes(List<Permissao> permissoes) {
 		this.permissoes = permissoes;
 	}
-	
+
 	public void adicionarPermissao(Permissao permissao) {
-		permissoes.add(permissao);
+		if (!permissoes.contains(permissao)) {
+			permissoes.add(permissao);
+		}
 	}
 
 	public String getCro() {
@@ -244,32 +243,31 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	public void setAnamnese(Anamnese anamnese) {
 		this.anamnese = anamnese;
 	}
-	
+
 	public int getIdade() {
 		return calculaIdade(dataNascimento);
 	}
-	
+
 	private int calculaIdade(Date dataNasc) {
 
-	    Calendar dataNascimento = Calendar.getInstance();  
-	    dataNascimento.setTime(dataNasc); 
-	    Calendar hoje = Calendar.getInstance();  
+		Calendar dataNascimento = Calendar.getInstance();
+		dataNascimento.setTime(dataNasc);
+		Calendar hoje = Calendar.getInstance();
 
-	    int idade = hoje.get(Calendar.YEAR) - dataNascimento.get(Calendar.YEAR); 
+		int idade = hoje.get(Calendar.YEAR) - dataNascimento.get(Calendar.YEAR);
 
-	    if (hoje.get(Calendar.MONTH) < dataNascimento.get(Calendar.MONTH)) {
-	      idade--;  
-	    } 
-	    else 
-	    { 
-	        if (hoje.get(Calendar.MONTH) == dataNascimento.get(Calendar.MONTH) && hoje.get(Calendar.DAY_OF_MONTH) < dataNascimento.get(Calendar.DAY_OF_MONTH)) {
-	            idade--; 
-	        }
-	    }
+		if (hoje.get(Calendar.MONTH) < dataNascimento.get(Calendar.MONTH)) {
+			idade--;
+		} else {
+			if (hoje.get(Calendar.MONTH) == dataNascimento.get(Calendar.MONTH)
+					&& hoje.get(Calendar.DAY_OF_MONTH) < dataNascimento.get(Calendar.DAY_OF_MONTH)) {
+				idade--;
+			}
+		}
 
-	    return idade;
+		return idade;
 	}
-	
+
 	public String getNomeCompleto() {
 		return nome + " " + sobrenome;
 	}

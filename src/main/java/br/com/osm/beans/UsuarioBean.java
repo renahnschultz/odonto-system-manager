@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.primefaces.model.CheckboxTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -59,6 +60,7 @@ public class UsuarioBean implements Serializable {
 	public void salvar() {
 		try {
 			if (permissoesSelecionadas != null) {
+				usuario.getPermissoes().clear();
 				for (TreeNode treeNode : permissoesSelecionadas) {
 					if (treeNode.getType().equals("permissao")) {
 						usuario.adicionarPermissao((Permissao) treeNode.getData());
@@ -82,6 +84,7 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public Usuario getUsuario() {
+		criarTreePermissoes();
 		return usuario;
 	}
 
@@ -101,7 +104,6 @@ public class UsuarioBean implements Serializable {
 	public List<TipoUsuario> tiposUsuario() {
 		List<TipoUsuario> tipoUsuario = new ArrayList<TipoUsuario>();
 		Usuario usuarioLogado = new LoginBean().getUsuario();
-
 		for (TipoUsuario tipo : TipoUsuario.values()) {
 			if (TipoUsuario.ADMINISTRADOR.equals(tipo)) {
 				continue;
@@ -132,7 +134,10 @@ public class UsuarioBean implements Serializable {
 				if (!grupos.containsKey(permissao.getGrupo())) {
 					grupos.put(permissao.getGrupo(), new CheckboxTreeNode("grupo", permissao.getGrupo(), this.permissoes));
 				}
-				new CheckboxTreeNode("permissao", permissao, grupos.get(permissao.getGrupo()));
+				CheckboxTreeNode checkboxTreeNode = new CheckboxTreeNode("permissao", permissao, grupos.get(permissao.getGrupo()));
+				if (usuario.getPermissoes().contains(permissao)) {
+					checkboxTreeNode.setSelected(true);
+				}
 			}
 		} catch (OSMException e) {
 			e.printStackTrace();
@@ -154,7 +159,7 @@ public class UsuarioBean implements Serializable {
 	public void setAlterarSenha(Boolean alterarSenha) {
 		this.alterarSenha = alterarSenha;
 	}
-	
+
 	public void iniciarAlteracaoSenha() {
 		setAlterarSenha(true);
 	}

@@ -99,12 +99,12 @@
 							<p:inputText id="telefoneWhats" required="true"
 								value="#{usuarioBean.usuario.telefoneWhats}" />
 						</h:panelGroup>
-						<h:panelGroup>
+						<h:panelGroup rendered="#{usuarioBean.usuario.id eq null}">
 							<p:outputLabel for="senha1" value="#{msgs['senha']}" />
 							<p:password id="senha1" value="#{usuarioBean.usuario.senha}"
 								match="senha22" label="#{msgs['senha']}" required="true" />
 						</h:panelGroup>
-						<h:panelGroup>
+						<h:panelGroup rendered="#{usuarioBean.usuario.id eq null}">
 							<p:outputLabel for="senha22" value="#{msgs['repita.a.senha']}" />
 							<p:password id="senha22" value="#{usuarioBean.usuario.senha}"
 								label="#{msgs['repita.a.senha']}" required="true" />
