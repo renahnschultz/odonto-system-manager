@@ -55,7 +55,7 @@ public class Debito implements Entidade<Long> {
 
 	@Enumerated
 	@Column(name = "quitado", nullable = false)
-	private SimNao quitado;
+	private SimNao quitado = SimNao.NAO;
 
 	public Debito() {
 	}
@@ -152,6 +152,13 @@ public class Debito implements Entidade<Long> {
 	public Double valorRestante() {
 		Double total = valor - totalPago();
 		return total;
+	}
+	
+	public Double percentualPago() {
+		return (totalPago() / valor) * 100;
+	}
+	public Double percentualRestante() {
+		return 100 - percentualPago();
 	}
 
 }

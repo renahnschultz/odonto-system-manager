@@ -28,10 +28,9 @@ public class DebitoDAO extends GenericoDAO<Long, Debito> {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")
 					.append(tipo.getSimpleName())
 					.append(" AS p ")
-					.append(" WHERE p.agendamento.paciente = :paciente AND p.quitado = :quitado");
+					.append(" WHERE p.agendamento.paciente = :paciente");
 			TypedQuery<Debito> query = entityManager.createQuery(sql.toString(), Debito.class);
 			query.setParameter("paciente", paciente);
-			query.setParameter("quitado", SimNao.NAO);
 			return query.getResultList();
 		} catch (NoResultException e) {
 			return null;
