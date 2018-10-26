@@ -108,6 +108,7 @@ public class PagamentoBean implements Serializable {
 			debito.setQuitado(SimNao.SIM);
 			new DebitoWebService(debitoDAO).salvar(debito);
 			this.pagamento = new Pagamento();
+			buscarDebitos();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao quitar débito do paciente.", e);
@@ -116,7 +117,7 @@ public class PagamentoBean implements Serializable {
 	
 	public void pagarParcialmente() {
 		try {
-			if(pagamento.getValor() == debito.valorRestante()) {
+			if(pagamento.getValor() >= debito.valorRestante()) {
 				quitarDebito();
 				return;
 			}
@@ -127,6 +128,7 @@ public class PagamentoBean implements Serializable {
 			debito.setQuitado(SimNao.NAO);
 			new DebitoWebService(debitoDAO).salvar(debito);
 			this.pagamento = new Pagamento();
+			buscarDebitos();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao pagar parcialmente débito do paciente.", e);

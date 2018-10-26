@@ -109,9 +109,34 @@
 									</h3>
 								</div>
 								<div class="ui-g-12">
-									<div style="width: 100%; height: 20px; border-radius: 10px;">
-										<div style="width: #{debito.percentualPago()};height: 20px;background: #cddc39;float: left;"></div>
-										<div style="width: #{debito.percentualRestante()};height: 20px;background: #f44336;float: left;"></div>
+									<div
+										style="width: 100%; height: 20px; border-radius: 10px; overflow: hidden;transition: all ease-in-out 0.3s;">
+										<div style="width: #{debito.percentualPago()}%;height: 20px;background: #cddc39;float:left;"></div>
+										<div style="width: #{debito.percentualRestante()}%;height: 20px;background: #f44336;float:left;"></div>
+									</div>
+									<div style="#{(debito.valorRestante() eq 0) or (debito.totalPago() eq 0.0) ? 'text-align:center': ''}">
+									<h:outputText
+										style="color: #8bc34a;#{debito.valorRestante() eq 0.0 ? 'text-align:center;' : ''}"
+										rendered="#{debito.totalPago() > 0}"
+										value="#{debito.totalPago()}">
+										<f:convertNumber
+											type="currency"
+											currencyCode="BRL"
+											currencySymbol="R$ "
+											maxFractionDigits="2"
+											minFractionDigits="2"></f:convertNumber>
+									</h:outputText>
+									<h:outputText
+										style="color: #f44336;#{debito.totalPago() eq 0.0 ? '' : 'float: right;'}"
+										rendered="#{debito.valorRestante() > 0}"
+										value="#{debito.valorRestante()}">
+										<f:convertNumber
+											type="currency"
+											currencyCode="BRL"
+											currencySymbol="R$ "
+											maxFractionDigits="2"
+											minFractionDigits="2"></f:convertNumber>
+									</h:outputText>
 									</div>
 								</div>
 							</div>
