@@ -24,11 +24,11 @@ public interface Paginas extends ViewConfig {
 	class Login implements ViewConfig {
 	}
 
-	@Restricao(value = {"visualizar-servicos", "cadastrar-servicos", "excluir-servicos"})
+	@Restricao(value = {"visualizar-servico", "cadastrar-servico", "excluir-servico"})
 	public class cadServicos implements ViewConfig {
 	}
 
-	@Restricao(value = {"visualizar-materiais", "cadastrar-materiais", "excluir-materiais"})
+	@Restricao(value = {"visualizar-material", "cadastrar-material", "excluir-material"})
 	public class cadMaterial implements ViewConfig {
 	}
 

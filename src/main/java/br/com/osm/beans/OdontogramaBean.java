@@ -96,7 +96,7 @@ public class OdontogramaBean implements Serializable {
 		try {
 			List<Dente> dentes = denteDAO.listarTudo();
 			odontograma = new Odontograma();
-			odontograma.setPaciente(usuarioLogado);
+			odontograma.setPaciente(atendimentoBean.getAtendimento().getAgendamento().getPaciente());
 			odontograma.setDentes(new ArrayList<DenteOdontograma>());
 			inicializarDentes(dentes);
 			salvar();

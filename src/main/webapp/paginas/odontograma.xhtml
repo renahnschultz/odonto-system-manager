@@ -78,6 +78,7 @@
 						value="#{msgs['novo.odontograma']}"
 						styleClass="btn btn-success"
 						process="@this"
+						update="@form"
 						action="#{bean.criarNovoOdontograma}"
 						icon="fa fa-plus"></p:commandButton>
 				</h:panelGroup>
@@ -119,6 +120,8 @@
 									<h:outputText
 										style="font-size: 22px;font-weight: bold;"
 										value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" />
+									<h:outputText
+										value="#{msgs['genero']}: #{msgs[bean.odontograma.paciente.genero.descricao]}" />
 									<h:outputText
 										value="#{msgs['idade']}: #{bean.odontograma.paciente.idade}" />
 								</p:panelGrid>

@@ -7,55 +7,30 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<ui:composition template="/template/template_cadastro.xhtml">
-	<ui:define name="cadastro">
-		<h:form>
-				<p:panelGrid columns="1" layout="grid">
-					<p:outputLabel for="nome" value="Nome" />
-					<p:inputText id="nome" required="true"
-						value="#{testeBean.usuario.nome}" />
-					<p:outputLabel for="email" value="Email" />
-					<p:inputText id="email" type="email" required="true"
-						value="#{testeBean.usuario.email}" />
-					<p:outputLabel for="senha" value="Senha" />
-					<p:inputText id="senha" type="password" required="true"
-						value="#{testeBean.usuario.senha}" />
-					<p:outputLabel for="dataNascimento" value="Data de Nascimento" />
-					<p:calendar id="dataNascimento"
-						value="#{testeBean.usuario.dataNascimento}" />
-					<p:outputLabel for="cpf" value="CPF" />
-					<p:inputText id="cpf" required="true"
-						value="#{testeBean.usuario.cpf}" />
-					<p:outputLabel for="tipo" value="Tipo" />
-					<p:inputText id="tipo" required="true"
-						value="#{testeBean.usuario.tipo}" />
-					<p:outputLabel for="telefone" value="Telefone" />
-					<p:inputText id="telefone" required="true" placeholder="Telefone"
-						value="#{testeBean.usuario.telefone}" />
-					<p:commandButton action="#{testeBean.salvar}"
-						update="dataTableUsuario" value="Salvar" />
-				</p:panelGrid>
-		</h:form>
-	</ui:define>
-	<ui:define name="listagem">
-		<h:form prependId="false">
-			<p:dataTable id="dataTableUsuario" value="#{testeBean.usuarioLazy}"
-				lazy="true" rows="15" var="usuario" filterEvent="enter">
-				<f:facet name="header">
-				<div class="ui-g">
-					<div class="ui-g-4">
-					<p:commandButton value="Novo" icon="fa fa-plus" onclick="abrirCadastro()" />
-					</div>
-					<div class="ui-g-4">Usuários</div>
-					<div class="ui-g-4">
-					</div>
-				</div>
-    </f:facet>
-				<p:column headerText="ID">#{usuario.id}</p:column>
-				<p:column headerText="Nome">#{usuario.nome}</p:column>
-				<p:column headerText="E-mail">#{usuario.email}</p:column>
-			</p:dataTable>
-		</h:form>
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['dashboard']}</ui:define>
+	<ui:define name="card">
+		<div class="ui-g" style="padding-left: 15px;">
+			<div class="ui-g-12">
+				<h2><i class="fa fa-home"/> Dashboard</h2>
+			</div>
+			<div class="ui-g-3" style="text-align:center;">
+				<h1><p>35</p></h1>
+				<h4><p>AGENDAMENTOS</p></h4>
+			</div>
+			<div class="ui-g-3" style="text-align:center;">
+				<h1><p>26</p></h1>
+				<h4><p>ATENDIMENTOS</p></h4>
+			</div>
+			<div class="ui-g-3" style="text-align:center;">
+				<h1><p>R$ 1.235,43</p></h1>
+				<h4><p>FATURAMENTO</p></h4>
+			</div>
+			<div class="ui-g-3" style="text-align:center;">
+				<h1><p>130</p></h1>
+				<h4><p>USUÁRIOS</p></h4>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>
 </html>
