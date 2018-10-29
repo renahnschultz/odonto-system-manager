@@ -63,7 +63,7 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 	@Column(name = "telefone", nullable = false, length = 16)
 	private String telefone;
 
-	@Column(name = "telefone_whats", nullable = false, length = 16)
+	@Column(name = "telefone_whats", nullable = true, length = 16)
 	private String telefoneWhats;
 
 	@Column(name = "cro", nullable = true, length = 16)
