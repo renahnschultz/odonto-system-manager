@@ -78,7 +78,6 @@ public class AcaoServicoMaterial implements Entidade<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((acaoServico == null) ? 0 : acaoServico.hashCode());
 		result = prime * result + ((material == null) ? 0 : material.hashCode());
 		return result;
 	}
@@ -92,11 +91,6 @@ public class AcaoServicoMaterial implements Entidade<Long> {
 		if (getClass() != obj.getClass())
 			return false;
 		AcaoServicoMaterial other = (AcaoServicoMaterial) obj;
-		if (acaoServico == null) {
-			if (other.acaoServico != null)
-				return false;
-		} else if (!acaoServico.equals(other.acaoServico))
-			return false;
 		if (material == null) {
 			if (other.material != null)
 				return false;
@@ -104,6 +98,7 @@ public class AcaoServicoMaterial implements Entidade<Long> {
 			return false;
 		return true;
 	}
+
 
 
 }

@@ -46,78 +46,113 @@
 		widgetVar="modalAtendimento">
 		<h:form
 			id="formModalAtendimento"
+			styleClass="ui-g"
 			prependId="false">
-			<p:panelGrid
-				columns="2"
-				layout="grid"
-				styleClass="panel-grid-agendamento">
-				<p:outputLabel value="#{msgs['odontologo']}"></p:outputLabel>
-				<p:outputLabel value="#{msgs['paciente']}"></p:outputLabel>
-				<h:outputText
-					value="#{atendimentoBean.atendimento.agendamento.odontologo.nomeCompleto}"></h:outputText>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.agendamento.paciente.nomeCompleto}"></h:outputText>
-				<p:outputLabel value="#{msgs['cro']}"></p:outputLabel>
-				<p:outputLabel value="#{msgs['cpf']}"></p:outputLabel>
-				<h:outputText
-					value="#{atendimentoBean.atendimento.agendamento.odontologo.cro}"></h:outputText>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.agendamento.paciente.cpf}"></h:outputText>
-				<p:outputLabel value="#{msgs['data']}"></p:outputLabel>
-				<p:outputLabel value="#{msgs['hora']}"></p:outputLabel>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.agendamento.dataHora}">
-					<f:convertDateTime
-						pattern="dd/MM/yy"
-						locale="pt_BR"
-						timeZone="GMT-3"></f:convertDateTime>
-				</h:outputText>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.agendamento.dataHora}">
-					<f:convertDateTime
-						pattern="HH:mm"
-						locale="pt_BR"
-						timeZone="GMT-3"></f:convertDateTime>
-				</h:outputText>
-				<p:outputLabel value="#{msgs['servicos.realizados']}"></p:outputLabel>
-				<p:outputLabel value="#{msgs['valor.total']}"></p:outputLabel>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.servicos.size()}">
-				</h:outputText>
-				<h:outputText
-					style="font-weight: bold;"
-					value="#{atendimentoBean.atendimento.valorTotal}">
-					<f:convertNumber
-						type="currency"
-						currencyCode="BRL"
-						currencySymbol="R$ "
-						maxFractionDigits="2"
-						minFractionDigits="2"></f:convertNumber>
-				</h:outputText>
-				<h:panelGroup>
-					<p:commandButton
-						value="#{msgs['finalizar.atendimento']}"
-						icon="fa fa-stop"
-						action="#{atendimentoBean.finalizarAtendimento()}"
-						onstart="PF('statusDialog').show()"
-						oncomplete="PF('statusDialog').hide(); refreshPage();"
-						update="topMenu"
-						rendered="#{atendimentoBean.atendimento ne null}"
-						styleClass="btn btn-warning"
-						onsuccess="PF('modalAtendimento').hide()"></p:commandButton>
-					<p:commandButton
-						value="#{msgs['cancelar']}"
-						icon="fa fa-times"
-						type="button"
-						styleClass="btn btn-danger"
-						onclick="PF('modalAgendamento').hide()"></p:commandButton>
-				</h:panelGroup>
-			</p:panelGrid>
+			<div class="ui-g-8">
+				<b style="font-size: 20px;">INFORMAÇÕES DO ATENDIMENTO</b>
+				<p:panelGrid
+					columns="2"
+					layout="grid"
+					styleClass="panel-grid-agendamento">
+					<p:outputLabel value="#{msgs['odontologo']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['paciente']}"></p:outputLabel>
+					<h:outputText
+						value="#{atendimentoBean.atendimento.agendamento.odontologo.nomeCompleto}"></h:outputText>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.agendamento.paciente.nomeCompleto}"></h:outputText>
+					<p:outputLabel value="#{msgs['cro']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['cpf']}"></p:outputLabel>
+					<h:outputText
+						value="#{atendimentoBean.atendimento.agendamento.odontologo.cro}"></h:outputText>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.agendamento.paciente.cpf}"></h:outputText>
+					<p:outputLabel value="#{msgs['data']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['hora']}"></p:outputLabel>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.agendamento.dataHora}">
+						<f:convertDateTime
+							pattern="dd/MM/yy"
+							locale="pt_BR"
+							timeZone="GMT-3"></f:convertDateTime>
+					</h:outputText>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.agendamento.dataHora}">
+						<f:convertDateTime
+							pattern="HH:mm"
+							locale="pt_BR"
+							timeZone="GMT-3"></f:convertDateTime>
+					</h:outputText>
+					<p:outputLabel value="#{msgs['servicos.realizados']}"></p:outputLabel>
+					<p:outputLabel value="#{msgs['valor.total']}"></p:outputLabel>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.servicos.size()}">
+					</h:outputText>
+					<h:outputText
+						style="font-weight: bold;"
+						value="#{atendimentoBean.atendimento.valorTotal}">
+						<f:convertNumber
+							type="currency"
+							currencyCode="BRL"
+							currencySymbol="R$ "
+							maxFractionDigits="2"
+							minFractionDigits="2"></f:convertNumber>
+					</h:outputText>
+				</p:panelGrid>
+			</div>
+			<div class="ui-g-4">
+				<b style="font-size: 20px;">SERVIÇOS REALIZADOS</b>
+				<p:repeat
+					var="servico"
+					value="#{atendimentoBean.atendimento.servicos}">
+					<div class="servico-atendimento">
+						<span>#{servico.servico.nome}</span> <b style="float: right;"><h:outputText
+								value="#{servico.preco}"
+								style="float:right">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText></b>
+					</div>
+				</p:repeat>
+				<div class="servico-atendimento">
+						<B>TOTAL</B> <b style="float: right;"><h:outputText
+								value="#{atendimentoBean.atendimento.totalServicos()}"
+								style="float:right">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText></b>
+					</div>
+			</div>
+			<h:panelGroup>
+				<p:commandButton
+					value="#{msgs['finalizar.atendimento']}"
+					icon="fa fa-stop"
+					action="#{atendimentoBean.finalizarAtendimento()}"
+					onstart="PF('statusDialog').show()"
+					oncomplete="PF('statusDialog').hide(); refreshPage();"
+					update="topMenu"
+					rendered="#{atendimentoBean.atendimento ne null}"
+					styleClass="btn btn-warning"
+					onsuccess="PF('modalAtendimento').hide()"></p:commandButton>
+				<p:commandButton
+					value="#{msgs['cancelar']}"
+					icon="fa fa-times"
+					type="button"
+					styleClass="btn btn-danger"
+					onclick="PF('modalAgendamento').hide()"></p:commandButton>
+			</h:panelGroup>
 		</h:form>
 	</p:dialog>
 	<p:dialog
