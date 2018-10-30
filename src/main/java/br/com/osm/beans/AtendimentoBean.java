@@ -74,6 +74,7 @@ public class AtendimentoBean implements Serializable {
 		try {
 			atendimento.setDataFim(new Date());
 			atendimento.getAgendamento().setSituacao(SituacaoAgendamento.FINALIZADO);
+			atendimento.getAgendamento().setAtendimento(atendimento);
 			new AtendimentoWebService(atendimentoDAO).salvar(atendimento);
 			if (atendimento.getValorTotal() > 0.0) {
 				Debito debito = new Debito();
