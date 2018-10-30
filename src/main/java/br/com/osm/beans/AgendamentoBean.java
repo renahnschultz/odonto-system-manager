@@ -93,8 +93,8 @@ public class AgendamentoBean implements Serializable {
 						||
 						((horaAdd.isAfter(inicio2) || horaAdd.isEqual(inicio2))
 								&& horaAdd.isBefore(fim2))) {
-					Agendamento agendamento = new Agendamento(odontologo, Timestamp.valueOf(horaAdd.withYear(diaSelecionado.getYear())
-											.withMonth(diaSelecionado.getMonthValue()).withDayOfMonth(diaSelecionado.getDayOfMonth())));
+					Agendamento agendamento = new Agendamento(odontologo, Date.from(Timestamp.valueOf(horaAdd.withYear(diaSelecionado.getYear())
+											.withMonth(diaSelecionado.getMonthValue()).withDayOfMonth(diaSelecionado.getDayOfMonth())).toInstant()));
 					if(agendamentosDoDia.contains(agendamento)) {
 						horaAdd = horaAdd.plusMinutes(30);
 						continue;
