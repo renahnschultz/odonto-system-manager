@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:composition template="/template/template_geral.xhtml">
+	<ui:define name="title">#{msgs['cadastro.de.materiais']}</ui:define>
+	<ui:define name="card">
+		<h:form
+			id="formDataTable"
+			prependId="false">
+			<p:dataTable
+				id="dataTableMaterial"
+				value="#{logUsuarioBean.auditoriaLazy}"
+				lazy="true"
+				rows="15"
+				sortBy="data"
+				var="audi"
+				emptyMessage="#{msgs['nenhum.registro.encontrado']}">
+				<f:facet name="header">
+					<div class="ui-g">
+						<div class="ui-g-4"></div>
+						<div class="ui-g-4">Log Usuarios</div>
+						<div class="ui-g-4"></div>
+					</div>
+				</f:facet>
+				<p:column
+					headerText="#{msgs['id']}" 
+					style="text-align:center;">
+					<h:outputText value="#{audi.usuario.id}" />
+				</p:column>
+				<p:column headerText="#{msgs['nome']}" >
+					<h:outputText value="#{audi.usuario.nomeCompleto}" />
+				</p:column>
+				<p:column headerText="#{msgs['acao']}">
+					<h:outputText value="#{audi.acao}" />
+				</p:column>
+				<p:column headerText="#{msgs['data']}">
+					<h:outputText value="#{audi.data}">
+						<f:convertDateTime
+							pattern="dd/MM/yy HH:mm"
+							locale="pt_BR"
+							timeZone="GMT-3"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{IP}">
+					<h:outputText value="#{audi.ip}">
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+			<p:remoteCommand
+				name="refreshTable"
+				process="@this"
+				update="@form" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

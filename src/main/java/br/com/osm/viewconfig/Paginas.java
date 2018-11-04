@@ -95,5 +95,9 @@ public interface Paginas extends ViewConfig {
 	public class Debitos implements ViewConfig {
 		
 	}
+	@Restricao(value = {"administrador-clinica", "administrador"})
+	public class LogUsuario implements ViewConfig {
+		
+	}
 
 }

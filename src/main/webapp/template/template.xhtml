@@ -136,6 +136,12 @@
 					<i class="fa fa-cog"></i>
 					<span>#{msgs['configuracao']}</span>
 				</p:link></li>
+			<li><p:link
+					outcome="logUsuario.jsf"
+					rendered="#{verificaPermissao.temPermissao('administrador,administrador-clinica')}">
+					<i class="fa fa-user-secret"></i>
+					<span>Log Usuarios</span>
+				</p:link></li>
 		</ul>
 	</ui:define>
 

@@ -26,7 +26,7 @@ public class Auditoria implements Entidade<Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@OrdenacaoPadrao
+	@OrdenacaoPadrao(asc = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
