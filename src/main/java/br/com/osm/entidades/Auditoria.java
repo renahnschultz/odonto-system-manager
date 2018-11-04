@@ -38,8 +38,8 @@ public class Auditoria implements Entidade<Long> {
 	private Date data = new Date();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_odontologo")
-	private Usuario odontologo;
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
 	
 	@Column(name = "ip", nullable = false)
 	private String ip;
@@ -50,11 +50,11 @@ public class Auditoria implements Entidade<Long> {
 	
 	
 
-	public Auditoria(String acao, Date data, Usuario odontologo,String ip) {
+	public Auditoria(String acao, Date data, Usuario usuario,String ip) {
 		super();
 		this.acao = acao;
 		this.data = data;
-		this.odontologo = odontologo;
+		this.usuario = usuario;
 		this.ip = ip;
 	}
 
@@ -76,12 +76,12 @@ public class Auditoria implements Entidade<Long> {
 		this.data = data;
 	}
 
-	public Usuario getOdontologo() {
-		return odontologo;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setOdontologo(Usuario odontologo) {
-		this.odontologo = odontologo;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getAcao() {
