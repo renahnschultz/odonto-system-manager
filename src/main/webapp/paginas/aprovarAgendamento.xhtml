@@ -72,7 +72,9 @@
 								id="reprovar"
 								style="width: auto;"
 								update="dataTableAgendamentos"
-								action="#{agendamentoBean.aprovarReprovar(2)}"></p:commandButton>
+								action="#{agendamentoBean.aprovarReprovar(2)}">
+								<f:setPropertyActionListener value="#{agendamento}" target="#{agendamentoBean.agendamentoAprovar}"></f:setPropertyActionListener>
+								</p:commandButton>
 							<p:tooltip
 								for="aprovar"
 								position="top"
