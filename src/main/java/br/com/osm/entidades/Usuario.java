@@ -85,6 +85,8 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	@OneToMany(mappedBy = "odontologo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Agendamento> agendamentos;
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Agendamento> agendamentosPaciente;
 
 	@Enumerated
 	@Column(name = "genero", nullable = false, length = 4)
@@ -294,6 +296,14 @@ public class Usuario extends AbstractAtivo implements Entidade<Long> {
 
 	public void setGenero(Genero genero) {
 		this.genero = genero;
+	}
+
+	public List<Agendamento> getAgendamentosPaciente() {
+		return agendamentosPaciente;
+	}
+
+	public void setAgendamentosPaciente(List<Agendamento> agendamentosPaciente) {
+		this.agendamentosPaciente = agendamentosPaciente;
 	}
 
 }

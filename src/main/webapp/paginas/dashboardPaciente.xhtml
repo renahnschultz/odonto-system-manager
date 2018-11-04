@@ -35,8 +35,33 @@
 						outcome="anamnese.jsf"></p:button>
 				</div>
 			</div>
-			<div class="ui-g-6 ui-g">
+			<div class="ui-g-12 ui-g">
 				<h2>#{msgs['seus.agendamentos']}</h2>
+				<div
+					style="padding: 0px;"
+					class="ui-g-12">
+					<p:repeat
+						var="agendamento"
+						value="#{loginBean.usuario.agendamentosPaciente}">
+						<div class="ui-g-3">
+							<div
+								class="card"
+								style="padding: 10px;">
+								<b>#{agendamento.odontologo.nomeCompleto}</b>
+								<p>
+									<h:outputText value="#{agendamento.dataHora}">
+										<f:convertDateTime
+											pattern="dd/MM/yy HH:mm"
+											locale="pt_BR"
+											timeZone="GMT-3"></f:convertDateTime>
+									</h:outputText>
+								</p>
+								<div
+									style="padding: 5px 10px;border-radius: 3px;text-align:center; background: #{agendamento.cor} ">#{msgs[agendamento.situacao.descricao]}</div>
+							</div>
+						</div>
+					</p:repeat>
+				</div>
 				<div class="ui-g-12">
 					<p:button
 						value="Agendar Consulta"

@@ -145,11 +145,32 @@
 
 	<ui:define name="footer">
 		<a target="_blank">Odonto System Manager</a>
-
 		<div
 			class="pull-right hidden-xs"
 			style="color: gray">
-			<i>v0.1</i>
+			<h:form>
+				<p:commandButton
+					icon="fa fa-question-circle"
+					value="Ajuda"
+					type="button"
+					style="padding: 0px;"
+					onclick="PF('dialogAjuda').show()"></p:commandButton>
+			</h:form>
 		</div>
+		<p:dialog
+			draggable="true"
+			resizable="true"
+			id="dialogAjuda"
+			widgetVar="dialogAjuda"
+			width="50%"
+			header="Ajuda"
+			height="50vh">
+			<iframe
+				width="100%"
+				height="95%"
+				src="https://www.youtube.com/embed/juP3xkE8mvI"
+				frameborder="0"
+				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+		</p:dialog>
 	</ui:define>
 </ui:composition>

@@ -50,7 +50,7 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 	@Enumerated
 	@Column(name = "situacao", nullable = false)
 	private SituacaoAgendamento situacao;
-	
+
 	@OneToOne(mappedBy = "agendamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Atendimento atendimento;
 
@@ -145,6 +145,22 @@ public class Agendamento extends AbstractAtivo implements Entidade<Long> {
 
 	public void setAtendimento(Atendimento atendimento) {
 		this.atendimento = atendimento;
+	}
+
+	public String getCor() {
+		if(SituacaoAgendamento.APROVADO.equals(situacao)) {
+			return "#8bc34a";
+		}
+		if(SituacaoAgendamento.REPROVADO.equals(situacao)) {
+			return "#f44336";
+		}
+		if(SituacaoAgendamento.PENDENTE.equals(situacao)) {
+			return "#ffeb3b";
+		}
+		if(SituacaoAgendamento.FINALIZADO.equals(situacao)) {
+			return "#1e88e5";
+		}
+		return "#607d8b";
 	}
 
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -10,25 +11,69 @@
 <ui:composition template="/template/template_geral.xhtml">
 	<ui:define name="title">#{msgs['dashboard']}</ui:define>
 	<ui:define name="card">
-		<div class="ui-g" style="padding-left: 15px;">
+		<div
+			class="ui-g"
+			style="padding-left: 15px;">
 			<div class="ui-g-12">
-				<h2><i class="fa fa-home"/> Dashboard</h2>
+				<h2>
+					<i class="fa fa-home" /> Dashboard
+				</h2>
 			</div>
-			<div class="ui-g-3" style="text-align:center;">
-				<h1><p>35</p></h1>
-				<h4><p>AGENDAMENTOS</p></h4>
+			<div
+				class="ui-g-3"
+				style="text-align: center;">
+				<h1>
+					<p>#{dashboardBean.qtdAgendamentos}</p>
+				</h1>
+				<h4>
+					<p>AGENDAMENTOS</p>
+				</h4>
 			</div>
-			<div class="ui-g-3" style="text-align:center;">
-				<h1><p>26</p></h1>
-				<h4><p>ATENDIMENTOS</p></h4>
+			<div
+				class="ui-g-3"
+				style="text-align: center;">
+				<h1>
+					<p>#{dashboardBean.qtdAtendimentos}</p>
+				</h1>
+				<h4>
+					<p>ATENDIMENTOS</p>
+				</h4>
 			</div>
-			<div class="ui-g-3" style="text-align:center;">
-				<h1><p>R$ 1.235,43</p></h1>
-				<h4><p>FATURAMENTO</p></h4>
+			<div
+				class="ui-g-3"
+				style="text-align: center;">
+				<h1>
+					<p>
+						<h:outputText value="#{dashboardBean.debitoFaturado}">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText>
+					</p>
+				</h1>
+				<h4>
+					<p>FATURADO</p>
+				</h4>
 			</div>
-			<div class="ui-g-3" style="text-align:center;">
-				<h1><p>130</p></h1>
-				<h4><p>USUÁRIOS</p></h4>
+			<div
+				class="ui-g-3"
+				style="text-align: center;">
+				<h1>
+					<p><h:outputText value="#{dashboardBean.debitoAberto}">
+							<f:convertNumber
+								type="currency"
+								currencyCode="BRL"
+								currencySymbol="R$ "
+								maxFractionDigits="2"
+								minFractionDigits="2"></f:convertNumber>
+						</h:outputText></p>
+				</h1>
+				<h4>
+					<p>A RECEBER</p>
+				</h4>
 			</div>
 		</div>
 	</ui:define>
