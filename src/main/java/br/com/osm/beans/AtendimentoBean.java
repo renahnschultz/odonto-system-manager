@@ -8,13 +8,16 @@ import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.osm.dao.AnamneseDAO;
 import br.com.osm.dao.AtendimentoDAO;
 import br.com.osm.dao.DebitoDAO;
 import br.com.osm.entidades.AcaoServico;
+import br.com.osm.entidades.Anamnese;
 import br.com.osm.entidades.Atendimento;
 import br.com.osm.entidades.Debito;
 import br.com.osm.enuns.SituacaoAgendamento;
 import br.com.osm.exception.OSMException;
+import br.com.osm.rest.AnamneseWebService;
 import br.com.osm.rest.AtendimentoWebService;
 import br.com.osm.rest.DebitoWebService;
 import br.com.osm.util.FacesUtil;
@@ -33,8 +36,11 @@ public class AtendimentoBean implements Serializable {
 	transient private AtendimentoDAO atendimentoDAO;
 	@Inject
 	transient private DebitoDAO debitoDAO;
+	@Inject
+	transient private AnamneseDAO anamneseDAO;
 
 	private Atendimento atendimento;
+	private Anamnese anamneseDoUsuario;
 
 	public AtendimentoBean() {
 	}
@@ -89,6 +95,32 @@ public class AtendimentoBean implements Serializable {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao iniciar atendimento.", e);
 		}
+	}
+
+	public Anamnese anamnesePaciente() {
+		try {
+			setAnamneseDoUsuario(anamneseDAO.anamneseDoUsuario(atendimento.getAgendamento().getPaciente()));
+			return getAnamneseDoUsuario();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao iniciar anamnese.", e);
+		}
+	}
+	
+	public void salvarAnamnese() {
+		try {
+			anamneseDoUsuario.setDataPreenchimento(new Date());
+			new AnamneseWebService(anamneseDAO).salvar(anamneseDoUsuario);
+		}catch(Exception e) {
+			throw new RuntimeException("Erro ao iniciar anamnese.", e);
+		}
+	}
+
+	public Anamnese getAnamneseDoUsuario() {
+		return anamneseDoUsuario;
+	}
+
+	public void setAnamneseDoUsuario(Anamnese anamneseDoUsuario) {
+		this.anamneseDoUsuario = anamneseDoUsuario;
 	}
 
 }

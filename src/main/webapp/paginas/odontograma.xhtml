@@ -88,7 +88,7 @@
 					<div
 						id="divOdontograma"
 						class="ui-g-8"
-						style="border-right: 1px solid #eee;width: 830px;">
+						style="border-right: 1px solid #eee; width: 830px;">
 						<p:repeat
 							var="dente"
 							value="#{bean.odontograma.dentes}">
@@ -114,17 +114,16 @@
 									height="60" />
 							</div>
 							<div class="ui-g-10">
-								<p:panelGrid
-									columns="1"
-									layout="grid">
-									<h:outputText
-										style="font-size: 22px;font-weight: bold;"
-										value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" />
-									<h:outputText
-										value="#{msgs['genero']}: #{msgs[bean.odontograma.paciente.genero.descricao]}" />
-									<h:outputText
-										value="#{msgs['idade']}: #{bean.odontograma.paciente.idade}" />
-								</p:panelGrid>
+								<h:outputText
+									style="font-size: 22px;font-weight: bold;"
+									value="#{bean.odontograma.paciente.nome} #{bean.odontograma.paciente.sobrenome}" /><br/>
+								<h:outputText
+									value="#{msgs['genero']}: #{msgs[bean.odontograma.paciente.genero.descricao]}" /><br/>
+								<h:outputText
+									value="#{msgs['idade']}: #{bean.odontograma.paciente.idade}" /><br/>
+								<p:link
+									outcome="anamnesePaciente.jsf"
+									value="Visualizar Anamnese"></p:link>
 							</div>
 						</div>
 						<div

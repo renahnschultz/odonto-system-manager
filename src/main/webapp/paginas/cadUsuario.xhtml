@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,59 +9,113 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="/template/template_cadastro.xhtml">
+	<ui:define name="botaoAjuda">
+		<iframe
+			width="100%"
+			height="95%"
+			src="https://www.youtube.com/embed/juP3xkE8mvI"
+			frameborder="0"
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+	</ui:define>
 	<ui:define name="title">#{msgs['cadastro.de.usuarios']}</ui:define>
 	<ui:define name="cadastro">
-		<h:form id="formCadastro" prependId="false">
+		<h:form
+			id="formCadastro"
+			prependId="false">
 			<div class="ui-datatable-header ui-widget-header ui-corner-top">
 				<div class="ui-g">
 					<div class="ui-g-4"></div>
-					<div class="ui-g-4"
+					<div
+						class="ui-g-4"
 						style="text-align: center; font-weight: normal; font-size: 20px;">#{msgs['cadastro.de.usuarios']}</div>
 					<div class="ui-g-4">
-						<p:commandButton value="#{msgs['listagem']}" type="button"
-							icon="fa fa-chevron-right" iconPos="right"
-							onclick="fecharCadastro()" style="float: right;" />
+						<p:commandButton
+							value="#{msgs['listagem']}"
+							type="button"
+							icon="fa fa-chevron-right"
+							iconPos="right"
+							onclick="fecharCadastro()"
+							style="float: right;" />
 					</div>
 				</div>
 			</div>
-			<p:panelGrid columns="2" layout="grid" id="gridCadastro"
+			<p:panelGrid
+				columns="2"
+				layout="grid"
+				id="gridCadastro"
 				styleClass="ui-fluid">
 				<h:panelGroup>
-					<p:outputLabel for="tipo" value="#{msgs['tipo']}" />
-					<p:selectOneMenu id="tipo" value="#{usuarioBean.usuario.tipo}">
-						<f:selectItems var="tipoUsuario"
-							value="#{OSMProducer.tiposUsuario()}" itemValue="#{tipoUsuario}"
+					<p:outputLabel
+						for="tipo"
+						value="#{msgs['tipo']}" />
+					<p:selectOneMenu
+						id="tipo"
+						value="#{usuarioBean.usuario.tipo}">
+						<f:selectItems
+							var="tipoUsuario"
+							value="#{OSMProducer.tiposUsuario()}"
+							itemValue="#{tipoUsuario}"
 							itemLabel="#{msgs[tipoUsuario.descricao]}" />
-						<p:ajax event="change" process="@this" update="gridCadastro"
+						<p:ajax
+							event="change"
+							process="@this"
+							update="gridCadastro"
 							listener="#{usuarioBean.alteracaoTipoUsuario()}"></p:ajax>
 					</p:selectOneMenu>
 				</h:panelGroup>
-				<h:outputText value="#{msgs['permissoes']}"
+				<h:outputText
+					value="#{msgs['permissoes']}"
 					style="    font-weight: bold;font-size: 25px;margin-top: 20px;display: table;" />
 				<h:panelGroup>
-					<p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+					<p:panelGrid
+						columns="2"
+						layout="grid"
+						styleClass="ui-fluid">
 						<h:panelGroup>
-							<p:outputLabel for="nome" value="#{msgs['nome']}" />
-							<p:inputText id="nome" required="true"
+							<p:outputLabel
+								for="nome"
+								value="#{msgs['nome']}" />
+							<p:inputText
+								id="nome"
+								required="true"
 								value="#{usuarioBean.usuario.nome}" />
 						</h:panelGroup>
 						<h:panelGroup>
-							<p:outputLabel for="sobrenome" value="#{msgs['sobrenome']}" />
-							<p:inputText id="sobrenome" required="true"
+							<p:outputLabel
+								for="sobrenome"
+								value="#{msgs['sobrenome']}" />
+							<p:inputText
+								id="sobrenome"
+								required="true"
 								value="#{usuarioBean.usuario.sobrenome}" />
 						</h:panelGroup>
 					</p:panelGrid>
-					<p:panelGrid columns="1" layout="grid" styleClass="ui-fluid">
+					<p:panelGrid
+						columns="1"
+						layout="grid"
+						styleClass="ui-fluid">
 						<h:panelGroup>
-							<p:outputLabel for="email" value="#{msgs['email']}" />
-							<p:inputText id="email" required="true"
+							<p:outputLabel
+								for="email"
+								value="#{msgs['email']}" />
+							<p:inputText
+								id="email"
+								required="true"
 								value="#{usuarioBean.usuario.email}" />
 						</h:panelGroup>
 					</p:panelGrid>
-					<p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+					<p:panelGrid
+						columns="2"
+						layout="grid"
+						styleClass="ui-fluid">
 						<h:panelGroup>
-							<p:outputLabel for="cpf" value="#{msgs['cpf']}" />
-							<p:inputMask id="cpf" mask="999.999.999-99" required="true"
+							<p:outputLabel
+								for="cpf"
+								value="#{msgs['cpf']}" />
+							<p:inputMask
+								id="cpf"
+								mask="999.999.999-99"
+								required="true"
 								value="#{usuarioBean.usuario.cpf}" />
 						</h:panelGroup>
 						<h:panelGroup
@@ -69,92 +124,150 @@
 						</h:panelGroup>
 						<h:panelGroup
 							rendered="#{usuarioBean.usuario.tipo eq 'ODONTOLOGO'}">
-							<p:outputLabel for="cro" value="#{msgs['cro']}" />
-							<p:inputText id="cro" required="true"
+							<p:outputLabel
+								for="cro"
+								value="#{msgs['cro']}" />
+							<p:inputText
+								id="cro"
+								required="true"
 								value="#{usuarioBean.usuario.cro}" />
 						</h:panelGroup>
 						<h:panelGroup>
-							<p:outputLabel for="dataNascimento"
+							<p:outputLabel
+								for="dataNascimento"
 								value="#{msgs['data.de.nascimento']}" />
-							<p:calendar id="dataNascimento" required="true"
+							<p:calendar
+								id="dataNascimento"
+								required="true"
 								value="#{usuarioBean.usuario.dataNascimento}" />
 						</h:panelGroup>
 						<h:panelGroup>
-							<p:outputLabel for="genero" value="#{msgs['genero']}" />
-							<p:selectOneMenu id="genero" value="#{usuarioBean.usuario.genero}">
-								<f:selectItems var="genero"
+							<p:outputLabel
+								for="genero"
+								value="#{msgs['genero']}" />
+							<p:selectOneMenu
+								id="genero"
+								value="#{usuarioBean.usuario.genero}">
+								<f:selectItems
+									var="genero"
 									value="#{OSMProducer.generoProducer()}"
 									itemValue="#{genero}"
 									itemLabel="#{msgs[genero.descricao]}" />
 							</p:selectOneMenu>
 						</h:panelGroup>
 						<h:panelGroup>
-							<p:outputLabel for="telefone1" value="#{msgs['telefone']}" />
-							<p:inputText id="telefone1" required="true"
+							<p:outputLabel
+								for="telefone1"
+								value="#{msgs['telefone']}" />
+							<p:inputText
+								id="telefone1"
+								required="true"
 								value="#{usuarioBean.usuario.telefone}" />
 						</h:panelGroup>
 						<h:panelGroup>
-							<p:outputLabel for="telefoneWhats"
+							<p:outputLabel
+								for="telefoneWhats"
 								value="#{msgs['telefone.whats']}" />
-							<p:inputText id="telefoneWhats" required="false"
+							<p:inputText
+								id="telefoneWhats"
+								required="false"
 								value="#{usuarioBean.usuario.telefoneWhats}" />
 						</h:panelGroup>
 						<h:panelGroup rendered="#{usuarioBean.usuario.id eq null}">
-							<p:outputLabel for="senha1" value="#{msgs['senha']}" />
-							<p:password id="senha1" value="#{usuarioBean.usuario.senha}"
-								match="senha22" label="#{msgs['senha']}" required="true" />
+							<p:outputLabel
+								for="senha1"
+								value="#{msgs['senha']}" />
+							<p:password
+								id="senha1"
+								value="#{usuarioBean.usuario.senha}"
+								match="senha22"
+								label="#{msgs['senha']}"
+								required="true" />
 						</h:panelGroup>
 						<h:panelGroup rendered="#{usuarioBean.usuario.id eq null}">
-							<p:outputLabel for="senha22" value="#{msgs['repita.a.senha']}" />
-							<p:password id="senha22" value="#{usuarioBean.usuario.senha}"
-								label="#{msgs['repita.a.senha']}" required="true" />
+							<p:outputLabel
+								for="senha22"
+								value="#{msgs['repita.a.senha']}" />
+							<p:password
+								id="senha22"
+								value="#{usuarioBean.usuario.senha}"
+								label="#{msgs['repita.a.senha']}"
+								required="true" />
 						</h:panelGroup>
 					</p:panelGrid>
 				</h:panelGroup>
 				<h:panelGroup styleClass="custom-checkbox">
-					<p:tree value="#{usuarioBean.permissoes}" var="permissao"
+					<p:tree
+						value="#{usuarioBean.permissoes}"
+						var="permissao"
 						selectionMode="checkbox"
 						selection="#{usuarioBean.permissoesSelecionadas}">
-						<p:treeNode type="grupo" icon="fa fa-archive">
+						<p:treeNode
+							type="grupo"
+							icon="fa fa-archive">
 							<h:outputText value="#{msgs[permissao]}" />
 						</p:treeNode>
-						<p:treeNode type="permissao" icon="fa fa-key">
+						<p:treeNode
+							type="permissao"
+							icon="fa fa-key">
 							<h:outputText value="#{msgs[permissao.descricao]}" />
 						</p:treeNode>
 					</p:tree>
 				</h:panelGroup>
 			</p:panelGrid>
-			<p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
-				<p:commandButton action="#{usuarioBean.salvar}"
+			<p:panelGrid
+				columns="4"
+				layout="grid"
+				styleClass="ui-fluid">
+				<p:commandButton
+					action="#{usuarioBean.salvar}"
 					onstart="PF('statusDialog').show()"
 					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
-					update="dataTableUsuario  @form" styleClass="btn btn-primary"
-					process="@form" icon="fa fa-check" value="#{msgs['salvar']}" />
-				<p:commandButton action="#{usuarioBean.cancelar}"
+					update="dataTableUsuario  @form"
+					styleClass="btn btn-primary"
+					process="@form"
+					icon="fa fa-check"
+					value="#{msgs['salvar']}" />
+				<p:commandButton
+					action="#{usuarioBean.cancelar}"
 					onstart="PF('statusDialog').show()"
 					oncomplete="PF('statusDialog').hide(); fecharCadastro()"
-					update="dataTableUsuario @form" styleClass="btn btn-danger"
-					icon="fa fa-ban" value="#{msgs['cancelar']}" />
+					update="dataTableUsuario @form"
+					styleClass="btn btn-danger"
+					icon="fa fa-ban"
+					value="#{msgs['cancelar']}" />
 			</p:panelGrid>
 		</h:form>
 	</ui:define>
 	<ui:define name="listagem">
-		<h:form id="formDataTable" prependId="false">
-			<p:dataTable id="dataTableUsuario" value="#{usuarioBean.usuarioLazy}"
-				lazy="true" rows="15" var="usuario"
+		<h:form
+			id="formDataTable"
+			prependId="false">
+			<p:dataTable
+				id="dataTableUsuario"
+				value="#{usuarioBean.usuarioLazy}"
+				lazy="true"
+				rows="15"
+				var="usuario"
 				emptyMessage="#{msgs['nenhum.registro.encontrado']}"
 				filterEvent="enter">
 				<f:facet name="header">
 					<div class="ui-g">
 						<div class="ui-g-4">
-							<p:commandButton value="#{msgs['novo']}" icon="fa fa-plus"
-								type="button" onclick="abrirCadastro()" style="float: left;" />
+							<p:commandButton
+								value="#{msgs['novo']}"
+								icon="fa fa-plus"
+								type="button"
+								onclick="abrirCadastro()"
+								style="float: left;" />
 						</div>
 						<div class="ui-g-4">#{msgs['usuarios']}</div>
 						<div class="ui-g-4"></div>
 					</div>
 				</f:facet>
-				<p:column headerText="#{msgs['id']}" style="text-align:center;">
+				<p:column
+					headerText="#{msgs['id']}"
+					style="text-align:center;">
 					<h:outputText value="#{usuario.id}" />
 				</p:column>
 				<p:column headerText="#{msgs['nome']}">
@@ -163,27 +276,38 @@
 				<p:column headerText="#{msgs['tipo']}">
 					<h:outputText value="#{msgs[usuario.tipo.descricao]}" />
 				</p:column>
-				<p:column headerText="#{msgs['acoes']}" style="text-align:center;">
-					<p:commandButton action="#{usuarioBean.excluir}" update="@form"
+				<p:column
+					headerText="#{msgs['acoes']}"
+					style="text-align:center;">
+					<p:commandButton
+						action="#{usuarioBean.excluir}"
+						update="@form"
 						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide(); refreshTable()"
 						icon="fa fa-trash">
-						<p:confirm header="#{msgs['confirmacao.de.exclusao']}"
+						<p:confirm
+							header="#{msgs['confirmacao.de.exclusao']}"
 							message="#{msgs['tem.certeza.que.deseja.excluir.este.registro']}"
 							icon="fa fa-alert" />
-						<f:setPropertyActionListener value="#{usuario}"
+						<f:setPropertyActionListener
+							value="#{usuario}"
 							target="#{usuarioBean.usuario}"></f:setPropertyActionListener>
 					</p:commandButton>
-					<p:commandButton update="@form formCadastro"
+					<p:commandButton
+						update="@form formCadastro"
 						onstart="PF('statusDialog').show()"
 						oncomplete="PF('statusDialog').hide(); abrirCadastro();"
 						icon="fa fa-pencil">
-						<f:setPropertyActionListener value="#{usuario}"
+						<f:setPropertyActionListener
+							value="#{usuario}"
 							target="#{usuarioBean.usuario}"></f:setPropertyActionListener>
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
-			<p:remoteCommand name="refreshTable" process="@this" update="@form" />
+			<p:remoteCommand
+				name="refreshTable"
+				process="@this"
+				update="@form" />
 		</h:form>
 	</ui:define>
 </ui:composition>
