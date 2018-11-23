@@ -24,6 +24,21 @@ public class AgendamentoDAO extends GenericoDAO<Long, Agendamento> {
 		super(Agendamento.class, entityManager);
 	}
 	
+	public List<Agendamento> buscarAgendamentosPaciente(Usuario paciente) throws OSMException {
+		try {
+			StringBuilder sql = new StringBuilder("SELECT p FROM ")
+					.append(tipo.getSimpleName())
+					.append(" AS p ")
+					.append(" WHERE p.paciente = :paciente");
+			TypedQuery<Agendamento> query = entityManager.createQuery(sql.toString(), Agendamento.class);
+			query.setParameter("paciente", paciente);
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			throw new OSMException(e, "erro.dao.generico.listar", tipo.getSimpleName());
+		}
+	}
 	public List<Agendamento> buscarAgendamentosPendentes() throws OSMException {
 		try {
 			StringBuilder sql = new StringBuilder("SELECT p FROM ")

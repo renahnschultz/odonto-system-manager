@@ -118,6 +118,7 @@ public class AgendamentoBean implements Serializable {
 			agendamentoNovo.setSituacao(SituacaoAgendamento.PENDENTE);
 			new AgendamentoWebService(agendamentoDAO).salvar(agendamentoNovo);
 			agendamentosDisponiveis.remove(agendamentoNovo);
+			FacesUtil.getUsuarioLogado().getAgendamentosPaciente().add(agendamentoNovo);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Erro ao confirmar agendamento", e);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -16,49 +17,81 @@
 				});
 			/*]]>*/
 		</script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</ui:define>
 	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<p:remoteCommand action="#{loginBean.verificarAutenticacao()}"
+		<h:form prependId="false">
+			<p:remoteCommand
+				action="#{loginBean.setHabilitarBotao(false)}"
+				process="@form"
+				update="@form"
+				name="habilitarButton"></p:remoteCommand>
+			<p:remoteCommand
+				action="#{loginBean.verificarAutenticacao()}"
 				name="verificarAutenticacao"></p:remoteCommand>
-			<div class="row login"
+			<div
+				class="row login"
 				style="text-align: center; top: 45%; position: absolute; width: 100%; transform: translateY(-50%);">
 				<div class="ui-g-6">
 					<div class="ui-g-6">
 						<p:spacer />
 					</div>
 					<div class="ui-g-6">
-						<img src="../images/logo2.png" width="70%" />
+						<img
+							src="../images/logo2.png"
+							width="70%" />
 					</div>
 				</div>
-				<div class="col-6" style="text-align: left;">
+				<div
+					class="col-6"
+					style="text-align: left;">
 					<div class="ui-g">
 						<div class="ui-g-6">
 							<div class="ui-g-12">
 								<div class="ui-inputgroup">
 									<span class="bg-primary"><i class="fa fa-user mx-auto"></i></span>
-									<p:inputText value="#{loginBean.login}"
-										placeholder="#{msgs['email.ou.cpf']}" maxlength="45"
+									<p:inputText
+										value="#{loginBean.login}"
+										placeholder="#{msgs['email.ou.cpf']}"
+										maxlength="45"
 										onkeypress="mascara(this, cpfCnpj);"></p:inputText>
 								</div>
 							</div>
 							<div class="ui-g-12">
 								<div class="ui-inputgroup">
 									<span class="bg-primary"><i class="fa fa-lock mx-auto"></i></span>
-									<p:password value="#{loginBean.senha}"
+									<p:password
+										value="#{loginBean.senha}"
 										placeholder="#{msgs['senha']}"></p:password>
 								</div>
 							</div>
-							<div class="ui-g-12" style="text-align: right;">
-								<p:link value="Esqueceu a senha?" styleClass="text-secondary"></p:link>
+							<div
+								class="ui-g-12"
+								style="text-align: right;">
+								<p:link
+									value="Esqueceu a senha?"
+									styleClass="text-secondary"></p:link>
 							</div>
 							<div class="ui-g-12 ui-fluid">
-								<p:commandButton styleClass="btn btn-primary"
-									action="#{loginBean.autenticar}" value="#{msgs['logar']}"></p:commandButton>
-								<p:button styleClass="btn btn-secondary"
+								<div
+									class="g-recaptcha"
+									data-callback="recaptchaCallback"
+									data-sitekey="6LfPvnwUAAAAANB8fiL7U6LAwx3l4WwiQZ-ZNjDo"></div>
+							</div>
+							<div class="ui-g-12 ui-fluid">
+								<p:commandButton
+									styleClass="btn btn-primary"
+									action="#{loginBean.autenticar()}"
+									process="@form"
+									id="botaoLogin"
+									disabled="#{loginBean.habilitarBotao}"
+									value="#{msgs['logar']}"></p:commandButton>
+								<p:button
+									styleClass="btn btn-secondary"
 									style="margin-top: 10px;"
-									outcome="/paginas/registroPaciente.jsf" type="button"
+									outcome="/paginas/registroPaciente.jsf"
+									type="button"
 									value="#{msgs['cadastre.se']}"></p:button>
 							</div>
 						</div>
@@ -68,7 +101,9 @@
 		</h:form>
 		<script type="text/javascript">
 				/*<![CDATA[ */
-	
+				function recaptchaCallback() {
+					habilitarButton();
+				}
 				function mascara(o, f) {
 					v_obj = o;
 					v_fun = f;

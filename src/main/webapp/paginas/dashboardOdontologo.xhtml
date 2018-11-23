@@ -41,7 +41,7 @@
 			</div>
 			<div class="ui-g-3">
 				<div
-					style="background: #4caf50; text-align: center; border-radius: 5px; color: #fff;padding: 10px;">
+					style="background: #4caf50; text-align: center; border-radius: 5px; color: #fff; padding: 10px;">
 					<h1>
 						<p>
 							<h:outputText value="#{dashboardBean.debitoFaturado}">
@@ -61,7 +61,7 @@
 			</div>
 			<div class="ui-g-3">
 				<div
-					style="background: #f44336; text-align: center; border-radius: 5px; color: #fff;padding: 10px;">
+					style="background: #f44336; text-align: center; border-radius: 5px; color: #fff; padding: 10px;">
 					<h1>
 						<p>
 							<h:outputText value="#{dashboardBean.debitoAberto}">
@@ -76,6 +76,46 @@
 					</h1>
 					<h4>
 						<p>A RECEBER</p>
+					</h4>
+				</div>
+			</div>
+			<div
+				class="ui-g-6"
+				style="text-align: center;">
+				<h1>
+					<p>
+						<h:outputText
+							value="#{(dashboardBean.debitoAberto+ dashboardBean.debitoFaturado) / dashboardBean.qtdAgendamentos}">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText></p>
+				</h1>
+				<h4>
+					<p>TICKET MÉDIO</p>
+				</h4>
+			</div>
+			<div class="ui-g-6">
+				<div
+					style="background: #0288d1; text-align: center; border-radius: 5px; color: #fff; padding: 10px;">
+					<h1>
+						<p>
+							<h:outputText
+								value="#{dashboardBean.debitoAberto + dashboardBean.debitoFaturado}">
+								<f:convertNumber
+									type="currency"
+									currencyCode="BRL"
+									currencySymbol="R$ "
+									maxFractionDigits="2"
+									minFractionDigits="2"></f:convertNumber>
+							</h:outputText>
+						</p>
+					</h1>
+					<h4>
+						<p>MONTANTE</p>
 					</h4>
 				</div>
 			</div>

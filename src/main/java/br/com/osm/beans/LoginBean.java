@@ -55,6 +55,7 @@ public class LoginBean implements Serializable {
 	public static final String HOME = "/paginas/dashboard";
 	private String login;
 	private String senha;
+	private Boolean habilitarBotao = true;
 	@Inject
 	private JsfMessage<Mensagens> mensagens;
 	@Inject
@@ -213,5 +214,13 @@ public class LoginBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Boolean getHabilitarBotao() {
+		return habilitarBotao;
+	}
+
+	public void setHabilitarBotao(Boolean habilitarBotao) {
+		this.habilitarBotao = habilitarBotao;
 	}
 }
