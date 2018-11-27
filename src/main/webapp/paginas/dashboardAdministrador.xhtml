@@ -11,13 +11,32 @@
 <ui:composition template="/template/template_geral.xhtml">
 	<ui:define name="title">#{msgs['dashboard']}</ui:define>
 	<ui:define name="card">
-		<div
-			class="ui-g"
+		<h:form
+			styleClass="ui-g"
 			style="padding-left: 15px;">
 			<div class="ui-g-12">
-				<h2>
-					<i class="fa fa-home" /> Dashboard
-				</h2>
+				<div class="ui-g-6">
+					<h2>
+						<i class="fa fa-home" /> Dashboard
+					</h2>
+				</div>
+				<div class="ui-g-6">
+					<p:panelGrid
+						layout="grid"
+						columns="3">
+						<p:outputLabel value="Data Inicial"></p:outputLabel>
+						<p:outputLabel value="Data Final"></p:outputLabel>
+						<p:spacer />
+						<p:calendar value="#{dashboardBean.dataInicio}"></p:calendar>
+						<p:calendar value="#{dashboardBean.dataFim}"></p:calendar>
+						<p:commandButton
+							value="Atualizar"
+							icon="fa fa-refresh"
+							process="@form @this"
+							update="@form"
+							action="#{dashboardBean.atualizarDados()}"></p:commandButton>
+					</p:panelGrid>
+				</div>
 			</div>
 			<div
 				class="ui-g-3"
@@ -41,7 +60,7 @@
 			</div>
 			<div class="ui-g-3">
 				<div
-					style="background: #4caf50; text-align: center; border-radius: 5px; color: #fff;padding: 10px;">
+					style="background: #4caf50; text-align: center; border-radius: 5px; color: #fff; padding: 10px;">
 					<h1>
 						<p>
 							<h:outputText value="#{dashboardBean.debitoFaturado}">
@@ -61,7 +80,7 @@
 			</div>
 			<div class="ui-g-3">
 				<div
-					style="background: #f44336; text-align: center; border-radius: 5px; color: #fff;padding: 10px;">
+					style="background: #f44336; text-align: center; border-radius: 5px; color: #fff; padding: 10px;">
 					<h1>
 						<p>
 							<h:outputText value="#{dashboardBean.debitoAberto}">
@@ -79,7 +98,7 @@
 					</h4>
 				</div>
 			</div>
-		</div>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

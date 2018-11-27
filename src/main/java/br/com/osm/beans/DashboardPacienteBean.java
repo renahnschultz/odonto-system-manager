@@ -27,7 +27,7 @@ public class DashboardPacienteBean implements Serializable {
 	private LoginBean loginBean;
 	private List<Agendamento> agendamentosPaciente;
 	@Inject
-	private AgendamentoDAO agendamentoDAO;
+	transient private AgendamentoDAO agendamentoDAO;
 
 	@PostConstruct
 	public void init() {

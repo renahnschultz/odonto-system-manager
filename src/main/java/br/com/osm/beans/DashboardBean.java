@@ -2,6 +2,10 @@ package br.com.osm.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -35,6 +39,9 @@ public class DashboardBean implements Serializable {
 	private Double debitoFaturado = 0.0;
 	private Double debitoAberto= 0.0;
 	private Usuario usuarioLogado = FacesUtil.getUsuarioLogado();
+	
+	private Date dataInicio = Date.from(LocalDate.now().minusDays(30).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+	private Date dataFim = Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
 	public DashboardBean() {
 	}
@@ -43,13 +50,19 @@ public class DashboardBean implements Serializable {
 	public void init() {
 		try {
 			boolean odontologo = TipoUsuario.ODONTOLOGO.equals(usuarioLogado.getTipo());
-			qtdAgendamentos = (Long) dashboardDAO.quantidadeAgendamentos(odontologo ? usuarioLogado : null);
-			qtdAtendimentos = (Long) dashboardDAO.quantidadeAtendimentos(odontologo ? usuarioLogado : null);
-			debitoFaturado = ((BigDecimal) dashboardDAO.debitoFaturado(odontologo ? usuarioLogado : null)).doubleValue();
-			debitoAberto = ((BigDecimal) dashboardDAO.debitoAberto(odontologo ? usuarioLogado : null)).doubleValue();
+			qtdAgendamentos = (Long) dashboardDAO.quantidadeAgendamentos(odontologo ? usuarioLogado : null, dataInicio, dataFim);
+			qtdAtendimentos = (Long) dashboardDAO.quantidadeAtendimentos(odontologo ? usuarioLogado : null, dataInicio, dataFim);
+			Object debitoFaturado2 = dashboardDAO.debitoFaturado(odontologo ? usuarioLogado : null, dataInicio, dataFim);
+			debitoFaturado = debitoFaturado2 != null ? ((BigDecimal) debitoFaturado2).doubleValue() : 0.0;
+			Object debitoAberto2 = dashboardDAO.debitoAberto(odontologo ? usuarioLogado : null, dataInicio, dataFim);
+			debitoAberto = debitoAberto2 != null ? ((BigDecimal) debitoAberto2).doubleValue() : 0.0;
 		} catch (OSMException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void atualizarDados() {
+		init();
 	}
 
 	public Long getQtdAgendamentos() {
@@ -82,6 +95,22 @@ public class DashboardBean implements Serializable {
 
 	public void setDebitoAberto(Double debitoAberto) {
 		this.debitoAberto = debitoAberto;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 }
